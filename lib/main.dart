@@ -1,10 +1,11 @@
 import 'package:cltvspj/controller/calculator_controller.dart';
+import 'package:cltvspj/controller/clt_controller.dart';
 import 'package:cltvspj/controller/locale_controller.dart';
 import 'package:cltvspj/controller/notification_controller.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/services/notification_service.dart';
 import 'package:cltvspj/services/secure_service.dart';
-import 'package:cltvspj/views/home_page.dart';
+import 'package:cltvspj/views/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -32,6 +33,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => NotificationController()),
           ChangeNotifierProvider(create: (_) => LocaleController()),
           ChangeNotifierProvider(create: (_) => CalculatorController()),
+          ChangeNotifierProvider(create: (_) => CltController()),
           ChangeNotifierProvider(create: (_) => UiProvider()..init()),
         ],
         child: ModularApp(module: AppModule(), child: const AppWidget()),
@@ -74,6 +76,6 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/', child: (context) => const HomePage());
+    r.child('/', child: (context) => const AppPage());
   }
 }
