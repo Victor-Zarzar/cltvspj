@@ -80,22 +80,8 @@ class CalculatorController extends ChangeNotifier {
     }
   }
 
-  void updateValues() {
-    model = CalculatorModel(
-      salaryClt: salaryCltController.numberValue,
-      salaryPj: salaryPjController.numberValue,
-      benefits: benefitsController.numberValue,
-      accountantFee: accountantFeeController.numberValue,
-      taxesPj: _parsePercentage(taxesPjController),
-      inssPj: _parsePercentage(inssPjController) / 100,
-    );
-
-    StorageService.saveData(model);
-    notifyListeners();
-  }
-
   Future<void> loadData() async {
-    model = await StorageService.loadData();
+    model = await StorageService.loadCalculatorData();
     salaryCltController.updateValue(model.salaryClt);
     salaryPjController.updateValue(model.salaryPj);
     benefitsController.updateValue(model.benefits);
@@ -107,6 +93,20 @@ class CalculatorController extends ChangeNotifier {
         .toStringAsFixed(2)
         .replaceAll('.', ',');
 
+    notifyListeners();
+  }
+
+  void updateValues() {
+    model = CalculatorModel(
+      salaryClt: salaryCltController.numberValue,
+      salaryPj: salaryPjController.numberValue,
+      benefits: benefitsController.numberValue,
+      accountantFee: accountantFeeController.numberValue,
+      taxesPj: _parsePercentage(taxesPjController),
+      inssPj: _parsePercentage(inssPjController) / 100,
+    );
+
+    StorageService.saveCalculatorData(model);
     notifyListeners();
   }
 

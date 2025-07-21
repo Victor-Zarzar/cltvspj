@@ -1,4 +1,4 @@
-import 'package:cltvspj/model/calculate_model.dart';
+import 'package:cltvspj/model/clt_model.dart';
 import 'package:cltvspj/services/storage_service.dart';
 import 'package:cltvspj/utils/salary_helper.dart';
 import 'package:flutter/material.dart';
@@ -41,22 +41,15 @@ class CltController extends ChangeNotifier {
   }
 
   Future<void> _loadData() async {
-    final model = await StorageService.loadData();
+    final model = await StorageService.loadCltData();
     cltSalaryController.updateValue(model.salaryClt);
     cltBenefitsController.updateValue(model.benefits);
     calculate();
   }
 
   Future<void> _saveData(double salary, double benefits) async {
-    final model = CalculatorModel(
-      salaryClt: salary,
-      benefits: benefits,
-      salaryPj: 0,
-      taxesPj: 0,
-      accountantFee: 0,
-      inssPj: 0,
-    );
-    await StorageService.saveData(model);
+    final model = CltModel(salaryClt: salary, benefits: benefits);
+    await StorageService.saveCltData(model);
   }
 
   @override
