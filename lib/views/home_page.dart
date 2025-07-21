@@ -4,7 +4,7 @@ import 'package:cltvspj/features/responsive.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
-import 'package:cltvspj/views/components/show_dialog.dart';
+import 'package:cltvspj/views/components/result_dialog.dart';
 import 'package:cltvspj/views/widgets/body_home_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

@@ -1,10 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cltvspj/model/calculate_model.dart';
 import 'package:cltvspj/model/clt_model.dart';
+import 'package:cltvspj/model/pj_model.dart';
 
 class StorageService {
   // ===== CLT =====
-
   static Future<void> saveCltData(CltModel model) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble('clt_salary', model.salaryClt);
@@ -20,7 +20,6 @@ class StorageService {
   }
 
   // ===== Calculator =====
-
   static Future<void> saveCalculatorData(CalculatorModel model) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble('calc_salaryClt', model.salaryClt);
@@ -40,6 +39,25 @@ class StorageService {
       taxesPj: prefs.getDouble('calc_taxesPj') ?? 0.0,
       accountantFee: prefs.getDouble('calc_accountantFee') ?? 189.0,
       inssPj: prefs.getDouble('calc_inssPj') ?? 0.11,
+    );
+  }
+
+  // ===== PJ =====
+  static Future<void> savePjData(PjModel model) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('pj_salary', model.salary);
+    await prefs.setDouble('pj_taxes', model.taxes);
+    await prefs.setDouble('pj_accountantFee', model.accountantFee);
+    await prefs.setDouble('pj_inss', model.inss);
+  }
+
+  static Future<PjModel> loadPjData() async {
+    final prefs = await SharedPreferences.getInstance();
+    return PjModel(
+      salary: prefs.getDouble('pj_salary') ?? 0.0,
+      taxes: prefs.getDouble('pj_taxes') ?? 0.0,
+      accountantFee: prefs.getDouble('pj_accountantFee') ?? 189.0,
+      inss: prefs.getDouble('pj_inss') ?? 0.11,
     );
   }
 }

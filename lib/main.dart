@@ -2,6 +2,7 @@ import 'package:cltvspj/controller/calculator_controller.dart';
 import 'package:cltvspj/controller/clt_controller.dart';
 import 'package:cltvspj/controller/locale_controller.dart';
 import 'package:cltvspj/controller/notification_controller.dart';
+import 'package:cltvspj/controller/pj_controller.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/services/notification_service.dart';
 import 'package:cltvspj/services/secure_service.dart';
@@ -34,6 +35,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => LocaleController()),
           ChangeNotifierProvider(create: (_) => CalculatorController()),
           ChangeNotifierProvider(create: (_) => CltController()),
+          ChangeNotifierProvider(create: (_) => PjController()),
           ChangeNotifierProvider(create: (_) => UiProvider()..init()),
         ],
         child: ModularApp(module: AppModule(), child: const AppWidget()),

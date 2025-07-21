@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ResultDialog extends StatelessWidget {
-  final NumberFormat currencyFormat;
-
   const ResultDialog({super.key, required this.currencyFormat});
+
+  final NumberFormat currencyFormat;
 
   static void show(BuildContext context, NumberFormat currencyFormat) {
     showDialog(
@@ -80,6 +80,23 @@ class ResultDialog extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildSalaryLine(
+    BuildContext context, {
+    required String label,
+    required double value,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: context.bodySmallDark),
+          Text(currencyFormat.format(value), style: context.bodySmallDarkBold),
+        ],
+      ),
     );
   }
 }

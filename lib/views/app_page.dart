@@ -4,6 +4,7 @@ import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/views/clt_salary_page.dart';
 import 'package:cltvspj/views/home_page.dart';
+import 'package:cltvspj/views/pj_salary_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,7 @@ class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -41,7 +42,7 @@ class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
           body: TabBarView(
             key: ValueKey(currentLocale),
             controller: tabController,
-            children: const [HomePage(), Cltpage()],
+            children: const [HomePage(), Cltpage(), Pjpage()],
           ),
           bottomNavigationBar: Material(
             color: notifier.isDark
@@ -73,6 +74,19 @@ class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
                   ),
                   child: Text(
                     'Clt',
+                    style: context.footerMediumFont,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.business,
+                    semanticLabel: "money_icon".tr(),
+                    color: IconColor.primaryColor,
+                  ),
+                  child: Text(
+                    'Pj',
                     style: context.footerMediumFont,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
