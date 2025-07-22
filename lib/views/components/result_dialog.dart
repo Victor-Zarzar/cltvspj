@@ -22,22 +22,29 @@ class ResultDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<CalculatorController>();
-    final totalClt = controller.totalClt;
-    final totalPj = controller.totalPj;
-    final difference = (totalClt - totalPj).abs();
+    return Consumer2<UiProvider, CalculatorController>(
+      builder: (context, notifier, controller, child) {
+        final totalClt = controller.totalClt;
+        final totalPj = controller.totalPj;
+        final difference = (totalClt - totalPj).abs();
 
-    final chartData = ChartDataHelper.buildResultChartData(
-      cltNet: totalClt,
-      pjNet: totalPj,
-    );
+        final chartData = ChartDataHelper.buildResultChartData(
+          cltNet: controller.totalClt,
+          pjNet: controller.totalPj,
+          difference: difference,
+        );
 
-    final colorList = [ChartColor.thirdColor, ChartColor.fourthColor];
+        final colorList = [
+          ChartColor.thirdColor,
+          ChartColor.fourthColor,
+          ChartColor.primaryColor,
+        ];
 
-    return Consumer<UiProvider>(
-      builder: (context, notifier, child) {
         return AlertDialog(
-          title: Text('result'.tr()),
+          backgroundColor: notifier.isDark
+              ? AlertDialogColor.thirdColor
+              : AlertDialogColor.primaryColor,
+          title: Text('result'.tr(), style: context.h1Dialog),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -47,27 +54,20 @@ class ResultDialog extends StatelessWidget {
                   colorList: colorList,
                   size: 180,
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  'clt_net'.tr(
-                    namedArgs: {'amount': currencyFormat.format(totalClt)},
-                  ),
-                  style: context.bodySmallDark,
+                const SizedBox(height: 24),
+                _buildSalaryLine(
+                  context,
+                  label: 'clt_net'.tr(),
+                  value: totalClt,
                 ),
-                Text(
-                  'pj_net'.tr(
-                    namedArgs: {'amount': currencyFormat.format(totalPj)},
-                  ),
-                  style: context.bodySmallDark,
-                ),
+                _buildSalaryLine(context, label: 'pj_net'.tr(), value: totalPj),
                 const SizedBox(height: 8),
-                Text(
-                  'difference'.tr(
-                    namedArgs: {'amount': currencyFormat.format(difference)},
-                  ),
-                  style: context.bodySmallDarkBold,
+                _buildSalaryLine(
+                  context,
+                  label: 'difference'.tr(),
+                  value: difference,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 24),
                 Text(controller.bestOption, style: context.bodySmallDarkBold),
               ],
             ),

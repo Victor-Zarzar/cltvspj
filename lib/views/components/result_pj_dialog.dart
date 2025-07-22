@@ -1,6 +1,7 @@
 import 'package:cltvspj/controller/pj_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
+import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/utils/chart_pj_data_helper.dart';
 import 'package:cltvspj/views/components/pie_chart_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,8 +22,8 @@ class ResultPjtDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PjController>(
-      builder: (context, ctrl, _) {
+    return Consumer2<UiProvider, PjController>(
+      builder: (context, notifier, ctrl, _) {
         final chartData = PjChartDataHelper.buildResultChartData(
           tax: ctrl.tax,
           inss: ctrl.inss,
@@ -38,7 +39,10 @@ class ResultPjtDialog extends StatelessWidget {
         ];
 
         return AlertDialog(
-          title: Text('result'.tr()),
+          backgroundColor: notifier.isDark
+              ? AlertDialogColor.thirdColor
+              : AlertDialogColor.primaryColor,
+          title: Text('result'.tr(), style: context.h1Dialog),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -49,7 +53,7 @@ class ResultPjtDialog extends StatelessWidget {
                   size: 180,
                 ),
                 const SizedBox(height: 24),
-                _buildSalaryLine(context, label: 'tax'.tr(), value: ctrl.tax),
+                _buildSalaryLine(context, label: 'taxes'.tr(), value: ctrl.tax),
                 _buildSalaryLine(context, label: 'inss'.tr(), value: ctrl.inss),
                 _buildSalaryLine(
                   context,

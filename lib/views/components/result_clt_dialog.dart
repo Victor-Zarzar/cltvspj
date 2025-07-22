@@ -1,6 +1,7 @@
 import 'package:cltvspj/controller/clt_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
+import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/utils/chart_clt_data_helper.dart';
 import 'package:cltvspj/views/components/pie_chart_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,8 +22,8 @@ class ResultCltDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CltController>(
-      builder: (context, controller, _) {
+    return Consumer2<UiProvider, CltController>(
+      builder: (context, notifier, controller, _) {
         final chartData = CltChartDataHelper.buildResultChartData(
           netSalary: controller.netSalary,
           inss: controller.inss,
@@ -38,11 +39,13 @@ class ResultCltDialog extends StatelessWidget {
         ];
 
         return AlertDialog(
-          backgroundColor: Theme.of(context).cardColor,
+          backgroundColor: notifier.isDark
+              ? AlertDialogColor.thirdColor
+              : AlertDialogColor.primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          title: Text('result'.tr(), style: context.h2),
+          title: Text('result'.tr(), style: context.h1Dialog),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
