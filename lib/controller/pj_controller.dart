@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:cltvspj/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
-import 'package:cltvspj/services/storage_service.dart';
 import 'package:cltvspj/model/pj_model.dart';
 
 class PjController extends ChangeNotifier {
@@ -51,14 +51,14 @@ class PjController extends ChangeNotifier {
   }
 
   Future<void> _loadData() async {
-    final model = await StorageService.loadPjData();
-
-    salaryController.updateValue(model.salary);
-    accountantController.updateValue(model.accountantFee);
-    taxController.text = model.taxes.toStringAsFixed(0);
-    inssController.text = model.inss.toStringAsFixed(0);
-
-    calculate();
+    final model = await DatabaseService().loadPj();
+    if (model != null) {
+      salaryController.updateValue(model.salary);
+      accountantController.updateValue(model.accountantFee);
+      taxController.text = model.taxes.toStringAsFixed(0);
+      inssController.text = model.inss.toStringAsFixed(0);
+      calculate();
+    }
   }
 
   Future<void> _saveData(
@@ -73,7 +73,7 @@ class PjController extends ChangeNotifier {
       accountantFee: accountant,
       inss: inssPercent,
     );
-    await StorageService.savePjData(model);
+    await DatabaseService().savePj(model);
   }
 
   @override

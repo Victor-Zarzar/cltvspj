@@ -23,6 +23,9 @@ dependencies:
   flutter_svg: ^2.1.0
   fl_chart: ^1.0.0
   flutter_masked_text2: ^0.9.1
+  sqflite: ^2.4.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

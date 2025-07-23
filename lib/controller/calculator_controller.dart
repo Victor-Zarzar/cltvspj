@@ -1,9 +1,9 @@
+import 'package:cltvspj/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../model/calculate_model.dart';
 import '../utils/salary_helper.dart';
-import '../services/storage_service.dart';
 
 class CalculatorController extends ChangeNotifier {
   final salaryCltController = MoneyMaskedTextController(
@@ -51,6 +51,12 @@ class CalculatorController extends ChangeNotifier {
       _parsePercentage(inssPjController) > 0 &&
       _parsePercentage(taxesPjController) > 0;
 
+  double get difference => (totalClt - totalPj).abs();
+
+  double get benefits => model.benefits;
+
+  double get inss => model.salaryPj * model.inssPj;
+
   double get totalClt {
     final inss = calculateInss(model.salaryClt);
     final irrf = calculateIrrf(model.salaryClt);
@@ -81,7 +87,7 @@ class CalculatorController extends ChangeNotifier {
   }
 
   Future<void> loadData() async {
-    model = await StorageService.loadCalculatorData();
+    model = await DatabaseService().loadCalculator() ?? model;
     salaryCltController.updateValue(model.salaryClt);
     salaryPjController.updateValue(model.salaryPj);
     benefitsController.updateValue(model.benefits);
@@ -106,7 +112,7 @@ class CalculatorController extends ChangeNotifier {
       inssPj: _parsePercentage(inssPjController) / 100,
     );
 
-    StorageService.saveCalculatorData(model);
+    DatabaseService().saveCalculator(model);
     notifyListeners();
   }
 

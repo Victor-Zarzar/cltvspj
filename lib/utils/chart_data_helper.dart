@@ -5,7 +5,15 @@ class ChartDataHelper {
     required double cltNet,
     required double pjNet,
     required double difference,
+    required double benefits,
+    required double inss,
   }) {
-    return {'CLT': cltNet, 'PJ': pjNet, 'difference'.tr(): difference};
+    return {
+      'CLT': cltNet,
+      'PJ': pjNet,
+      'difference'.tr(): difference,
+      'benefits'.tr(): benefits,
+      'inss'.tr(): inss,
+    };
   }
 }

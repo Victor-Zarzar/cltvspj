@@ -31,13 +31,17 @@ class ResultDialog extends StatelessWidget {
         final chartData = ChartDataHelper.buildResultChartData(
           cltNet: controller.totalClt,
           pjNet: controller.totalPj,
-          difference: difference,
+          difference: controller.difference,
+          benefits: controller.benefits,
+          inss: controller.inss,
         );
 
         final colorList = [
+          ChartColor.primaryColor,
+          ChartColor.secondaryColor,
           ChartColor.thirdColor,
           ChartColor.fourthColor,
-          ChartColor.primaryColor,
+          ChartColor.fifthColor,
         ];
 
         return AlertDialog(
