@@ -1,16 +1,52 @@
-# cltvspj
+<h1 align="center" id="header">
+ CLT Vs PJ App Flutter - Android/iOS - Web
+</h1>
 
-A new Flutter project.
+🤖 Stack:
 
-## Getting Started
+- Dart
+- Flutter
+- Material Design 3 (UI) 
+- Google Fonts
+- Locale Language EN / PT-BR / ES
+- Dark Mode Provider
+- Flutter local notifications
+- Url Launcher
+- Timezone
+- Provider (State Managment)
+- Flutter Secure Storage
+- SQFlite
+- PierChart
 
-This project is a starting point for a Flutter application.
+<br />
 
-A few resources to get you started if this is your first Flutter project:
+⚙️ How to install:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Project Clone
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+     git clone https://github.com/Victor-Zarzar/cltvspj
+
+Enter in directory:
+
+     cd cltvspj
+
+Open in your favorite editor(e.g. VSCode):
+
+    code .
+
+For install dependencies:
+
+    flutter pub get
+
+Run the app:
+
+    flutter run
+
+Run the app version Web:
+
+    flutter run -d chrome    
+    
+
+### Archictecture:
+
+<img src="assets/imgs/architecture.png" alt="architecture" width="1000" height="800">
