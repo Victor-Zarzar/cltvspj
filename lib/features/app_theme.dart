@@ -138,7 +138,7 @@ class LoadingColor {
 
 class ChartColor {
   ChartColor._();
-  static Color get primaryColor => const Color(0xFFFF5733);
+  static Color get primaryColor => const Color.fromARGB(255, 193, 47, 14);
   static Color get secondaryColor => const Color(0xFFFFAE33);
   static Color get thirdColor => const Color(0xFF339CFF);
   static Color get fourthColor => const Color(0xFF20A819);

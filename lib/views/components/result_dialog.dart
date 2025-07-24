@@ -37,9 +37,9 @@ class ResultDialog extends StatelessWidget {
         );
 
         final colorList = [
-          ChartColor.primaryColor,
-          ChartColor.secondaryColor,
           ChartColor.thirdColor,
+          ChartColor.secondaryColor,
+          ChartColor.primaryColor,
           ChartColor.fourthColor,
           ChartColor.fifthColor,
         ];
