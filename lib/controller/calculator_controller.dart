@@ -57,6 +57,8 @@ class CalculatorController extends ChangeNotifier {
 
   double get inss => model.salaryPj * model.inssPj;
 
+  double get accountantFee => model.accountantFee;
+
   double get totalClt {
     final inss = calculateInss(model.salaryClt);
     final irrf = calculateIrrf(model.salaryClt);

@@ -34,6 +34,7 @@ class ResultDialog extends StatelessWidget {
           difference: controller.difference,
           benefits: controller.benefits,
           inss: controller.inss,
+          accountantFee: controller.accountantFee,
         );
 
         final colorList = [
@@ -70,6 +71,12 @@ class ResultDialog extends StatelessWidget {
                   context,
                   label: 'difference'.tr(),
                   value: difference,
+                ),
+                const SizedBox(height: 8),
+                _buildSalaryLine(
+                  context,
+                  label: 'accountant_fee'.tr(),
+                  value: controller.accountantFee,
                 ),
                 const SizedBox(height: 24),
                 Text(controller.bestOption, style: context.bodySmallDarkBold),

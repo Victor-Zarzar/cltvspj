@@ -7,6 +7,7 @@ import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/views/about_page.dart';
 import 'package:cltvspj/views/theme_page.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -147,6 +148,33 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   const SizedBox(height: 5),
+                  if (!kIsWeb)
+                    ListTile(
+                      leading: Icon(
+                        color: IconColor.primaryColor,
+                        Icons.notification_important,
+                        semanticLabel: 'about_icon'.tr(),
+                        size: 20,
+                      ),
+                      title: Text(
+                        'notifications'.tr(),
+                        style: context.bodyMediumFont,
+                      ),
+                      trailing: CupertinoSwitch(
+                        value: notificationController.notificationsEnabled,
+                        onChanged: notificationController.toggleNotifications,
+                        activeTrackColor: notifier.isDark
+                            ? SwitchColor.darkInactiveTrack
+                            : SwitchColor.activeThumb.withValues(alpha: 0.5),
+                        inactiveThumbColor: notifier.isDark
+                            ? SwitchColor.fiveColor
+                            : SwitchColor.fourthColor,
+                        inactiveTrackColor: notifier.isDark
+                            ? SwitchColor.inactiveThumb
+                            : SwitchColor.activeThumb,
+                      ),
+                    ),
+                  const SizedBox(height: 5),
                   ListTile(
                     leading: Icon(
                       Icons.color_lens,
@@ -167,34 +195,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                     },
                   ),
-                  const SizedBox(height: 5),
-                  if (!kIsWeb)
-                    ListTile(
-                      leading: Icon(
-                        color: IconColor.primaryColor,
-                        Icons.notification_important,
-                        semanticLabel: 'about_icon'.tr(),
-                        size: 20,
-                      ),
-                      title: Text(
-                        'notifications'.tr(),
-                        style: context.bodyMediumFont,
-                      ),
-                      trailing: Switch(
-                        value: notificationController.notificationsEnabled,
-                        onChanged: notificationController.toggleNotifications,
-                        activeColor: SwitchColor.inactiveThumb,
-                        inactiveThumbColor: notifier.isDark
-                            ? SwitchColor.fiveColor
-                            : SwitchColor.fourthColor,
-                        activeTrackColor: notifier.isDark
-                            ? SwitchColor.darkInactiveTrack
-                            : SwitchColor.activeThumb.withValues(alpha: 0.5),
-                        inactiveTrackColor: notifier.isDark
-                            ? SwitchColor.inactiveThumb
-                            : SwitchColor.activeThumb,
-                      ),
-                    ),
                   const SizedBox(height: 5),
                   ListTile(
                     leading: Icon(

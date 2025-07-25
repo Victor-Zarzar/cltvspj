@@ -7,6 +7,7 @@ class ChartDataHelper {
     required double difference,
     required double benefits,
     required double inss,
+    required double accountantFee,
   }) {
     return {
       'CLT': cltNet,
@@ -14,6 +15,7 @@ class ChartDataHelper {
       'difference'.tr(): difference,
       'benefits'.tr(): benefits,
       'inss'.tr(): inss,
+      'accountant'.tr(): accountantFee,
     };
   }
 }
