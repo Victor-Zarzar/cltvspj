@@ -23,12 +23,12 @@ class ResultPjtDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer2<UiProvider, PjController>(
-      builder: (context, notifier, ctrl, _) {
+      builder: (context, notifier, controller, _) {
         final chartData = PjChartDataHelper.buildResultChartData(
-          tax: ctrl.tax,
-          inss: ctrl.inss,
-          accountantFee: ctrl.accountantFee,
-          netSalary: ctrl.netSalary,
+          tax: controller.tax,
+          inss: controller.inss,
+          accountantFee: controller.accountantFee,
+          netSalary: controller.netSalary,
         );
 
         final colorList = [
@@ -52,23 +52,33 @@ class ResultPjtDialog extends StatelessWidget {
                   colorList: colorList,
                   size: 180,
                 ),
-                const SizedBox(height: 24),
-                _buildSalaryLine(context, label: 'taxes'.tr(), value: ctrl.tax),
-                _buildSalaryLine(context, label: 'inss'.tr(), value: ctrl.inss),
+                const SizedBox(height: 12),
+                _buildSalaryLine(
+                  context,
+                  label: 'taxes'.tr(),
+                  value: controller.tax,
+                ),
+                const SizedBox(height: 4),
+                _buildSalaryLine(
+                  context,
+                  label: 'inss'.tr(),
+                  value: controller.inss,
+                ),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
                   label: 'accountant_fee'.tr(),
-                  value: ctrl.accountantFee,
+                  value: controller.accountantFee,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
                   label: 'net_salary'.tr(),
-                  value: ctrl.netSalary,
+                  value: controller.netSalary,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 14),
                 Text(
-                  '${'net_salary'.tr()}: ${currencyFormat.format(ctrl.netSalary)}',
+                  '${'net_salary'.tr()}: ${currencyFormat.format(controller.netSalary)}',
                   style: context.bodySmallDarkBold,
                 ),
               ],

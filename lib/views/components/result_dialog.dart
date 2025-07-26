@@ -24,10 +24,6 @@ class ResultDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<UiProvider, CalculatorController>(
       builder: (context, notifier, controller, child) {
-        final totalClt = controller.totalClt;
-        final totalPj = controller.totalPj;
-        final difference = (totalClt - totalPj).abs();
-
         final chartData = ChartDataHelper.buildResultChartData(
           cltNet: controller.totalClt,
           pjNet: controller.totalPj,
@@ -59,26 +55,43 @@ class ResultDialog extends StatelessWidget {
                   colorList: colorList,
                   size: 180,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
                 _buildSalaryLine(
                   context,
                   label: 'clt_net'.tr(),
-                  value: totalClt,
+                  value: controller.totalClt,
                 ),
-                _buildSalaryLine(context, label: 'pj_net'.tr(), value: totalPj),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
-                  label: 'difference'.tr(),
-                  value: difference,
+                  label: 'pj_net'.tr(),
+                  value: controller.totalPj,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
                   label: 'accountant_fee'.tr(),
                   value: controller.accountantFee,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 4),
+                _buildSalaryLine(
+                  context,
+                  label: 'benefits'.tr(),
+                  value: controller.benefits,
+                ),
+                const SizedBox(height: 4),
+                _buildSalaryLine(
+                  context,
+                  label: 'inss_pj_description'.tr(),
+                  value: controller.inss,
+                ),
+                const SizedBox(height: 4),
+                _buildSalaryLine(
+                  context,
+                  label: 'difference'.tr(),
+                  value: controller.difference,
+                ),
+                const SizedBox(height: 14),
                 Text(controller.bestOption, style: context.bodySmallDarkBold),
               ],
             ),

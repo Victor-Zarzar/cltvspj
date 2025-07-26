@@ -55,28 +55,31 @@ class ResultCltDialog extends StatelessWidget {
                   colorList: colorList,
                   size: 180,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
                 _buildSalaryLine(
                   context,
                   label: 'net_salary'.tr(),
                   value: controller.netSalary,
                 ),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
                   label: 'inss'.tr(),
                   value: controller.inss,
                 ),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
                   label: 'irrf'.tr(),
                   value: controller.irrf,
                 ),
+                const SizedBox(height: 4),
                 _buildSalaryLine(
                   context,
                   label: 'benefits_clt'.tr(),
                   value: controller.benefits,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 14),
                 Text(
                   '${'net_salary'.tr()}: ${currencyFormat.format(controller.netSalary)}',
                   style: context.bodySmallDarkBold,

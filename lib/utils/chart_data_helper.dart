@@ -14,8 +14,8 @@ class ChartDataHelper {
       'PJ': pjNet,
       'difference'.tr(): difference,
       'benefits'.tr(): benefits,
-      'inss'.tr(): inss,
-      'accountant'.tr(): accountantFee,
+      'inss_pj_description'.tr(): inss,
+      'taxes_pj__description'.tr(): accountantFee,
     };
   }
 }
