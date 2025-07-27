@@ -22,39 +22,41 @@ class Cltpage extends StatefulWidget {
 class _CltpageState extends State<Cltpage> {
   @override
   Widget build(BuildContext context) {
-    final notifier = Provider.of<UiProvider>(context);
-
-    return Scaffold(
-      backgroundColor: notifier.isDark
-          ? BackGroundColor.fourthColor
-          : BackGroundColor.primaryColor,
-      appBar: AppBar(
-        title: Text("clt_title".tr(), style: context.h1),
-        centerTitle: true,
-        backgroundColor: notifier.isDark
-            ? AppBarColor.thirdColor
-            : AppBarColor.secondaryColor,
-      ),
-      body: Responsive(
-        mobile: _buildContent(
-          context,
-          maxWidth: 370,
-          padding: 20,
-          minHeight: 550,
-        ),
-        tablet: _buildContent(
-          context,
-          maxWidth: 600,
-          padding: 30,
-          minHeight: 600,
-        ),
-        desktop: _buildContent(
-          context,
-          maxWidth: 700,
-          minHeight: 560,
-          padding: 50,
-        ),
-      ),
+    return Consumer<UiProvider>(
+      builder: (context, notifier, child) {
+        return Scaffold(
+          backgroundColor: notifier.isDark
+              ? BackGroundColor.fourthColor
+              : BackGroundColor.primaryColor,
+          appBar: AppBar(
+            title: Text("clt_title".tr(), style: context.h1),
+            centerTitle: true,
+            backgroundColor: notifier.isDark
+                ? AppBarColor.thirdColor
+                : AppBarColor.secondaryColor,
+          ),
+          body: Responsive(
+            mobile: _buildContent(
+              context,
+              maxWidth: 370,
+              padding: 20,
+              minHeight: 550,
+            ),
+            tablet: _buildContent(
+              context,
+              maxWidth: 600,
+              padding: 30,
+              minHeight: 600,
+            ),
+            desktop: _buildContent(
+              context,
+              maxWidth: 700,
+              minHeight: 560,
+              padding: 50,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -133,7 +135,7 @@ Widget _buildContent(
                         } else {
                           ShowDialogError.show(
                             context,
-                            title: 'error'.tr(),
+                            title: 'error_dialog'.tr(),
                             child: Text('fill_fields_to_see_chart'.tr()),
                           );
                         }

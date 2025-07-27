@@ -35,10 +35,8 @@ class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final currentLocale = context.locale;
-    final notifier = context.watch<UiProvider>();
-
-    return Consumer<LocaleController>(
-      builder: (context, languageProvider, child) {
+    return Consumer2<UiProvider, LocaleController>(
+      builder: (context, notifier, languageProvider, child) {
         return Scaffold(
           body: TabBarView(
             key: ValueKey(currentLocale),

@@ -38,9 +38,8 @@ class BodyContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<CalculatorController>();
-    return Consumer<UiProvider>(
-      builder: (context, notifier, child) {
+    return Consumer2<UiProvider, CalculatorController>(
+      builder: (context, notifier, controller, child) {
         return Center(
           child: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -143,7 +142,7 @@ class BodyContainer extends StatelessWidget {
                             if (!controller.hasValidInput) {
                               ShowDialogError.show(
                                 context,
-                                title: 'error'.tr(),
+                                title: 'error_dialog'.tr(),
                                 child: Text('fill_fields_to_see_chart'.tr()),
                               );
                               return;
