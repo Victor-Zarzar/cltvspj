@@ -6,6 +6,7 @@
 
 - Dart
 - Flutter
+- Flutter Modular (Modularized routes/Modularized Dependency Injection.)
 - Material Design 3 (UI) 
 - Google Fonts
 - Locale Language EN / PT-BR / ES
@@ -17,6 +18,8 @@
 - Flutter Secure Storage
 - SQFlite
 - PierChart
+- PDF (Export)
+- Printing
 
 <br />
 
@@ -42,7 +45,15 @@ Run the app:
 
     flutter run
 
-Run the app version Web:
+Run the app version web:
+
+    flutter run -d web-server
+
+Open in the browser:
+
+    http://localhost:xxxx
+
+Or run the app version Web (default):
 
     flutter run -d chrome    
     

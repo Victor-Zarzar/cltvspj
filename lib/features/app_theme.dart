@@ -144,3 +144,26 @@ class ChartColor {
   static Color get fourthColor => const Color(0xFF20A819);
   static Color get fifthColor => const Color(0xFFB819A8);
 }
+
+class RadioColor {
+  RadioColor._();
+  static Color get primaryColor => const Color(0xFFF5F5F5);
+  static Color get secondaryColor => const Color(0xB3FFFFFF);
+  static Color get thirdColor => const Color(0xFFFFFFFF);
+}
+
+class ThemeColorIcon {
+  ThemeColorIcon._();
+  static Color get primaryColor => const Color(0xFF4C6FFF);
+  static Color get secondaryColor => const Color(0xFF7F53FF);
+  static Color get thirdColor => const Color(0xFF30313A);
+  static Color get fourthColor => const Color(0xFF191A23);
+  static Color get fifthColor => const Color(0xFFE0A84F);
+  static Color get sixthColor => const Color(0xFFE58E20);
+  static Color get seventhColor => const Color(0xFFF0E2C8);
+  static Color get eighthColor => const Color(0xFFEBCFA0);
+  static Color get ninthColor => const Color(0xFF141A33);
+  static Color get tenthColor => const Color(0xFF050816);
+  static Color get eleventhColor => const Color(0xFF1F2433);
+  static Color get twelfthColor => const Color(0xFF131624);
+}

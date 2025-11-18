@@ -58,7 +58,6 @@ class DatabaseService {
     ''');
   }
 
-  // ========== CLT ==========
   Future<void> saveClt(CltModel model) async {
     final dbClient = await db;
     await dbClient.delete('clt');
@@ -79,7 +78,6 @@ class DatabaseService {
     );
   }
 
-  // ========== PJ ==========
   Future<void> savePj(PjModel model) async {
     final dbClient = await db;
     await dbClient.delete('pj');
@@ -104,7 +102,6 @@ class DatabaseService {
     );
   }
 
-  // ========== Calculator ==========
   Future<void> saveCalculator(CalculatorModel model) async {
     final dbClient = await db;
     await dbClient.delete('calculator');

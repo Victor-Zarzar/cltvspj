@@ -13,11 +13,28 @@ class UiProvider extends ChangeNotifier {
   final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.black,
+    tooltipTheme: TooltipThemeData(
+      decoration: BoxDecoration(
+        color: Colors.grey[800],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      waitDuration: const Duration(milliseconds: 400),
+      showDuration: const Duration(seconds: 3),
+    ),
   );
 
   final lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.white,
+    tooltipTheme: TooltipThemeData(
+      decoration: BoxDecoration(
+        color: Colors.green[600],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+    ),
   );
 
   bool get isDark {

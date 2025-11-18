@@ -1,6 +1,7 @@
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
+import 'package:cltvspj/views/components/theme_ilustration.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,51 +35,107 @@ class ThemePage extends StatelessWidget {
                 ? AppBarColor.thirdColor
                 : AppBarColor.secondaryColor,
           ),
-          body: Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: ListView(
-              children: ThemeModeOption.values.map((option) {
-                IconData icon;
-                String label;
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              const double maxContentWidth = 420;
 
-                switch (option) {
-                  case ThemeModeOption.light:
-                    icon = Icons.light_mode;
-                    label = "light_theme".tr();
-                    break;
-                  case ThemeModeOption.dark:
-                    icon = Icons.dark_mode;
-                    label = "dark_theme".tr();
-                    break;
-                  case ThemeModeOption.system:
-                    icon = Icons.settings;
-                    label = "system_theme".tr();
-                    break;
-                }
-
-                return RadioListTile<ThemeModeOption>(
-                  title: Text(label, style: context.bodyMediumFont),
-                  secondary: Icon(
-                    icon,
-                    color: IconColor.primaryColor,
-                    semanticLabel: "radio_icon".tr(),
+              return Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: constraints.maxWidth < maxContentWidth
+                        ? constraints.maxWidth
+                        : maxContentWidth,
                   ),
-                  activeColor: notifier.isDark
-                      ? IconColor.primaryColor
-                      : IconColor.fourthColor,
-                  value: option,
-                  groupValue: notifier.themeMode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      notifier.changeTheme(value);
-                    }
-                  },
-                );
-              }).toList(),
-            ),
+                  child: RadioGroup<ThemeModeOption>(
+                    groupValue: notifier.themeMode,
+                    onChanged: (ThemeModeOption? value) {
+                      if (value != null) {
+                        notifier.changeTheme(value);
+                      }
+                    },
+                    child: ListView(
+                      padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+                      children: ThemeModeOption.values.map((option) {
+                        String label;
+                        switch (option) {
+                          case ThemeModeOption.light:
+                            label = "light_theme".tr();
+                            break;
+                          case ThemeModeOption.dark:
+                            label = "dark_theme".tr();
+                            break;
+                          case ThemeModeOption.system:
+                            label = "system_theme".tr();
+                            break;
+                        }
+
+                        final bool isSelected = notifier.themeMode == option;
+
+                        return Card(
+                          color: notifier.isDark
+                              ? CardColor.primaryColor
+                              : CardColor.secondaryColor,
+                          elevation: isSelected ? 4 : 1,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              color: isSelected
+                                  ? IconColor.fourthColor
+                                  : Colors.transparent,
+                              width: 1.2,
+                            ),
+                          ),
+                          child: RadioListTile<ThemeModeOption>(
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            title: Text(label, style: context.bodyMediumFont),
+                            subtitle: Text(
+                              _subtitleFor(option),
+                              style: context.h2,
+                            ),
+                            secondary: ThemeIllustration(
+                              option: option,
+                              isSelected: isSelected,
+                              isDark: notifier.isDark,
+                            ),
+                            fillColor: WidgetStateProperty.resolveWith<Color>((
+                              states,
+                            ) {
+                              if (states.contains(WidgetState.selected)) {
+                                return notifier.isDark
+                                    ? RadioColor.primaryColor
+                                    : RadioColor.thirdColor;
+                              }
+                              return notifier.isDark
+                                  ? RadioColor.secondaryColor
+                                  : RadioColor.thirdColor;
+                            }),
+                            value: option,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         );
       },
     );
+  }
+
+  String _subtitleFor(ThemeModeOption option) {
+    switch (option) {
+      case ThemeModeOption.system:
+        return "system_theme_description".tr();
+      case ThemeModeOption.light:
+        return "light_theme_description".tr();
+      case ThemeModeOption.dark:
+        return "dark_theme_description".tr();
+    }
   }
 }

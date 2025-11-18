@@ -23,8 +23,19 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    double myHeight = MediaQuery.of(context).size.height;
-    double myWidth = MediaQuery.of(context).size.width;
+    final double myHeight = MediaQuery.of(context).size.height;
+    final double myWidth = MediaQuery.of(context).size.width;
+    final Locale currentLocale = context.locale;
+
+    String currentLanguageKey;
+    if (currentLocale.languageCode == 'pt') {
+      currentLanguageKey = 'portuguese';
+    } else if (currentLocale.languageCode == 'es') {
+      currentLanguageKey = 'spanish';
+    } else {
+      currentLanguageKey = 'english';
+    }
+
     return Consumer2<UiProvider, NotificationController>(
       builder: (context, notifier, notificationController, child) {
         return Scaffold(
@@ -59,6 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         style: context.bodyMediumFont,
                       ),
                       trailing: PopupMenuButton<Locale>(
+                        initialValue: currentLocale,
                         color: notifier.isDark
                             ? PopupMenuColor.fourthColor
                             : PopupMenuColor.thirdColor,
@@ -74,7 +86,10 @@ class _SettingsPageState extends State<SettingsPage> {
                               semanticLabel: "language_icon".tr(),
                             ),
                             const SizedBox(width: 4),
-                            Text('english'.tr(), style: context.bodyMediumFont),
+                            Text(
+                              currentLanguageKey.tr(),
+                              style: context.bodyMediumFont,
+                            ),
                             Icon(
                               Icons.arrow_drop_down,
                               color: IconColor.primaryColor,

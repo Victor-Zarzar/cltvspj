@@ -28,7 +28,7 @@ void main() async {
         Locale('es'),
       ],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en', 'US'),
+      fallbackLocale: const Locale('en-US'),
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => NotificationController()),
