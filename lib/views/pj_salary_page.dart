@@ -6,6 +6,7 @@ import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:cltvspj/views/components/custom_button.dart';
 import 'package:cltvspj/views/components/input_field.dart';
+import 'package:cltvspj/views/components/pj_popup_menu.dart';
 import 'package:cltvspj/views/components/result_pj_dialog.dart';
 import 'package:cltvspj/views/components/show_dialog_error.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -30,6 +31,7 @@ class _PjpageState extends State<Pjpage> {
               : BackGroundColor.primaryColor,
           appBar: AppBar(
             title: Text("pj_title".tr(), style: context.h1),
+            actions: const [PjPopupMenu()],
             centerTitle: true,
             backgroundColor: notifier.isDark
                 ? AppBarColor.thirdColor

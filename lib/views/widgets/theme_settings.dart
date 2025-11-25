@@ -3,12 +3,12 @@ import 'package:cltvspj/features/theme_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class ThemeIllustration extends StatelessWidget {
+class ThemeSettings extends StatelessWidget {
   final ThemeModeOption option;
   final bool isSelected;
   final bool isDark;
 
-  const ThemeIllustration({
+  const ThemeSettings({
     super.key,
     required this.option,
     required this.isSelected,

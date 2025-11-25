@@ -26,48 +26,69 @@ class PieChartWidget extends StatelessWidget {
       );
     }
 
-    final sections = dataMap.entries.map((entry) {
-      final index = dataMap.keys.toList().indexOf(entry.key);
+    final entries = dataMap.entries.toList();
+    final total = entries.fold<double>(0, (sum, e) => sum + e.value.abs());
+
+    final safeTotal = total == 0 ? 1.0 : total;
+
+    final sections = List.generate(entries.length, (index) {
+      final entry = entries[index];
       final color = colorList[index % colorList.length];
+      final value = entry.value.abs();
+      final percentage = (value / safeTotal) * 100;
+
+      const minLabelPercent = 7.0;
+      final showLabel = percentage >= minLabelPercent;
+
+      final baseFontSize = size / 9;
+      final fontSize = baseFontSize.clamp(8.0, 16.0);
 
       return PieChartSectionData(
         color: color,
-        value: entry.value.abs(),
-        title: entry.value.toStringAsFixed(0),
+        value: value,
+        title: showLabel ? value.toStringAsFixed(0) : '',
         titleStyle: TextStyle(
-          fontSize: size / (entry.value < 100 ? 9 : 11),
+          fontSize: fontSize,
           fontWeight: FontWeight.bold,
           color: TextColor.primaryColor,
         ),
-        radius: size / 2.3,
+        radius: size / 2.5,
       );
-    }).toList();
+    });
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AspectRatio(
-          aspectRatio: 1,
+        SizedBox(
+          height: size,
+          width: size,
           child: PieChart(
             PieChartData(
               sections: sections,
-              sectionsSpace: 2,
-              centerSpaceRadius: size / 5,
+              sectionsSpace: 1,
+              centerSpaceRadius: size / 4.8,
               startDegreeOffset: -90,
             ),
+            swapAnimationDuration: const Duration(milliseconds: 600),
+            swapAnimationCurve: Curves.easeOutCubic,
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 40),
         Wrap(
           alignment: WrapAlignment.center,
           spacing: 12,
           runSpacing: 8,
-          children: dataMap.entries.map((entry) {
-            final index = dataMap.keys.toList().indexOf(entry.key);
+          children: List.generate(entries.length, (index) {
+            final entry = entries[index];
             final color = colorList[index % colorList.length];
+            final value = entry.value.abs();
+            final percentage = (value / safeTotal) * 100;
 
-            return Indicator(color: color, text: entry.key);
-          }).toList(),
+            final legendText =
+                '${entry.key} (${percentage.toStringAsFixed(1)}%)';
+
+            return Indicator(color: color, text: legendText);
+          }),
         ),
       ],
     );
@@ -93,7 +114,14 @@ class Indicator extends StatelessWidget {
               decoration: BoxDecoration(shape: BoxShape.circle, color: color),
             ),
             const SizedBox(width: 6),
-            Text(text, style: context.bodySmall),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 180),
+              child: Text(
+                text,
+                style: context.bodySmall,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         );
       },

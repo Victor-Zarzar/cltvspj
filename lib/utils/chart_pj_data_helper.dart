@@ -5,7 +5,7 @@ class PjChartDataHelper {
     required double tax,
     required double accountantFee,
     required double inss,
-    required double netSalary,
+    required double netSalary, 
   }) {
     return {
       'taxes'.tr(): tax,

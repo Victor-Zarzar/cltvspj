@@ -4,8 +4,9 @@ import 'package:cltvspj/features/responsive.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
+import 'package:cltvspj/views/components/home_popup_menu.dart';
 import 'package:cltvspj/views/components/result_dialog.dart';
-import 'package:cltvspj/views/widgets/body_home_container.dart';
+import 'package:cltvspj/views/widgets/body_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                 ? AppBarColor.thirdColor
                 : AppBarColor.secondaryColor,
             title: Text('app_bar_title'.tr(), style: context.h1),
+            actions: const [HomePopupMenu()],
           ),
           backgroundColor: notifier.isDark
               ? BackGroundColor.fourthColor

@@ -66,5 +66,17 @@
   "inss": "Social Security",
   "net": "Net",
   "irrf": "Income Tax",
-  "benefits": "Benefits"
+  "benefits": "Benefits",
+  "net_salary_discounts": "Net salary after deductions",
+  "clt_report_title": "CLT Report",
+  "report_name_prefix": "Name:",
+  "report_benefits_title": "Benefits:",
+  "report_chart_title": "Comparison chart",
+  "report_table_header_type": "Type",
+  "report_table_header_value": "Amount",
+  "pj_report_title": "PJ Report",
+  "pdf_title_clt_vs_pj": "CLT vs PJ Report",
+  "pdf_row_clt_net": "CLT (Net)",
+  "pdf_row_pj_net": "PJ (Net)",
+  "pdf_row_difference": "Difference"
 }

@@ -3,7 +3,7 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 final currencyFormat = NumberFormat.currency(
   locale: 'pt_BR',
-  symbol: '',
+  symbol: 'R\$ ',
   decimalDigits: 2,
 );
 
@@ -15,7 +15,6 @@ MoneyMaskedTextController moneyMaskedController({String symbol = 'R\$ '}) {
   );
 }
 
-void formatCurrency(MoneyMaskedTextController controller) {
-  final value = controller.numberValue;
-  controller.updateValue(value);
+String formatNumber(double value) {
+  return currencyFormat.format(value);
 }

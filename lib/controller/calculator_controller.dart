@@ -1,34 +1,19 @@
+import 'dart:typed_data';
+import 'package:cltvspj/models/report_model.dart';
 import 'package:cltvspj/services/database_service.dart';
+import 'package:cltvspj/services/export_service.dart';
+import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../model/calculate_model.dart';
+import '../models/calculate_model.dart';
 import '../utils/salary_helper.dart';
 
 class CalculatorController extends ChangeNotifier {
-  final salaryCltController = MoneyMaskedTextController(
-    leftSymbol: 'R\$ ',
-    decimalSeparator: ',',
-    thousandSeparator: '.',
-  );
-
-  final salaryPjController = MoneyMaskedTextController(
-    leftSymbol: 'R\$ ',
-    decimalSeparator: ',',
-    thousandSeparator: '.',
-  );
-
-  final benefitsController = MoneyMaskedTextController(
-    leftSymbol: 'R\$ ',
-    decimalSeparator: ',',
-    thousandSeparator: '.',
-  );
-
-  final accountantFeeController = MoneyMaskedTextController(
-    leftSymbol: 'R\$ ',
-    decimalSeparator: ',',
-    thousandSeparator: '.',
-  );
+  final salaryCltController = moneyMaskedController();
+  final salaryPjController = moneyMaskedController();
+  final benefitsController = moneyMaskedController();
+  final cltBenefitsController = moneyMaskedController();
+  final accountantFeeController = moneyMaskedController();
 
   final taxesPjController = TextEditingController();
   final inssPjController = TextEditingController();
@@ -119,6 +104,45 @@ class CalculatorController extends ChangeNotifier {
   }
 
   void calculate() => updateValues();
+
+  Future<void> exportToPdf({
+    required String nome,
+    Uint8List? chartBytes,
+  }) async {
+    String formatCurrency(double value) => currencyFormat.format(value);
+
+    final diff = (totalClt - totalPj).abs();
+
+    final reportData = ReportData(
+      title: 'pdf_title_clt_vs_pj'.tr(),
+      name: nome,
+      summaryRows: [
+        ReportRow(
+          label: 'pdf_row_clt_net'.tr(),
+          value: formatCurrency(totalClt),
+        ),
+        ReportRow(label: 'pdf_row_pj_net'.tr(), value: formatCurrency(totalPj)),
+        ReportRow(
+          label: 'pdf_row_difference'.tr(),
+          value: formatCurrency(diff),
+        ),
+      ],
+      benefits: {},
+      chartBytes: chartBytes,
+      benefitsRows: [],
+      labels: ReportLabels(
+        namePrefix: 'report_name_prefix'.tr(),
+        benefitsTitle: 'report_benefits_title'.tr(),
+        chartTitle: 'report_chart_title'.tr(),
+        tableHeaders: [
+          'report_table_header_type'.tr(),
+          'report_table_header_value'.tr(),
+        ],
+      ),
+    );
+
+    await generatePdfReport(reportData);
+  }
 
   void disposeAll() {
     salaryCltController.dispose();

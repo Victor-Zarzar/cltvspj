@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:cltvspj/model/calculate_model.dart';
+import 'package:cltvspj/models/calculate_model.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:cltvspj/model/clt_model.dart';
-import 'package:cltvspj/model/pj_model.dart';
+import 'package:cltvspj/models/clt_model.dart';
+import 'package:cltvspj/models/pj_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
@@ -50,7 +50,7 @@ class DatabaseService {
     await db.execute('''
       CREATE TABLE pj (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        salary REAL,
+        grosssalary REAL,
         accountantFee REAL,
         inss REAL,
         taxes REAL
@@ -82,7 +82,7 @@ class DatabaseService {
     final dbClient = await db;
     await dbClient.delete('pj');
     await dbClient.insert('pj', {
-      'salary': model.salary,
+      'grosssalary': model.grossSalary,
       'accountantFee': model.accountantFee,
       'inss': model.inss,
       'taxes': model.taxes,
@@ -95,7 +95,7 @@ class DatabaseService {
     if (result.isEmpty) return null;
     final row = result.first;
     return PjModel(
-      salary: row['salary'] as double,
+      grossSalary: row['grosssalary'] as double,
       accountantFee: row['accountantFee'] as double,
       inss: row['inss'] as double,
       taxes: row['taxes'] as double,

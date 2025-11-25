@@ -34,71 +34,110 @@ class ResultDialog extends StatelessWidget {
         );
 
         final colorList = [
-          ChartColor.thirdColor,
-          ChartColor.secondaryColor,
           ChartColor.primaryColor,
+          ChartColor.secondaryColor,
           ChartColor.fourthColor,
+          ChartColor.sixthColor,
           ChartColor.fifthColor,
         ];
+
+        final mediaQuery = MediaQuery.of(context);
+        final width = mediaQuery.size.width;
+        final height = mediaQuery.size.height;
+        final bool isTablet = width >= 850 && width < 1100;
+        final bool isDesktop = width >= 1100;
+        final double chartSize = (isTablet || isDesktop) ? 220 : 170;
+        final double maxDialogContentHeight = height * 0.8;
 
         return AlertDialog(
           backgroundColor: notifier.isDark
               ? AlertDialogColor.thirdColor
               : AlertDialogColor.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 24,
+          ),
+          titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+          contentPadding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
           title: Text('result'.tr(), style: context.h1Dialog),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                PieChartWidget(
-                  dataMap: chartData,
-                  colorList: colorList,
-                  size: 180,
-                ),
-                const SizedBox(height: 12),
-                _buildSalaryLine(
-                  context,
-                  label: 'clt_net'.tr(),
-                  value: controller.totalClt,
-                ),
-                const SizedBox(height: 4),
-                _buildSalaryLine(
-                  context,
-                  label: 'pj_net'.tr(),
-                  value: controller.totalPj,
-                ),
-                const SizedBox(height: 4),
-                _buildSalaryLine(
-                  context,
-                  label: 'accountant_fee'.tr(),
-                  value: controller.accountantFee,
-                ),
-                const SizedBox(height: 4),
-                _buildSalaryLine(
-                  context,
-                  label: 'benefits'.tr(),
-                  value: controller.benefits,
-                ),
-                const SizedBox(height: 4),
-                _buildSalaryLine(
-                  context,
-                  label: 'inss_pj_description'.tr(),
-                  value: controller.inss,
-                ),
-                const SizedBox(height: 4),
-                _buildSalaryLine(
-                  context,
-                  label: 'difference'.tr(),
-                  value: controller.difference,
-                ),
-                const SizedBox(height: 14),
-                Text(controller.bestOption, style: context.bodySmallDarkBold),
-              ],
+          content: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: maxDialogContentHeight),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PieChartWidget(
+                    dataMap: chartData,
+                    colorList: colorList,
+                    size: chartSize,
+                  ),
+                  const SizedBox(height: 16),
+                  _buildSalaryLine(
+                    context,
+                    label: 'clt_net'.tr(),
+                    value: controller.totalClt,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildSalaryLine(
+                    context,
+                    label: 'pj_net'.tr(),
+                    value: controller.totalPj,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildSalaryLine(
+                    context,
+                    label: 'accountant_fee'.tr(),
+                    value: controller.accountantFee,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildSalaryLine(
+                    context,
+                    label: 'benefits'.tr(),
+                    value: controller.benefits,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildSalaryLine(
+                    context,
+                    label: 'inss_pj_description'.tr(),
+                    value: controller.inss,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildSalaryLine(
+                    context,
+                    label: 'difference'.tr(),
+                    value: controller.difference,
+                  ),
+                  Divider(
+                    color: notifier.isDark
+                        ? DividerColor.primaryColor.withValues(alpha: 0.15)
+                        : DividerColor.secondaryColor.withValues(alpha: 0.1),
+                    thickness: 1,
+                  ),
+                  const SizedBox(height: 14),
+                  Text(controller.bestOption, style: context.bodySmallDarkBold),
+                ],
+              ),
             ),
           ),
+          actionsAlignment: MainAxisAlignment.end,
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
+              style: TextButton.styleFrom(
+                backgroundColor: notifier.isDark
+                    ? TextButtonColor.fourthColor.withValues(alpha: 0.1)
+                    : TextButtonColor.fiveColor.withValues(alpha: 0.05),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               child: Text('close'.tr(), style: context.bodySmallDarkBold),
             ),
           ],
@@ -117,7 +156,14 @@ class ResultDialog extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: context.bodySmallDark),
+          Expanded(
+            child: Text(
+              label,
+              style: context.bodySmallDark,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(width: 8),
           Text(currencyFormat.format(value), style: context.bodySmallDarkBold),
         ],
       ),

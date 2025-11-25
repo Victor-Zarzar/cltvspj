@@ -4,6 +4,7 @@ import 'package:cltvspj/features/responsive.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
+import 'package:cltvspj/views/components/clt_popup_menu.dart';
 import 'package:cltvspj/views/components/custom_button.dart';
 import 'package:cltvspj/views/components/input_field.dart';
 import 'package:cltvspj/views/components/result_clt_dialog.dart';
@@ -30,6 +31,7 @@ class _CltpageState extends State<Cltpage> {
               : BackGroundColor.primaryColor,
           appBar: AppBar(
             title: Text("clt_title".tr(), style: context.h1),
+            actions: const [CltPopupMenu()],
             centerTitle: true,
             backgroundColor: notifier.isDark
                 ? AppBarColor.thirdColor

@@ -66,6 +66,17 @@
   "inss": "Seguridad Social",
   "net": "Neto",
   "irrf": "Impuesto sobre la Renta",
-  "benefits": "Beneficios"
-
+  "benefits": "Beneficios",
+  "net_salary_discounts": "Salario neto después de deducciones",
+  "clt_report_title": "Reporte CLT",
+  "report_name_prefix": "Nombre:",
+  "report_benefits_title": "Beneficios:",
+  "report_chart_title": "Gráfico comparativo",
+  "report_table_header_type": "Tipo",
+  "report_table_header_value": "Importe",
+  "pj_report_title": "Reporte PJ",
+  "pdf_title_clt_vs_pj": "Reporte CLT vs PJ",
+  "pdf_row_clt_net": "CLT (Neto)",
+  "pdf_row_pj_net": "PJ (Neto)",
+  "pdf_row_difference": "Diferencia"
 }

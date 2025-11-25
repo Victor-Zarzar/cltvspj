@@ -66,5 +66,17 @@
   "inss": "INSS",
   "net": "Líquido",
   "irrf": "IRRF",
-  "benefits": "Benefícios"
+  "benefits": "Benefícios",
+  "net_salary_discounts": "Líquido após descontos",
+  "clt_report_title": "Relatório CLT",
+  "report_name_prefix": "Nome:",
+  "report_benefits_title": "Benefícios:",
+  "report_chart_title": "Gráfico de comparação",
+  "report_table_header_type": "Tipo",
+  "report_table_header_value": "Valor",
+  "pj_report_title": "Relatório PJ",
+  "pdf_title_clt_vs_pj": "Relatório CLT vs PJ",
+  "pdf_row_clt_net": "CLT (Líquido)",
+  "pdf_row_pj_net": "PJ (Líquido)",
+  "pdf_row_difference": "Diferença"
 }

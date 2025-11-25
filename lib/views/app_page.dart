@@ -39,7 +39,6 @@ class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
       builder: (context, notifier, languageProvider, child) {
         return Scaffold(
           body: TabBarView(
-            key: ValueKey(currentLocale),
             controller: tabController,
             children: const [HomePage(), Cltpage(), Pjpage(), SettingsPage()],
           ),
@@ -48,6 +47,7 @@ class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
                 ? TabBarColor.fourthColor
                 : TabBarColor.primaryColor,
             child: TabBar(
+              key: ValueKey(currentLocale.languageCode),
               controller: tabController,
               labelColor: TextColor.primaryColor,
               indicatorColor: TextColor.primaryColor,

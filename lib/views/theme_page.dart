@@ -2,7 +2,7 @@ import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/features/responsive.dart';
-import 'package:cltvspj/views/widgets/theme_ilustration.dart';
+import 'package:cltvspj/views/widgets/theme_settings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -119,7 +119,7 @@ class ThemePage extends StatelessWidget {
                       ),
                       title: Text(label, style: context.bodyMediumFont),
                       subtitle: Text(_subtitleFor(option), style: context.h2),
-                      secondary: ThemeIllustration(
+                      secondary: ThemeSettings(
                         option: option,
                         isSelected: isSelected,
                         isDark: notifier.isDark,

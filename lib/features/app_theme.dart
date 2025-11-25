@@ -71,6 +71,7 @@ class TextButtonColor {
   static Color get secondaryColor => const Color(0xFF66BB6A);
   static Color get thirdColor => const Color(0xFF81C784);
   static Color get fourthColor => const Color(0xFFFFFFFF);
+  static Color get fiveColor => const Color(0xFF000000);
 }
 
 class AlertDialogColor {
@@ -138,11 +139,12 @@ class LoadingColor {
 
 class ChartColor {
   ChartColor._();
-  static Color get primaryColor => const Color.fromARGB(255, 193, 47, 14);
+  static Color get primaryColor => const Color(0xFF339CFF);
   static Color get secondaryColor => const Color(0xFFFFAE33);
-  static Color get thirdColor => const Color(0xFF339CFF);
+  static Color get thirdColor => const Color(0xFF4C6FFF);
   static Color get fourthColor => const Color(0xFF20A819);
   static Color get fifthColor => const Color(0xFFB819A8);
+  static Color get sixthColor => const Color.fromARGB(255, 193, 47, 14);
 }
 
 class RadioColor {
@@ -166,4 +168,10 @@ class ThemeColorIcon {
   static Color get tenthColor => const Color(0xFF050816);
   static Color get eleventhColor => const Color(0xFF1F2433);
   static Color get twelfthColor => const Color(0xFF131624);
+}
+
+class DividerColor {
+  DividerColor._();
+  static Color get primaryColor => const Color(0xFFF5F5F5);
+  static Color get secondaryColor => const Color(0xFF000000);
 }

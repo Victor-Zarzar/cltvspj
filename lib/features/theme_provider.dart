@@ -23,6 +23,7 @@ class UiProvider extends ChangeNotifier {
       waitDuration: const Duration(milliseconds: 400),
       showDuration: const Duration(seconds: 3),
     ),
+    popupMenuTheme: PopupMenuThemeData(color: Colors.grey[900]),
   );
 
   final lightTheme = ThemeData(
@@ -35,6 +36,7 @@ class UiProvider extends ChangeNotifier {
       ),
       textStyle: const TextStyle(color: Colors.white, fontSize: 12),
     ),
+    popupMenuTheme: PopupMenuThemeData(color: Colors.green[700]),
   );
 
   bool get isDark {

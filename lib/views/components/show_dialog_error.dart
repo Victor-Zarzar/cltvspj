@@ -19,15 +19,36 @@ class ShowDialogError {
       builder: (ctx) {
         return AlertDialog(
           backgroundColor: notifier.isDark
-              ? BackGroundColor.fourthColor
-              : BackGroundColor.primaryColor,
-          title: Text(title ?? defaultTitle, style: context.h1),
+              ? AlertDialogColor.thirdColor
+              : AlertDialogColor.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 24,
+          ),
+          titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+          contentPadding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+          title: Text(title ?? defaultTitle, style: context.h1Dialog),
           content: child,
-          contentTextStyle: context.h2,
+          contentTextStyle: context.h2Dialog,
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: Text('close'.tr(), style: context.footerMediumFont),
+              onPressed: () => Navigator.pop(ctx),
+              style: TextButton.styleFrom(
+                backgroundColor: notifier.isDark
+                    ? TextButtonColor.fourthColor.withValues(alpha: 0.1)
+                    : TextButtonColor.fiveColor.withValues(alpha: 0.05),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text('close'.tr(), style: context.bodySmallDarkBold),
             ),
           ],
         );
