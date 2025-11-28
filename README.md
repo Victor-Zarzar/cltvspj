@@ -1,63 +1,123 @@
-<h1 align="center" id="header">
- CLT Vs PJ App Flutter - Android/iOS - Web - Extension chrome.
-</h1>
+# CLT Vs PJ App • Flutter (Android / iOS / Web / Chrome Extension)
 
-🤖 Stack:
+A multi-platform financial comparison tool for CLT vs PJ in Brazil.  
+Built with Flutter, responsive UI, multi-language support and browser extension output.
 
-- Dart
-- Flutter
-- Material Design 3 (UI) 
-- Google Fonts
-- Locale Language EN / PT-BR / ES
-- Dark Mode Provider
-- Flutter local notifications
-- App Settings
-- Url Launcher
-- Timezone
-- Provider (State Managment)
-- Flutter Secure Storage
-- SQFlite
-- PierChart
-- PDF (Export)
-- Printing
+---
 
-<br />
+## 🤖 Tech Stack
 
-⚙️ How to install:
+- **Dart**
+- **Flutter**
+- **Material Design 3**
+- **Google Fonts**
+- **Localization:** EN / PT-BR / ES  
+- **Dark Mode Provider**
+- **Flutter Local Notifications**
+- **App Settings**
+- **URL Launcher**
+- **Timezone Initialization**
+- **Provider (State Management)**
+- **Flutter Secure Storage**
+- **SQFlite**
+- **PieChart**
+- **PDF Export / Printing**
+- **Makefile Automation**
 
-Project Clone
+---
 
-     git clone https://github.com/Victor-Zarzar/cltvspj
+## ⚙️ Installation
 
-Enter in directory:
+### 1. Clone the project
+```bash
+git clone https://github.com/Victor-Zarzar/cltvspj
+```
 
-     cd cltvspj
+### 2. Enter the directory
+```bash
+cd cltvspj
+```
 
-Open in your favorite editor(e.g. VSCode):
+### 3. Open in your editor (example: VS Code)
+```bash
+code .
+```
 
-    code .
+### 4. Install dependencies
 
-For install dependencies:
+Using Makefile:
+```bash
+make install
+```
 
-    flutter pub get
+Or manually:
+```bash
+flutter pub get
+```
 
-Run the app:
+---
 
-    flutter run
+## ▶️ Running the App
 
-Run the app version web:
+### Mobile / Desktop
+```bash
+flutter run
+```
 
-    flutter run -d web-server
+### Web (Web Server)
+```bash
+flutter run -d web-server
+```
 
-Open in the browser:
+Open the browser at: `http://localhost:xxxx`
 
-    http://localhost:xxxx
+### Web (Chrome – default)
+```bash
+flutter run -d chrome
+```
 
-Or run the app version Web (default):
+---
 
-    flutter run -d chrome    
-    
-
-### Archictecture:
+## 🧱 Project Architecture
 
 <img src="assets/imgs/architecture.png" alt="architecture" width="1000" height="800">
+
+---
+
+## 🛠️ Makefile Commands
+
+The project includes a complete Makefile for automating builds and maintenance.
+
+### Development
+
+| Command | Description |
+|---------|-------------|
+| `make install` | Install Flutter dependencies |
+| `make build-extension-dev` | Build Web Extension (dev mode) |
+
+### Production
+
+| Command | Description |
+|---------|-------------|
+| `make build-extension-prod` | Build Web Extension (production mode) |
+
+### Mobile Builds
+
+| Command | Description |
+|---------|-------------|
+| `make build-apk-release` | Generate APK release |
+| `make build-appbundle-release` | Generate AppBundle release |
+| `make build-ios-release` | Generate iOS release |
+
+### Cleanup
+
+| Command | Description |
+|---------|-------------|
+| `make clean` | Clean Flutter cache and project temp files |
+
+### Help Menu
+```bash
+make help
+```
+
+Displays all available Makefile commands with descriptions.
