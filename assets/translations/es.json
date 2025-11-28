@@ -25,6 +25,7 @@
   "settings": "Configuraciones",
   "launch_error": "No se pudo abrir",
   "error_dialog": "Error",
+  "report_error": "Error al generar el informe. Por favor, complete todos los campos correctamente.",
   "backtopage": "Volver a la página",
   "informationicon": "Ícono de información",
   "description": "Esta aplicación te ayuda a comparar la diferencia financiera entre trabajar como CLT (empleado) y PJ (freelancer/contratista) en Brasil. Ingresa tus valores de salario, beneficios e impuestos para ver qué opción es más ventajosa para tu situación.",
@@ -46,7 +47,7 @@
   "light_theme": "Claro",
   "dark_theme": "Oscuro",
   "system_theme": "Sistema",
-   "system_theme_description": "Seguir el tema definido por la configuración del sistema del dispositivo.",
+  "system_theme_description": "Seguir el tema definido por la configuración del sistema del dispositivo.",
   "light_theme_description": "Tema claro, ideal para ambientes iluminados y una mejor lectura durante el día.",
   "dark_theme_description": "Tema oscuro, más cómodo para el uso nocturno y con mejor eficiencia de batería.",
   "no_data_display": "No hay datos para mostrar",
@@ -78,5 +79,11 @@
   "pdf_title_clt_vs_pj": "Reporte CLT vs PJ",
   "pdf_row_clt_net": "CLT (Neto)",
   "pdf_row_pj_net": "PJ (Neto)",
-  "pdf_row_difference": "Diferencia"
+  "pdf_row_difference": "Diferencia",
+  "information_icon": "Icono de información",
+  "enable_notifications": "Activar notificaciones",
+  "arrow_back_icon": "Icono de flecha para volver",
+  "download_icon": "Icono de descarga",
+  "generate_report": "Generar informe (PDF)",
+  "more_options": "Más opciones"
 }

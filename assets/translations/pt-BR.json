@@ -25,6 +25,7 @@
   "settings": "Configurações",
   "launch_error": "Não foi possível abrir",
   "error_dialog": "Erro",
+  "report_error": "Erro ao gerar relatório. Por favor, preencha todos os campos corretamente.",
   "backtopage": "Voltar à página",
   "informationicon": "Ícone de informação",
   "description": "Este aplicativo ajuda você a comparar a diferença financeira entre trabalhar como CLT (funcionário) e PJ (freelancer/contratado) no Brasil. Digite seus valores de salário, benefícios e impostos para ver qual opção é mais vantajosa para sua situação.",
@@ -78,5 +79,11 @@
   "pdf_title_clt_vs_pj": "Relatório CLT vs PJ",
   "pdf_row_clt_net": "CLT (Líquido)",
   "pdf_row_pj_net": "PJ (Líquido)",
-  "pdf_row_difference": "Diferença"
+  "pdf_row_difference": "Diferença",
+  "information_icon": "Ícone de informação",
+  "enable_notifications": "Ativar notificações",
+  "arrow_back_icon": "Ícone de seta para voltar",
+  "download_icon": "Ícone de download",
+  "generate_report": "Gerar relatório (PDF)",
+  "more_options": "Mais opções"
 }

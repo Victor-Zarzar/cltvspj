@@ -9,11 +9,10 @@ import 'package:cltvspj/services/secure_service.dart';
 import 'package:cltvspj/views/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_10y.dart' as tz;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await NotificationService.init();
@@ -38,7 +37,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => PjController()),
           ChangeNotifierProvider(create: (_) => UiProvider()..init()),
         ],
-        child: ModularApp(module: AppModule(), child: const AppWidget()),
+        child: const AppWidget(),
       ),
     ),
   );
@@ -55,8 +54,8 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UiProvider>(
-      builder: (context, UiProvider notifier, child) {
-        return MaterialApp.router(
+      builder: (context, notifier, child) {
+        return MaterialApp(
           title: 'CLT VS PJ',
           debugShowCheckedModeBanner: false,
           theme: notifier.lightTheme,
@@ -65,19 +64,9 @@ class _AppWidgetState extends State<AppWidget> {
           locale: context.locale,
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
-          routerConfig: Modular.routerConfig,
+          home: AppPage(),
         );
       },
     );
-  }
-}
-
-class AppModule extends Module {
-  @override
-  void binds(i) {}
-
-  @override
-  void routes(r) {
-    r.child('/', child: (context) => const AppPage());
   }
 }

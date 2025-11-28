@@ -1,17 +1,17 @@
 <h1 align="center" id="header">
- CLT Vs PJ App Flutter - Android/iOS - Web
+ CLT Vs PJ App Flutter - Android/iOS - Web - Extension chrome.
 </h1>
 
 🤖 Stack:
 
 - Dart
 - Flutter
-- Flutter Modular (Modularized routes/Modularized Dependency Injection.)
 - Material Design 3 (UI) 
 - Google Fonts
 - Locale Language EN / PT-BR / ES
 - Dark Mode Provider
 - Flutter local notifications
+- App Settings
 - Url Launcher
 - Timezone
 - Provider (State Managment)

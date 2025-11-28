@@ -7,7 +7,6 @@ import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/views/about_page.dart';
 import 'package:cltvspj/views/theme_page.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,11 +20,29 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  Widget _buildTrailingArrow() {
+    return SizedBox(
+      width: 32,
+      height: 32,
+      child: Center(
+        child: Icon(
+          Icons.chevron_right,
+          size: 28,
+          color: IconColor.primaryColor,
+          semanticLabel: "arrow_forward_icon".tr(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double myHeight = MediaQuery.of(context).size.height;
     final double myWidth = MediaQuery.of(context).size.width;
     final Locale currentLocale = context.locale;
+
+    final NotificationController controller =
+        Provider.of<NotificationController>(context, listen: false);
 
     String currentLanguageKey;
     if (currentLocale.languageCode == 'pt') {
@@ -166,28 +183,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (!kIsWeb)
                     ListTile(
                       leading: Icon(
+                        Icons.notifications,
                         color: IconColor.primaryColor,
-                        Icons.notification_important,
-                        semanticLabel: 'about_icon'.tr(),
-                        size: 20,
+                        semanticLabel: 'information_icon'.tr(),
                       ),
                       title: Text(
-                        'notifications'.tr(),
+                        'enable_notifications'.tr(),
                         style: context.bodyMediumFont,
                       ),
-                      trailing: CupertinoSwitch(
-                        value: notificationController.notificationsEnabled,
-                        onChanged: notificationController.toggleNotifications,
-                        activeTrackColor: notifier.isDark
-                            ? SwitchColor.darkInactiveTrack
-                            : SwitchColor.activeThumb.withValues(alpha: 0.5),
-                        inactiveThumbColor: notifier.isDark
-                            ? SwitchColor.fiveColor
-                            : SwitchColor.fourthColor,
-                        inactiveTrackColor: notifier.isDark
-                            ? SwitchColor.inactiveThumb
-                            : SwitchColor.activeThumb,
-                      ),
+                      trailing: _buildTrailingArrow(),
+                      onTap: controller.openSystemNotificationSettings,
                     ),
                   const SizedBox(height: 5),
                   ListTile(
@@ -197,12 +202,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       semanticLabel: "color_icon".tr(),
                     ),
                     title: Text('theme'.tr(), style: context.bodyMediumFont),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: IconColor.primaryColor,
-                      semanticLabel: "arrow_forward_icon".tr(),
-                    ),
+                    trailing: _buildTrailingArrow(),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -218,12 +218,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       semanticLabel: "info_icon".tr(),
                     ),
                     title: Text('about'.tr(), style: context.bodyMediumFont),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: IconColor.primaryColor,
-                      semanticLabel: "arrow_forward_icon".tr(),
-                    ),
+                    trailing: _buildTrailingArrow(),
                     onTap: () {
                       Navigator.push(
                         context,

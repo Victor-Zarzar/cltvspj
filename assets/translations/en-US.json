@@ -25,6 +25,7 @@
   "settings": "Settings",
   "launch_error": "Could not launch",
   "error_dialog": "Error",
+  "report_error": "Error generating report. Please fill in all fields correctly.",
   "backtopage": "Back to page",
   "informationicon": "Information icon",
   "description": "This app helps you compare the financial difference between working as CLT (employee) and PJ (freelancer/contractor) in Brazil. Enter your salary values, benefits, and taxes to see which option is more advantageous for your situation.",
@@ -78,5 +79,11 @@
   "pdf_title_clt_vs_pj": "CLT vs PJ Report",
   "pdf_row_clt_net": "CLT (Net)",
   "pdf_row_pj_net": "PJ (Net)",
-  "pdf_row_difference": "Difference"
+  "pdf_row_difference": "Difference",
+  "information_icon": "Information icon",
+  "enable_notifications": "Enable notifications",
+  "arrow_back_icon": "Back arrow icon",
+  "download_icon": "Download Icon",
+  "generate_report": "Generate Report (PDF)",
+  "more_options": "More options"
 }

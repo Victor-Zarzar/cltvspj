@@ -24,8 +24,9 @@ class ThemePage extends StatelessWidget {
               child: IconButton(
                 icon: Icon(
                   Icons.arrow_back_ios,
-                  size: 16,
+                  size: 20,
                   color: IconColor.primaryColor,
+                  semanticLabel: 'arrow_back_icon'.tr(),
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               ),

@@ -6,10 +6,25 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  static const int _ratingNotificationId = 2;
+
   static Future<void> onDidReceiveNotification(
     NotificationResponse notificationResponse,
   ) async {
-    debugPrint("Notification receive");
+    debugPrint("Notification receive: ${notificationResponse.payload}");
+  }
+
+  static Future<bool> areNotificationsEnabled() async {
+    final androidImplementation = flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+
+    if (androidImplementation != null) {
+      final enabled = await androidImplementation.areNotificationsEnabled();
+      return enabled ?? false;
+    }
+    return true;
   }
 
   static Future<void> init() async {
@@ -23,6 +38,7 @@ class NotificationService {
           android: androidInitializationSettings,
           iOS: iOSInitializationSettings,
         );
+
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotification,
@@ -34,6 +50,44 @@ class NotificationService {
           AndroidFlutterLocalNotificationsPlugin
         >()
         ?.requestNotificationsPermission();
+  }
+
+  static Future<void> scheduleRatingNotification({
+    required String title,
+    required String body,
+    required String payload,
+    Duration delay = const Duration(days: 3),
+  }) async {
+    final scheduledDate = tz.TZDateTime.now(tz.local).add(delay);
+
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'rating_channel_id',
+          'Rating Notifications',
+          channelDescription: 'Notificação para avaliar o app',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+        );
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: DarwinNotificationDetails(),
+    );
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      _ratingNotificationId,
+      title,
+      body,
+      scheduledDate,
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      payload: payload,
+    );
+  }
+
+  static Future<void> cancelRatingNotification() async {
+    await flutterLocalNotificationsPlugin.cancel(_ratingNotificationId);
   }
 
   static Future<void> showInstantNotification(String title, String body) async {
@@ -53,64 +107,6 @@ class NotificationService {
       body,
       platformChannelSpecifics,
       payload: 'instant_notification',
-    );
-  }
-
-  static Future<void> showWeeklyNotification({
-    required String title,
-    required String body,
-    required String payload,
-  }) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-          'weekly_channel_id',
-          'Weekly Notifications',
-          channelDescription: 'Weekly Notification Channel',
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-        );
-
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidNotificationDetails,
-    );
-
-    await flutterLocalNotificationsPlugin.periodicallyShow(
-      2,
-      title,
-      body,
-      RepeatInterval.weekly,
-      notificationDetails,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: payload,
-    );
-  }
-
-  static Future<void> cancelWeeklyNotification() async {
-    await flutterLocalNotificationsPlugin.cancel(2);
-  }
-
-  static Future<void> scheduleNotification(
-    int id,
-    String title,
-    String body,
-    DateTime scheduledTime,
-  ) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-      const NotificationDetails(
-        iOS: DarwinNotificationDetails(),
-        android: AndroidNotificationDetails(
-          'your channel id',
-          'your channel name',
-          channelDescription: 'your channel description',
-        ),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
   }
 }

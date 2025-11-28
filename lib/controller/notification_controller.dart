@@ -1,10 +1,12 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:cltvspj/services/notification_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationController extends ChangeNotifier {
-  bool _notificationsEnabled = true;
+  bool _notificationsEnabled = false;
+  bool _ratingNotificationScheduled = false;
 
   bool get notificationsEnabled => _notificationsEnabled;
 
@@ -14,30 +16,30 @@ class NotificationController extends ChangeNotifier {
 
   Future<void> _loadNotificationPreference() async {
     final prefs = await SharedPreferences.getInstance();
-    _notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
-    if (_notificationsEnabled) {
-      NotificationService.showWeeklyNotification(
+
+    _notificationsEnabled = await NotificationService.areNotificationsEnabled();
+
+    _ratingNotificationScheduled =
+        prefs.getBool('rating_notification_scheduled') ?? false;
+
+    if (_notificationsEnabled && !_ratingNotificationScheduled) {
+      await NotificationService.scheduleRatingNotification(
         title: 'title_notification'.tr(),
         body: 'body_notification'.tr(),
         payload: 'rate_app',
       );
+
+      await prefs.setBool('rating_notification_scheduled', true);
+      _ratingNotificationScheduled = true;
     }
+
     notifyListeners();
   }
 
-  Future<void> toggleNotifications(bool value) async {
-    _notificationsEnabled = value;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('notifications_enabled', value);
-    if (value) {
-      NotificationService.showWeeklyNotification(
-        title: 'title_notification'.tr(),
-        body: 'body_notification'.tr(),
-        payload: 'rate_app',
-      );
-    } else {
-      NotificationService.cancelWeeklyNotification();
-    }
+  Future<void> openSystemNotificationSettings() async {
+    await AppSettings.openAppSettings(type: AppSettingsType.notification);
+
+    _notificationsEnabled = await NotificationService.areNotificationsEnabled();
     notifyListeners();
   }
 }

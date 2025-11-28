@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  flutter_modular: ^6.4.1
   google_fonts: ^6.2.1
   easy_localization: ^3.0.7
   shared_preferences: ^2.5.3
@@ -28,6 +27,7 @@ dependencies:
   path_provider: ^2.1.5
   pdf: ^3.11.3
   printing: ^5.14.2
+  app_settings: ^6.1.1
 
 dev_dependencies:
   flutter_test:

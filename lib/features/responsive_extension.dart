@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 extension ResponsiveTextStyle on BuildContext {
-  UiProvider get ui => Provider.of<UiProvider>(this, listen: true);
+  UiProvider get ui => Provider.of<UiProvider>(this, listen: false);
 
   // Heading Styles
 
