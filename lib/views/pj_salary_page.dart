@@ -106,6 +106,7 @@ class _PjpageState extends State<Pjpage> {
                             children: [
                               InputField(
                                 label: 'salary_pj'.tr(),
+                                hintText: 'money_hint'.tr(),
                                 controller: controller.salaryController,
                                 icon: Icons.business_center_rounded,
                                 maxWidth: maxWidth,
@@ -113,6 +114,7 @@ class _PjpageState extends State<Pjpage> {
                               ),
                               InputField(
                                 label: 'taxes_pj'.tr(),
+                                hintText: 'percent_hint'.tr(),
                                 controller: controller.taxController,
                                 icon: Icons.account_balance_rounded,
                                 maxWidth: maxWidth,
@@ -120,6 +122,7 @@ class _PjpageState extends State<Pjpage> {
                               ),
                               InputField(
                                 label: 'accountant_fee'.tr(),
+                                hintText: 'money_hint'.tr(),
                                 controller: controller.accountantController,
                                 icon: Icons.receipt_long_rounded,
                                 maxWidth: maxWidth,
@@ -127,6 +130,7 @@ class _PjpageState extends State<Pjpage> {
                               ),
                               InputField(
                                 label: 'inss_pj'.tr(),
+                                hintText: 'money_hint'.tr(),
                                 controller: controller.inssController,
                                 icon: Icons.security_rounded,
                                 maxWidth: maxWidth,

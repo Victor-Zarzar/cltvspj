@@ -6,6 +6,7 @@ import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/views/about_page.dart';
 import 'package:cltvspj/views/theme_page.dart';
+import 'package:cltvspj/views/user_profile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -193,6 +194,27 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       trailing: _buildTrailingArrow(),
                       onTap: controller.openSystemNotificationSettings,
+                    ),
+                  if (!kIsWeb)
+                    ListTile(
+                      leading: Icon(
+                        Icons.person_2,
+                        color: IconColor.primaryColor,
+                        semanticLabel: 'person_icon'.tr(),
+                      ),
+                      title: Text(
+                        'profile'.tr(),
+                        style: context.bodyMediumFont,
+                      ),
+                      trailing: _buildTrailingArrow(),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const UserProfilePage(),
+                          ),
+                        );
+                      },
                     ),
                   const SizedBox(height: 5),
                   ListTile(

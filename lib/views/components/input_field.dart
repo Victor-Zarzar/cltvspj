@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
   final String label;
+  final String? hintText;
   final TextEditingController controller;
   final IconData icon;
   final double? maxWidth;
@@ -16,18 +17,21 @@ class InputField extends StatelessWidget {
   final Widget? suffix;
   final TextInputType keyboardType;
   final bool obscureText;
+  final List<TextInputFormatter>? inputFormatters;
 
   const InputField({
     super.key,
     required this.label,
     required this.controller,
     required this.icon,
+    this.hintText,
     this.maxWidth,
     this.onChanged,
     this.prefix,
     this.suffix,
     this.keyboardType = TextInputType.number,
     this.obscureText = false,
+    this.inputFormatters,
   });
 
   @override
@@ -46,14 +50,25 @@ class InputField extends StatelessWidget {
                 controller: controller,
                 keyboardType: keyboardType,
                 obscureText: obscureText,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,.]')),
-                ],
                 style: context.bodySmallBold,
                 onChanged: onChanged,
+                inputFormatters:
+                    inputFormatters ??
+                    (keyboardType == TextInputType.number
+                        ? <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'[0-9,.]'),
+                            ),
+                          ]
+                        : null),
                 decoration: InputDecoration(
                   labelText: label,
+                  hintText: hintText,
                   labelStyle: TextStyle(
+                    color: TextColor.primaryColor.withValues(alpha: 0.7),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  hintStyle: TextStyle(
                     color: TextColor.primaryColor.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
                   ),

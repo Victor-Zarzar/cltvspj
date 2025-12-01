@@ -2,9 +2,20 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:cltvspj/models/report_model.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 Future<void> generatePdfReport(ReportData data) async {
   final pdf = pw.Document();
+
+  final robotoRegular = pw.Font.ttf(
+    await rootBundle.load('assets/fonts/Roboto-Regular.ttf'),
+  );
+  final robotoBold = pw.Font.ttf(
+    await rootBundle.load('assets/fonts/Roboto-Bold.ttf'),
+  );
+
+  final baseStyle = pw.TextStyle(font: robotoRegular, fontSize: 12);
+  final boldStyle = pw.TextStyle(font: robotoBold, fontSize: 12);
 
   pdf.addPage(
     pw.Page(
@@ -15,16 +26,18 @@ Future<void> generatePdfReport(ReportData data) async {
           children: [
             pw.Text(
               data.title,
-              style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+              style: pw.TextStyle(font: robotoBold, fontSize: 24),
             ),
 
             pw.SizedBox(height: 20),
 
-            pw.Text('${data.labels.namePrefix} ${data.name}'),
+            pw.Text('${data.labels.namePrefix} ${data.name}', style: baseStyle),
 
             pw.SizedBox(height: 10),
 
             pw.TableHelper.fromTextArray(
+              headerStyle: boldStyle,
+              cellStyle: baseStyle,
               headers: data.labels.tableHeaders,
               data: data.summaryRows
                   .map((row) => [row.label, row.value])
@@ -33,19 +46,22 @@ Future<void> generatePdfReport(ReportData data) async {
 
             pw.SizedBox(height: 20),
 
-            pw.Text(data.labels.benefitsTitle),
+            pw.Text(
+              data.labels.benefitsTitle,
+              style: boldStyle.copyWith(fontSize: 14),
+            ),
+
+            pw.SizedBox(height: 6),
+
             ...data.benefitsRows.map(
-              (e) => pw.Text('• ${e.label}: ${e.value}'),
+              (e) => pw.Text('• ${e.label}: ${e.value}', style: baseStyle),
             ),
 
             if (data.chartBytes != null) ...[
               pw.SizedBox(height: 30),
               pw.Text(
                 data.labels.chartTitle,
-                style: pw.TextStyle(
-                  fontSize: 18,
-                  fontWeight: pw.FontWeight.bold,
-                ),
+                style: pw.TextStyle(font: robotoBold, fontSize: 18),
               ),
               pw.SizedBox(height: 10),
               pw.Image(pw.MemoryImage(data.chartBytes!)),

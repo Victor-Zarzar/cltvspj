@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cltvspj/models/calculate_model.dart';
+import 'package:cltvspj/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:cltvspj/models/clt_model.dart';
 import 'package:cltvspj/models/pj_model.dart';
@@ -54,6 +55,15 @@ class DatabaseService {
         accountantFee REAL,
         inss REAL,
         taxes REAL
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE user_profile (
+        name TEXT,
+        salary REAL,
+        benefits REAL,
+        profession TEXT
       );
     ''');
   }
@@ -128,5 +138,35 @@ class DatabaseService {
       accountantFee: row['accountantFee'] as double,
       inssPj: row['inssPj'] as double,
     );
+  }
+
+  Future<void> saveUser(UserModel user) async {
+    final dbClient = await db;
+    await dbClient.delete('user_profile');
+    await dbClient.insert('user_profile', {
+      'name': user.name,
+      'profession': user.profession,
+      'salary': user.salary,
+      'benefits': user.benefits,
+    });
+  }
+
+  Future<UserModel?> loadUser() async {
+    final dbClient = await db;
+    final result = await dbClient.query('user_profile', limit: 1);
+    if (result.isEmpty) return null;
+    final row = result.first;
+
+    return UserModel(
+      name: row['name'] as String,
+      profession: row['profession'] as String,
+      salary: (row['salary'] as num).toDouble(),
+      benefits: (row['benefits'] as num).toDouble(),
+    );
+  }
+
+  Future<void> clearUser() async {
+    final dbClient = await db;
+    await dbClient.delete('user_profile');
   }
 }

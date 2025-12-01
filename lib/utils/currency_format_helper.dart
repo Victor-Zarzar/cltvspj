@@ -18,3 +18,11 @@ MoneyMaskedTextController moneyMaskedController({String symbol = 'R\$ '}) {
 String formatNumber(double value) {
   return currencyFormat.format(value);
 }
+
+bool isZeroOrEmptyCurrency(String text) {
+  final normalized = text.replaceAll(RegExp(r'[^0-9]'), '');
+  if (normalized.isEmpty) return true;
+
+  final valueInCents = int.tryParse(normalized) ?? 0;
+  return valueInCents == 0;
+}
