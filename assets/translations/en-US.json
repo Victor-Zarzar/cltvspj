@@ -108,5 +108,11 @@
   "delete_icon": "Delete icon",
   "money_hint": "$ 0.00",
   "percent_hint": "% (optional)",
-  "nothing_to_clear": "There is no data to delete."
+  "nothing_to_clear": "There is no data to delete.",
+  "success_dialog": "Success",
+  "user_saved_success": "Your profile has been saved successfully.",
+  "user_cleared_success": "Your profile data has been cleared successfully.",
+  "save_user_error": "An error occurred while saving your profile.",
+  "clear_user_error": "An error occurred while clearing your profile data.",
+  "expand_or_collapse": "Tap to expand or collapse"
 }

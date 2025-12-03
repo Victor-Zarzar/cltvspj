@@ -42,11 +42,47 @@ class _UserProfilePageState extends State<UserProfilePage> {
       return;
     }
 
-    await userController.saveUser();
+    try {
+      await userController.saveUser();
+
+      if (!mounted) return;
+
+      ShowDialogError.show(
+        context,
+        title: 'success_dialog'.tr(),
+        child: Text('user_saved_success'.tr()),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ShowDialogError.show(
+        context,
+        title: 'error_dialog'.tr(),
+        child: Text('error_dialog'.tr()),
+      );
+    }
   }
 
   Future<void> _onClearPressed(UserController userController) async {
-    await userController.clearUser();
+    try {
+      await userController.clearUser();
+
+      if (!mounted) return;
+
+      ShowDialogError.show(
+        context,
+        title: 'success_dialog'.tr(),
+        child: Text('user_cleared_success'.tr()),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ShowDialogError.show(
+        context,
+        title: 'error_dialog'.tr(),
+        child: Text('error_dialog'.tr()),
+      );
+    }
   }
 
   @override
@@ -186,7 +222,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   inputFormatters: const <TextInputFormatter>[],
                                 ),
                                 const SizedBox(height: 24),
-
                                 CustomButton(
                                   animatedGradient: true,
                                   fullWidth: true,
@@ -202,9 +237,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                     }
                                   },
                                 ),
-
                                 const SizedBox(height: 12),
-
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: TextButton.icon(
@@ -224,7 +257,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                             }
                                             _onClearPressed(userController);
                                           },
-
                                     icon: Icon(
                                       Icons.delete_outline,
                                       color: IconColor.primaryColor,
@@ -241,7 +273,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ),
                         ),
                         const SizedBox(height: 20),
-
                         BodyUserProfile(controller: userController),
                       ],
                     ),

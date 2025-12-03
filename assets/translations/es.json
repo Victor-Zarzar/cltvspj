@@ -108,5 +108,11 @@
   "delete_icon": "Ícono de eliminar",
   "money_hint": "$ 0,00",
   "percent_hint": "% (opcional)",
-  "nothing_to_clear": "No hay datos para eliminar."
+  "nothing_to_clear": "No hay datos para eliminar.",
+  "success_dialog": "Éxito",
+  "user_saved_success": "Tu perfil ha sido guardado correctamente.",
+  "user_cleared_success": "Los datos de tu perfil han sido eliminados correctamente.",
+  "save_user_error": "Ocurrió un error al guardar tu perfil.",
+  "clear_user_error": "Ocurrió un error al borrar los datos de tu perfil.",
+  "expand_or_collapse": "Toca para expandir o contraer"
 }

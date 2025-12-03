@@ -44,48 +44,54 @@ class BodyUserProfile extends StatelessWidget {
           elevation: 2,
           child: Theme(
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-            child: ExpansionTile(
-              tilePadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
-              childrenPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
-              title: Text(
-                'user_profile_saved_header'.tr(),
-                style: context.bodyMediumFont,
-              ),
-              subtitle: Text(
-                'user_profile_saved_subtitle'.tr(),
-                style: context.bodyMediumFont,
-              ),
-              children: [
-                _buildRow(
-                  context,
-                  label: 'user_name_label'.tr(),
-                  value: controller.nameController.text,
+            child: Semantics(
+              label: 'arrow_icon'.tr(),
+              hint: 'expand_or_collapse'.tr(),
+              child: ExpansionTile(
+                collapsedIconColor: IconColor.primaryColor,
+                iconColor: IconColor.primaryColor,
+                tilePadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-                _buildRow(
-                  context,
-                  label: 'user_salary_label'.tr(),
-                  value: controller.salaryController.text,
-                  isMoney: true,
+                childrenPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-                _buildRow(
-                  context,
-                  label: 'user_benefits_label'.tr(),
-                  value: controller.benefitsController.text,
-                  isMoney: true,
+                title: Text(
+                  'user_profile_saved_header'.tr(),
+                  style: context.bodyMediumFont,
                 ),
-                _buildRow(
-                  context,
-                  label: 'user_profession_label'.tr(),
-                  value: controller.professionController.text,
+                subtitle: Text(
+                  'user_profile_saved_subtitle'.tr(),
+                  style: context.bodyMediumFont,
                 ),
-                const SizedBox(height: 8),
-              ],
+                children: [
+                  _buildRow(
+                    context,
+                    label: 'user_name_label'.tr(),
+                    value: controller.nameController.text,
+                  ),
+                  _buildRow(
+                    context,
+                    label: 'user_salary_label'.tr(),
+                    value: controller.salaryController.text,
+                    isMoney: true,
+                  ),
+                  _buildRow(
+                    context,
+                    label: 'user_benefits_label'.tr(),
+                    value: controller.benefitsController.text,
+                    isMoney: true,
+                  ),
+                  _buildRow(
+                    context,
+                    label: 'user_profession_label'.tr(),
+                    value: controller.professionController.text,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
             ),
           ),
         );

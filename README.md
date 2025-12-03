@@ -23,6 +23,7 @@ Built with Flutter, responsive UI, multi-language support and browser extension 
 - **PieChart**
 - **PDF Export / Printing**
 - **Makefile Automation**
+- **Sentry Logs**
 
 ---
 

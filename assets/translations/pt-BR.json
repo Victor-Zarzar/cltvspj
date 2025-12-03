@@ -108,5 +108,11 @@
   "delete_icon": "Ícone de excluir",
   "money_hint": "R$ 0,00",
   "percent_hint": "% (opcional)",
-  "nothing_to_clear": "Não há dados para excluir."
+  "nothing_to_clear": "Não há dados para excluir.",
+  "success_dialog": "Sucesso",
+  "user_saved_success": "Seu perfil foi salvo com sucesso.",
+  "user_cleared_success": "Os dados do seu perfil foram removidos com sucesso.",
+  "save_user_error": "Ocorreu um erro ao salvar seu perfil.",
+  "clear_user_error": "Ocorreu um erro ao limpar os dados do seu perfil.",
+  "expand_or_collapse": "Toque para expandir ou recolher"
 }
