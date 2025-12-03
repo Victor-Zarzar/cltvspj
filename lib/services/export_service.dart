@@ -5,7 +5,7 @@ import 'package:cltvspj/models/report_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 Future<void> generatePdfReport(ReportData data) async {
-  final pdf = pw.Document();
+  final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
 
   final robotoRegular = pw.Font.ttf(
     await rootBundle.load('assets/fonts/Roboto-Regular.ttf'),

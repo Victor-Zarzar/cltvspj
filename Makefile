@@ -16,14 +16,20 @@ build-extension-prod:
 
 build-apk-release:
 	flutter build apk --release \
+	    --dart-define=SENTRY_DSN=$(SENTRY_DSN) \
+		--dart-define=SENTRY_ENV=${SENTRY_ENV} \
 		--obfuscate --split-debug-info=build/debug-info
 
 build-appbundle-release:
 	flutter build appbundle --release \
+	    --dart-define=SENTRY_DSN=$(SENTRY_DSN) \
+		--dart-define=SENTRY_ENV=${SENTRY_ENV} \
 		--obfuscate --split-debug-info=build/debug-info
 
 build-ios-release:
 	flutter build ios --release \
+	    --dart-define=SENTRY_DSN=$(SENTRY_DSN) \
+		--dart-define=SENTRY_ENV=${SENTRY_ENV} \
 		--obfuscate --split-debug-info=build/debug-info
 
 help:

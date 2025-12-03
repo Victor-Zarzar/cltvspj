@@ -7,8 +7,10 @@ import 'package:cltvspj/controller/user_controller.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/services/notification_service.dart';
 import 'package:cltvspj/services/secure_service.dart';
+import 'package:cltvspj/services/sentry_service.dart';
 import 'package:cltvspj/views/app_page.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_10y.dart' as tz;
@@ -19,6 +21,20 @@ Future<void> main() async {
   await NotificationService.init();
   tz.initializeTimeZones();
   SecureStorageService.init();
+
+  if (!kIsWeb) {
+    await SentryService.instance.init();
+
+    FlutterError.onError = (FlutterErrorDetails details) {
+      FlutterError.presentError(details);
+      SentryService.instance.captureException(
+        details.exception,
+        stackTrace: details.stack,
+      );
+    };
+  } else {
+    FlutterError.onError = FlutterError.dumpErrorToConsole;
+  }
 
   runApp(
     EasyLocalization(

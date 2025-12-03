@@ -23,8 +23,8 @@ class CalculatorController extends ChangeNotifier {
     salaryPj: 0,
     benefits: 0,
     taxesPj: 0,
-    accountantFee: 0,
-    inssPj: 0,
+    accountantFee: 189.0,
+    inssPj: 0.11,
   );
 
   double _parsePercentage(TextEditingController controller) {

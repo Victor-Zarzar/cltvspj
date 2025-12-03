@@ -21,7 +21,6 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  // Pode manter o Form se quiser, mas sem uso de validator por campo
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

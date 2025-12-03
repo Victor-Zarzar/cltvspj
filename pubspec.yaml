@@ -28,12 +28,14 @@ dependencies:
   pdf: ^3.11.3
   printing: ^5.14.2
   app_settings: ^6.1.1
+  sentry_flutter: ^9.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  sentry_dart_plugin: ^3.2.0
 
 flutter:
 
@@ -46,3 +48,9 @@ flutter:
   - assets/icons/
   - assets/fonts/Roboto-Regular.ttf
   - assets/fonts/Roboto-Bold.ttf
+  
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: cltvspj
+  org: victorzarzar
