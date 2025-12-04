@@ -1,5 +1,6 @@
 import 'package:cltvspj/controller/calculator_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
+import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/views/components/custom_button.dart';
 import 'package:cltvspj/views/components/input_field.dart';
@@ -79,6 +80,12 @@ class BodyContainer extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
+                                Text(
+                                  'calculator_question'.tr(),
+                                  style: context.h1Home,
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 20),
                                 InputField(
                                   label: 'salary_clt'.tr(),
                                   controller: controller.salaryCltController,

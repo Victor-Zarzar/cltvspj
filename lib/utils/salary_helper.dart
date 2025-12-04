@@ -33,3 +33,7 @@ double calculateIrrf(double grossSalary) {
     return (base * 0.275) - 1265.98;
   }
 }
+
+double calculateFgts(double grossSalary) {
+  return grossSalary * 0.08;
+}

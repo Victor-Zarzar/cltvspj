@@ -82,6 +82,25 @@ Widget _buildContent(
                 child: Column(
                   children: [
                     Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: notifier.isDark
+                            ? CardColor.primaryColor.withValues(alpha: 0.7)
+                            : CardColor.secondaryColor,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        'clt_simulation_hint'.tr(),
+                        style: context.h1Home,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
                       decoration: BoxDecoration(
                         color: notifier.isDark
                             ? CardColor.primaryColor
@@ -102,6 +121,72 @@ Widget _buildContent(
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.work_outline_rounded,
+                                      size: 20,
+                                      semanticLabel: 'work_icon'.tr(),
+                                      color: IconColor.primaryColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text("clt_data".tr(), style: context.h1),
+                                  ],
+                                ),
+
+                                Row(
+                                  children: [
+                                    Tooltip(
+                                      message: 'fgts_include_label'.tr(),
+                                      triggerMode: TooltipTriggerMode.tap,
+                                      preferBelow: false,
+                                      verticalOffset: 20,
+                                      child: Text(
+                                        'include_fgts'.tr(),
+                                        style: context.h1,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 2),
+
+                                    Checkbox(
+                                      fillColor:
+                                          WidgetStateProperty.resolveWith((
+                                            states,
+                                          ) {
+                                            if (!states.contains(
+                                              WidgetState.selected,
+                                            )) {
+                                              return Colors.transparent;
+                                            }
+                                            return null;
+                                          }),
+                                      side: BorderSide(
+                                        color: IconColor.primaryColor,
+
+                                        width: 2,
+                                      ),
+                                      value: controller.includeFgts,
+                                      visualDensity: VisualDensity.compact,
+                                      checkColor: IconColor.primaryColor,
+                                      activeColor: notifier.isDark
+                                          ? IconColor.fourthColor
+                                          : IconColor.secondaryColor,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (bool? value) {
+                                        if (value == null) return;
+                                        controller.toggleIncludeFgts(value);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+
                             InputField(
                               label: 'salary_clt'.tr(),
                               controller: controller.cltSalaryController,

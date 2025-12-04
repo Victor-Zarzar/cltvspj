@@ -106,7 +106,8 @@ class CalculatorController extends ChangeNotifier {
   void calculate() => updateValues();
 
   Future<void> exportToPdf({
-    required String nome,
+    required String name,
+    required String profession,
     Uint8List? chartBytes,
   }) async {
     String formatCurrency(double value) => currencyFormat.format(value);
@@ -115,7 +116,8 @@ class CalculatorController extends ChangeNotifier {
 
     final reportData = ReportData(
       title: 'pdf_title_clt_vs_pj'.tr(),
-      name: nome,
+      name: name,
+      profession: profession,
       summaryRows: [
         ReportRow(
           label: 'pdf_row_clt_net'.tr(),
@@ -132,6 +134,7 @@ class CalculatorController extends ChangeNotifier {
       benefitsRows: [],
       labels: ReportLabels(
         namePrefix: 'report_name_prefix'.tr(),
+        professionPrefix: 'report_profession_prefix'.tr(),
         benefitsTitle: 'report_benefits_title'.tr(),
         chartTitle: 'report_chart_title'.tr(),
         tableHeaders: [

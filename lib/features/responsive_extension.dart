@@ -16,6 +16,12 @@ extension ResponsiveTextStyle on BuildContext {
     color: TextColor.primaryColor,
   );
 
+  TextStyle get h1Home => GoogleFonts.roboto(
+    fontSize: ResponsiveText.getSize(this, 12),
+    fontWeight: FontWeight.w400,
+    color: TextColor.primaryColor,
+  );
+
   TextStyle get h1Dialog => GoogleFonts.roboto(
     fontSize: ResponsiveText.getSize(this, 16),
     fontWeight: FontWeight.w700,

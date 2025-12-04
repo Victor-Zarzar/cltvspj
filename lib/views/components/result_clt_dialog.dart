@@ -29,13 +29,25 @@ class ResultCltDialog extends StatelessWidget {
           inss: controller.inss,
           irrf: controller.irrf,
           benefits: controller.benefits,
+          fgts: controller.fgts,
+          includeFgts: controller.includeFgts,
         );
+
+        final bool includeFgts = controller.includeFgts;
+        final double netValueToShow = includeFgts
+            ? controller.netSalary + controller.fgts
+            : controller.netSalary;
+
+        final String netLabel = includeFgts
+            ? 'net_salary_with_fgts'.tr()
+            : 'net_salary'.tr();
 
         final colorList = [
           ChartColor.primaryColor,
           ChartColor.secondaryColor,
           ChartColor.fourthColor,
           ChartColor.sixthColor,
+          ChartColor.fifthColor,
         ];
 
         final mediaQuery = MediaQuery.of(context);
@@ -89,6 +101,14 @@ class ResultCltDialog extends StatelessWidget {
                     label: 'benefits_clt'.tr(),
                     value: controller.benefits,
                   ),
+                  if (controller.includeFgts) ...[
+                    const SizedBox(height: 4),
+                    _buildSalaryLine(
+                      context,
+                      label: 'fgts'.tr(),
+                      value: controller.fgts,
+                    ),
+                  ],
                   const SizedBox(height: 12),
                   Divider(
                     color: notifier.isDark
@@ -98,7 +118,7 @@ class ResultCltDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${'net_salary'.tr()}: ${currencyFormat.format(controller.netSalary)}',
+                    '$netLabel: ${currencyFormat.format(netValueToShow)}',
                     textAlign: TextAlign.center,
                     style: context.bodySmallDarkBold,
                   ),

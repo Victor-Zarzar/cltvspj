@@ -33,6 +33,15 @@ Future<void> generatePdfReport(ReportData data) async {
 
             pw.Text('${data.labels.namePrefix} ${data.name}', style: baseStyle),
 
+            pw.SizedBox(height: 6),
+
+            pw.Text(
+              '${data.labels.professionPrefix} ${data.profession}',
+              style: baseStyle,
+            ),
+
+            pw.SizedBox(height: 10),
+
             pw.SizedBox(height: 10),
 
             pw.TableHelper.fromTextArray(

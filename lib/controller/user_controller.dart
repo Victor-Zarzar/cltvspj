@@ -16,6 +16,9 @@ class UserController extends ChangeNotifier {
   final MoneyMaskedTextController salaryController = moneyMaskedController();
   final MoneyMaskedTextController benefitsController = moneyMaskedController();
 
+  String get userName => nameController.text.trim();
+  String get professionName => professionController.text.trim();
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -66,7 +69,8 @@ class UserController extends ChangeNotifier {
   }
 
   Future<void> exportToPdf({
-    required String nome,
+    required String name,
+    required String profession,
     Uint8List? chartBytes,
   }) async {
     String formatCurrency(double value) => currencyFormat.format(value);
@@ -76,10 +80,11 @@ class UserController extends ChangeNotifier {
 
     final reportData = ReportData(
       title: 'user_report_title'.tr(),
-      name: nome,
+      name: name,
+      profession: profession,
       summaryRows: [
-        ReportRow(label: 'name'.tr(), value: (nameController.text)),
-        ReportRow(label: 'profession'.tr(), value: (professionController.text)),
+        ReportRow(label: 'name'.tr(), value: (name)),
+        ReportRow(label: 'profession'.tr(), value: (profession)),
         ReportRow(label: 'salary'.tr(), value: formatCurrency(parsedSalary)),
         ReportRow(
           label: 'benefits'.tr(),
@@ -91,6 +96,7 @@ class UserController extends ChangeNotifier {
       benefitsRows: [],
       labels: ReportLabels(
         namePrefix: 'report_name_prefix'.tr(),
+        professionPrefix: 'report_professions_prefix'.tr(),
         benefitsTitle: 'report_benefits_title'.tr(),
         chartTitle: 'report_chart_title'.tr(),
         tableHeaders: [

@@ -114,5 +114,18 @@
   "user_cleared_success": "Your profile data has been cleared successfully.",
   "save_user_error": "An error occurred while saving your profile.",
   "clear_user_error": "An error occurred while clearing your profile data.",
-  "expand_or_collapse": "Tap to expand or collapse"
+  "expand_or_collapse": "Tap to expand or collapse",
+  "fgts": "FGTS",
+  "fgts_include_label": "Include FGTS (8%)",
+  "include_fgts": "Include FGTS",
+  "work_icon": "Work icon",
+  "clt_data": "CLT data",
+  "net_salary_with_fgts": "Net salary + FGTS",
+  "report_profession_prefix": "Profession:",
+  "report_name_default": "User",
+  "report_profession_default": "Profession",
+  "pj_simulation_hint": "Simulate the taxes for your company (ME/EPP) under the Simples Nacional regime.",
+  "clt_simulation_hint": "Simulate your net salary under a CLT contract, considering taxes, INSS, IRRF and FGTS.",
+  "pj_data": "Company data",
+  "calculator_question": "Which one pays off more: CLT or PJ?"
 }

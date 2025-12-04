@@ -87,7 +87,7 @@ class IconColor {
   static Color get primaryColor => const Color(0xFFF5F5F5);
   static Color get secondaryColor => const Color(0xFF4CAF50);
   static Color get thirdColor => const Color(0xFF81C784);
-  static Color get fourthColor => const Color(0xFFFFFFFF);
+  static Color get fourthColor => const Color(0xFF757575);
   static Color get fiveColor => const Color(0xFF000000);
 }
 

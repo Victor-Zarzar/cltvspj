@@ -9,12 +9,14 @@ class ReportRow {
 
 class ReportLabels {
   final String namePrefix;
+  final String professionPrefix;
   final String benefitsTitle;
   final String chartTitle;
   final List<String> tableHeaders;
 
   const ReportLabels({
     required this.namePrefix,
+    required this.professionPrefix,
     required this.benefitsTitle,
     required this.chartTitle,
     required this.tableHeaders,
@@ -24,6 +26,7 @@ class ReportLabels {
 class ReportData {
   final String title;
   final String name;
+  final String profession;
   final List<ReportRow> summaryRows;
   final List<ReportRow> benefitsRows;
   final Uint8List? chartBytes;
@@ -33,6 +36,7 @@ class ReportData {
   const ReportData({
     required this.title,
     required this.name,
+    required this.profession,
     required this.summaryRows,
     required this.benefitsRows,
     required this.labels,

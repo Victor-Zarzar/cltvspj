@@ -18,8 +18,15 @@ class CltController extends ChangeNotifier {
   double inss = 0.0;
   double irrf = 0.0;
   double benefits = 0.0;
+  double fgts = 0.0;
 
   bool get hasValidInput => netSalary > 0;
+
+  bool includeFgts = false;
+
+  double get netSalaryWithFgts => netSalary + fgts;
+
+  double get netSalaryDisplay => includeFgts ? netSalary + fgts : netSalary;
 
   CltController() {
     _loadData();
@@ -31,11 +38,21 @@ class CltController extends ChangeNotifier {
 
     inss = calculateInss(grossSalary);
     irrf = calculateIrrf(grossSalary);
+    fgts = calculateFgts(grossSalary);
 
     netSalaryWithoutBenefits = grossSalary - inss - irrf;
     netSalary = netSalaryWithoutBenefits + benefits;
 
     _saveData(grossSalary, benefits);
+    notifyListeners();
+  }
+
+  double get employerCost {
+    return grossSalary + benefits + (includeFgts ? fgts : 0);
+  }
+
+  void toggleIncludeFgts(bool value) {
+    includeFgts = value;
     notifyListeners();
   }
 
@@ -54,30 +71,52 @@ class CltController extends ChangeNotifier {
   }
 
   Future<void> exportToPdf({
-    required String nome,
+    required String name,
+    required String profession,
     Uint8List? chartBytes,
   }) async {
     String formatCurrency(double value) => currencyFormat.format(value);
 
+    final bool useFgts = includeFgts;
+    final String netLabel = useFgts
+        ? 'net_salary_with_fgts'.tr()
+        : 'net_salary'.tr();
+
+    final double netValueToShow = netSalaryDisplay;
+
+    final List<ReportRow> summaryRows = [
+      ReportRow(label: 'salary_clt'.tr(), value: formatCurrency(grossSalary)),
+      ReportRow(label: 'inss'.tr(), value: formatCurrency(inss)),
+      ReportRow(label: 'irrf'.tr(), value: formatCurrency(irrf)),
+      ReportRow(
+        label: 'net_salary_discounts'.tr(),
+        value: formatCurrency(netSalaryWithoutBenefits),
+      ),
+      ReportRow(label: 'benefits_clt'.tr(), value: formatCurrency(benefits)),
+    ];
+
+    if (useFgts) {
+      summaryRows.insert(
+        3,
+        ReportRow(label: 'fgts'.tr(), value: formatCurrency(fgts)),
+      );
+    }
+
+    summaryRows.add(
+      ReportRow(label: netLabel, value: formatCurrency(netValueToShow)),
+    );
+
     final reportData = ReportData(
       title: 'clt_report_title'.tr(),
-      name: nome,
-      summaryRows: [
-        ReportRow(label: 'salary_clt'.tr(), value: formatCurrency(grossSalary)),
-        ReportRow(label: 'inss'.tr(), value: formatCurrency(inss)),
-        ReportRow(label: 'irrf'.tr(), value: formatCurrency(irrf)),
-        ReportRow(
-          label: 'net_salary_discounts'.tr(),
-          value: formatCurrency(netSalaryWithoutBenefits),
-        ),
-        ReportRow(label: 'benefits_clt'.tr(), value: formatCurrency(benefits)),
-        ReportRow(label: 'net_salary'.tr(), value: formatCurrency(netSalary)),
-      ],
+      name: name,
+      profession: profession,
+      summaryRows: summaryRows,
       benefits: {'benefits_clt'.tr(): benefits},
       chartBytes: chartBytes,
       benefitsRows: [],
       labels: ReportLabels(
         namePrefix: 'report_name_prefix'.tr(),
+        professionPrefix: 'report_profession_prefix'.tr(),
         benefitsTitle: 'report_benefits_title'.tr(),
         chartTitle: 'report_chart_title'.tr(),
         tableHeaders: [

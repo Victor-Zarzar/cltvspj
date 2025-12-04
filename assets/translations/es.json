@@ -114,5 +114,18 @@
   "user_cleared_success": "Los datos de tu perfil han sido eliminados correctamente.",
   "save_user_error": "Ocurrió un error al guardar tu perfil.",
   "clear_user_error": "Ocurrió un error al borrar los datos de tu perfil.",
-  "expand_or_collapse": "Toca para expandir o contraer"
+  "expand_or_collapse": "Toca para expandir o contraer",
+  "fgts": "FGTS",
+  "fgts_include_label": "Considerar FGTS (8 %)",
+  "include_fgts": "Incluir FGTS",
+  "work_icon": "Ícono de trabajo",
+  "clt_data": "Datos CLT",
+  "net_salary_with_fgts": "Salario neto + FGTS",
+  "report_name_default": "Usuario",
+  "report_profession_prefix": "Profesión:",
+  "report_profession_default": "Profesión",
+  "pj_simulation_hint": "Simula los impuestos de tu empresa (ME/EPP) bajo el régimen de Simples Nacional.",
+  "clt_simulation_hint": "Simula tu salario neto bajo contrato CLT, considerando impuestos, INSS, IRRF y FGTS.",
+  "pj_data": "Datos de la empresa",
+  "calculator_question": "¿Cuál compensa más: CLT o PJ?"
 }

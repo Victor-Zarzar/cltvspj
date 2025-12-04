@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:cltvspj/controller/clt_controller.dart';
+import 'package:cltvspj/controller/user_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/views/components/show_dialog_error.dart';
@@ -21,6 +22,10 @@ class CltPopupMenu extends StatelessWidget {
       onSelected: (value) async {
         if (value == 'export_pdf') {
           final controller = context.read<CltController>();
+          final userController = context.read<UserController>();
+
+          final userName = userController.userName;
+          final profession = userController.professionName;
 
           if (!controller.hasValidInput) {
             ShowDialogError.show(
@@ -30,10 +35,19 @@ class CltPopupMenu extends StatelessWidget {
             );
             return;
           }
+
+          if (!userController.hasLoadedOnce) {
+            await userController.loadUser();
+          }
+
           Uint8List? chartBytes;
           // chartBytes = await _generateChartBytes();
 
-          await controller.exportToPdf(chartBytes: chartBytes, nome: '');
+          await controller.exportToPdf(
+            chartBytes: chartBytes,
+            name: userName,
+            profession: profession,
+          );
         }
       },
       itemBuilder: (context) => [

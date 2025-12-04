@@ -73,7 +73,8 @@ class PjController extends ChangeNotifier {
   }
 
   Future<void> exportToPdf({
-    required String nome,
+    required String name,
+    required String profession,
     Uint8List? chartBytes,
   }) async {
     String formatCurrency(double value) => currencyFormat.format(value);
@@ -82,7 +83,8 @@ class PjController extends ChangeNotifier {
 
     final reportData = ReportData(
       title: 'pj_report_title'.tr(),
-      name: nome,
+      name: name,
+      profession: profession,
       summaryRows: [
         ReportRow(label: 'salary_pj'.tr(), value: formatCurrency(grossSalary)),
         ReportRow(label: 'taxes_pj'.tr(), value: formatCurrency(tax)),
@@ -98,6 +100,7 @@ class PjController extends ChangeNotifier {
       benefitsRows: [],
       labels: ReportLabels(
         namePrefix: 'report_name_prefix'.tr(),
+        professionPrefix: 'report_profession_prefix'.tr(),
         benefitsTitle: 'report_benefits_title'.tr(),
         chartTitle: 'report_chart_title'.tr(),
         tableHeaders: [

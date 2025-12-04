@@ -84,6 +84,25 @@ class _PjpageState extends State<Pjpage> {
                   child: Column(
                     children: [
                       Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        margin: const EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                          color: notifier.isDark
+                              ? CardColor.primaryColor.withValues(alpha: 0.7)
+                              : CardColor.secondaryColor,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Text(
+                          'pj_simulation_hint'.tr(),
+                          style: context.h1Home,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Container(
                         decoration: BoxDecoration(
                           color: notifier.isDark
                               ? CardColor.primaryColor
@@ -104,6 +123,19 @@ class _PjpageState extends State<Pjpage> {
                           padding: const EdgeInsets.all(24.0),
                           child: Column(
                             children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.work_outline_rounded,
+                                    size: 20,
+                                    semanticLabel: 'work_icon'.tr(),
+                                    color: IconColor.primaryColor,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text("pj_data".tr(), style: context.h1),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
                               InputField(
                                 label: 'salary_pj'.tr(),
                                 hintText: 'money_hint'.tr(),
@@ -140,6 +172,7 @@ class _PjpageState extends State<Pjpage> {
                           ),
                         ),
                       ),
+
                       const SizedBox(height: 20),
                       CustomButton(
                         animatedGradient: true,

@@ -114,5 +114,18 @@
   "user_cleared_success": "Os dados do seu perfil foram removidos com sucesso.",
   "save_user_error": "Ocorreu um erro ao salvar seu perfil.",
   "clear_user_error": "Ocorreu um erro ao limpar os dados do seu perfil.",
-  "expand_or_collapse": "Toque para expandir ou recolher"
+  "expand_or_collapse": "Toque para expandir ou recolher",
+  "fgts": "FGTS",
+  "fgts_include_label": "Considerar FGTS (8%)",
+  "include_fgts": "Incluir FGTS",
+  "work_icon": "Ícone de trabalho",
+  "clt_data": "Dados CLT",
+  "net_salary_with_fgts": "Salário Líquido + FGTS",
+  "report_name_default": "Usuário",
+  "report_profession_prefix": "Profissão:",
+  "report_profession_default": "Profissão",
+  "pj_simulation_hint": "Simule os impostos da sua empresa (ME/EPP) optante pelo Simples Nacional.",
+  "clt_simulation_hint": "Simule seu salário líquido CLT considerando impostos, INSS, IRRF e FGTS.",
+  "pj_data": "Dados da empresa",
+  "calculator_question": "Qual compensa mais: CLT ou PJ?"
 }
