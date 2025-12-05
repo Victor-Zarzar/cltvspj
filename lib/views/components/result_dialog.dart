@@ -83,7 +83,7 @@ class ResultDialog extends StatelessWidget {
                   const SizedBox(height: 4),
                   _buildSalaryLine(
                     context,
-                    label: 'pj_net'.tr(),
+                    label: 'gross_revenue_pj'.tr(),
                     value: controller.totalPj,
                   ),
                   const SizedBox(height: 4),

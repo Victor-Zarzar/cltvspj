@@ -59,6 +59,25 @@ class BodyContainer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          margin: const EdgeInsets.only(bottom: 8),
+                          decoration: BoxDecoration(
+                            color: notifier.isDark
+                                ? CardColor.primaryColor
+                                : CardColor.secondaryColor,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Text(
+                            'calculator_question'.tr(),
+                            style: context.h1Home,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
                           decoration: BoxDecoration(
                             color: notifier.isDark
                                 ? CardColor.primaryColor
@@ -80,12 +99,52 @@ class BodyContainer extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Text(
-                                  'calculator_question'.tr(),
-                                  style: context.h1Home,
-                                  textAlign: TextAlign.center,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Tooltip(
+                                      message: 'fgts_include_label'.tr(),
+                                      triggerMode: TooltipTriggerMode.tap,
+                                      preferBelow: false,
+                                      verticalOffset: 20,
+                                      child: Text(
+                                        'include_fgts'.tr(),
+                                        style: context.h1,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 2),
+                                    Checkbox(
+                                      fillColor:
+                                          WidgetStateProperty.resolveWith((
+                                            states,
+                                          ) {
+                                            if (!states.contains(
+                                              WidgetState.selected,
+                                            )) {
+                                              return Colors.transparent;
+                                            }
+                                            return null;
+                                          }),
+                                      side: BorderSide(
+                                        color: IconColor.primaryColor,
+                                        width: 2,
+                                      ),
+                                      value: controller.includeFgts,
+                                      visualDensity: VisualDensity.compact,
+                                      checkColor: IconColor.primaryColor,
+                                      activeColor: notifier.isDark
+                                          ? IconColor.fourthColor
+                                          : IconColor.secondaryColor,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (bool? value) {
+                                        if (value == null) return;
+                                        controller.toggleIncludeFgts(value);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 InputField(
                                   label: 'salary_clt'.tr(),
                                   controller: controller.salaryCltController,
@@ -94,7 +153,7 @@ class BodyContainer extends StatelessWidget {
                                   onChanged: (_) => controller.calculate(),
                                 ),
                                 InputField(
-                                  label: 'salary_pj'.tr(),
+                                  label: 'gross_revenue_pj'.tr(),
                                   controller: controller.salaryPjController,
                                   icon: Icons.business_center_rounded,
                                   maxWidth: maxWidth,
@@ -129,11 +188,28 @@ class BodyContainer extends StatelessWidget {
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
                                 ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton.icon(
+                                    onPressed: () async {
+                                      await controller.clearData();
+                                    },
+                                    icon: Icon(
+                                      Icons.delete_outline,
+                                      color: IconColor.primaryColor,
+                                      semanticLabel: 'delete_icon'.tr(),
+                                    ),
+                                    label: Text(
+                                      'clear_data'.tr(),
+                                      style: context.footerMediumFont,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 8),
                         CustomButton(
                           animatedGradient: true,
                           fullWidth: true,

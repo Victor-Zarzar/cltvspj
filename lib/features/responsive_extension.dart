@@ -104,8 +104,14 @@ extension ResponsiveTextStyle on BuildContext {
     color: TextColor.primaryColor,
   );
 
-  TextStyle get footerMediumFont => GoogleFonts.roboto(
+  TextStyle get footerFont => GoogleFonts.roboto(
     fontSize: ResponsiveText.getSize(this, 11),
+    fontWeight: FontWeight.w600,
+    color: TextColor.primaryColor,
+  );
+
+  TextStyle get footerMediumFont => GoogleFonts.roboto(
+    fontSize: ResponsiveText.getSize(this, 13),
     fontWeight: FontWeight.w600,
     color: TextColor.primaryColor,
   );

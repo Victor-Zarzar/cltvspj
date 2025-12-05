@@ -41,7 +41,7 @@ class _PjpageState extends State<Pjpage> {
             mobile: _buildContent(
               context,
               maxWidth: 370,
-              padding: 20,
+              padding: 10,
               minHeight: 550,
             ),
             tablet: _buildContent(
@@ -89,12 +89,12 @@ class _PjpageState extends State<Pjpage> {
                           horizontal: 16,
                           vertical: 12,
                         ),
-                        margin: const EdgeInsets.only(bottom: 16),
+                        margin: const EdgeInsets.only(bottom: 8),
                         decoration: BoxDecoration(
                           color: notifier.isDark
-                              ? CardColor.primaryColor.withValues(alpha: 0.7)
+                              ? CardColor.primaryColor
                               : CardColor.secondaryColor,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                         child: Text(
                           'pj_simulation_hint'.tr(),
@@ -126,8 +126,8 @@ class _PjpageState extends State<Pjpage> {
                               Row(
                                 children: [
                                   Icon(
-                                    Icons.work_outline_rounded,
-                                    size: 20,
+                                    Icons.business,
+                                    size: 18,
                                     semanticLabel: 'work_icon'.tr(),
                                     color: IconColor.primaryColor,
                                   ),
@@ -137,7 +137,7 @@ class _PjpageState extends State<Pjpage> {
                               ),
                               const SizedBox(height: 20),
                               InputField(
-                                label: 'salary_pj'.tr(),
+                                label: 'monthly_gross_revenue'.tr(),
                                 hintText: 'money_hint'.tr(),
                                 controller: controller.salaryController,
                                 icon: Icons.business_center_rounded,
@@ -168,12 +168,28 @@ class _PjpageState extends State<Pjpage> {
                                 maxWidth: maxWidth,
                                 onChanged: (_) => controller.calculate(),
                               ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton.icon(
+                                  onPressed: () async {
+                                    await controller.clearData();
+                                  },
+                                  icon: Icon(
+                                    Icons.delete_outline,
+                                    color: IconColor.primaryColor,
+                                    semanticLabel: 'delete_icon'.tr(),
+                                  ),
+                                  label: Text(
+                                    'clear_data'.tr(),
+                                    style: context.footerMediumFont,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
                       ),
-
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 8),
                       CustomButton(
                         animatedGradient: true,
                         fullWidth: true,

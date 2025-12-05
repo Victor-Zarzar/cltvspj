@@ -73,6 +73,20 @@ class CalculatorController extends ChangeNotifier {
     }
   }
 
+  double fgts = 0.0;
+  double grossSalary = 0.0;
+
+  double get employerCost {
+    return grossSalary + benefits + (includeFgts ? fgts : 0);
+  }
+
+  bool includeFgts = false;
+
+  void toggleIncludeFgts(bool value) {
+    includeFgts = value;
+    notifyListeners();
+  }
+
   Future<void> loadData() async {
     model = await DatabaseService().loadCalculator() ?? model;
     salaryCltController.updateValue(model.salaryClt);
@@ -104,6 +118,30 @@ class CalculatorController extends ChangeNotifier {
   }
 
   void calculate() => updateValues();
+
+  Future<void> clearData() async {
+    salaryCltController.updateValue(0);
+    salaryPjController.updateValue(0);
+    benefitsController.updateValue(0);
+    cltBenefitsController.updateValue(0);
+    accountantFeeController.updateValue(0);
+    taxesPjController.text = '0';
+    inssPjController.text = '0';
+    includeFgts = false;
+
+    model = CalculatorModel(
+      salaryClt: 0.0,
+      salaryPj: 0.0,
+      benefits: 0.0,
+      taxesPj: 0.0,
+      accountantFee: 0.0,
+      inssPj: 0.0,
+    );
+
+    await DatabaseService().clearCalculator();
+
+    notifyListeners();
+  }
 
   Future<void> exportToPdf({
     required String name,

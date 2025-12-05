@@ -39,7 +39,7 @@ class InputField extends StatelessWidget {
     return Consumer<UiProvider>(
       builder: (context, notifier, child) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 6),
           child: Align(
             alignment: Alignment.center,
             child: ConstrainedBox(
@@ -67,10 +67,12 @@ class InputField extends StatelessWidget {
                   labelStyle: TextStyle(
                     color: TextColor.primaryColor.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
+                    fontSize: 15,
                   ),
                   hintStyle: TextStyle(
                     color: TextColor.primaryColor.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
+                    fontSize: 12,
                   ),
                   prefixIcon: Icon(
                     icon,
@@ -83,7 +85,7 @@ class InputField extends StatelessWidget {
                   fillColor: IconColor.primaryColor.withValues(alpha: 0.05),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
-                    vertical: 20,
+                    vertical: 15,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),

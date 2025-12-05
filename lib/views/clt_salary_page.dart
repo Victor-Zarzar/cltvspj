@@ -41,7 +41,7 @@ class _CltpageState extends State<Cltpage> {
             mobile: _buildContent(
               context,
               maxWidth: 370,
-              padding: 20,
+              padding: 10,
               minHeight: 550,
             ),
             tablet: _buildContent(
@@ -87,12 +87,12 @@ Widget _buildContent(
                         horizontal: 16,
                         vertical: 12,
                       ),
-                      margin: const EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         color: notifier.isDark
-                            ? CardColor.primaryColor.withValues(alpha: 0.7)
+                            ? CardColor.primaryColor
                             : CardColor.secondaryColor,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       child: Text(
                         'clt_simulation_hint'.tr(),
@@ -128,7 +128,7 @@ Widget _buildContent(
                                   children: [
                                     Icon(
                                       Icons.work_outline_rounded,
-                                      size: 20,
+                                      size: 18,
                                       semanticLabel: 'work_icon'.tr(),
                                       color: IconColor.primaryColor,
                                     ),
@@ -136,7 +136,6 @@ Widget _buildContent(
                                     Text("clt_data".tr(), style: context.h1),
                                   ],
                                 ),
-
                                 Row(
                                   children: [
                                     Tooltip(
@@ -186,7 +185,6 @@ Widget _buildContent(
                               ],
                             ),
                             const SizedBox(height: 20),
-
                             InputField(
                               label: 'salary_clt'.tr(),
                               controller: controller.cltSalaryController,
@@ -201,11 +199,28 @@ Widget _buildContent(
                               maxWidth: maxWidth,
                               onChanged: (_) => controller.calculate(),
                             ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton.icon(
+                                onPressed: () async {
+                                  await controller.clearData();
+                                },
+                                icon: Icon(
+                                  Icons.delete_outline,
+                                  color: IconColor.primaryColor,
+                                  semanticLabel: 'delete_icon'.tr(),
+                                ),
+                                label: Text(
+                                  'clear_data'.tr(),
+                                  style: context.footerMediumFont,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 8),
                     CustomButton(
                       animatedGradient: true,
                       fullWidth: true,

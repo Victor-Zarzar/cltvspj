@@ -127,5 +127,9 @@
   "pj_simulation_hint": "Simule os impostos da sua empresa (ME/EPP) optante pelo Simples Nacional.",
   "clt_simulation_hint": "Simule seu salário líquido CLT considerando impostos, INSS, IRRF e FGTS.",
   "pj_data": "Dados da empresa",
-  "calculator_question": "Qual compensa mais: CLT ou PJ?"
+  "calculator_question": "Qual compensa mais: CLT ou PJ?",
+  "clear_data": "Limpar dados",
+  "monthly_gross_revenue": "Faturamento Mensal Bruto",
+  "total_liquid": "Total Líquido",
+  "gross_revenue_pj": "Faturamento Bruto PJ"
 }

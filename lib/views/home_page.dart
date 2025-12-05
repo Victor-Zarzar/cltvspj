@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
       mobile: _buildContent(
         context,
         maxWidth: 370,
-        padding: 20,
+        padding: 10,
         minHeight: 550,
       ),
       tablet: _buildContent(

@@ -88,6 +88,11 @@ class DatabaseService {
     );
   }
 
+  Future<void> clearClt() async {
+    final dbClient = await db;
+    await dbClient.delete('clt');
+  }
+
   Future<void> savePj(PjModel model) async {
     final dbClient = await db;
     await dbClient.delete('pj');
@@ -110,6 +115,11 @@ class DatabaseService {
       inss: row['inss'] as double,
       taxes: row['taxes'] as double,
     );
+  }
+
+  Future<void> clearPj() async {
+    final dbClient = await db;
+    await dbClient.delete('pj');
   }
 
   Future<void> saveCalculator(CalculatorModel model) async {
@@ -138,6 +148,11 @@ class DatabaseService {
       accountantFee: row['accountantFee'] as double,
       inssPj: row['inssPj'] as double,
     );
+  }
+
+  Future<void> clearCalculator() async {
+    final dbClient = await db;
+    await dbClient.delete('calculator');
   }
 
   Future<void> saveUser(UserModel user) async {

@@ -127,5 +127,9 @@
   "pj_simulation_hint": "Simula los impuestos de tu empresa (ME/EPP) bajo el régimen de Simples Nacional.",
   "clt_simulation_hint": "Simula tu salario neto bajo contrato CLT, considerando impuestos, INSS, IRRF y FGTS.",
   "pj_data": "Datos de la empresa",
-  "calculator_question": "¿Cuál compensa más: CLT o PJ?"
+  "calculator_question": "¿Cuál compensa más: CLT o PJ?",
+  "clear_data": "Limpiar datos",
+  "monthly_gross_revenue": "Facturación Mensual Bruta",
+  "total_liquid": "Total Neto",
+  "gross_revenue_pj": "Facturación Bruta PJ"
 }

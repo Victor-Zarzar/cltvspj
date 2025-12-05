@@ -127,5 +127,9 @@
   "pj_simulation_hint": "Simulate the taxes for your company (ME/EPP) under the Simples Nacional regime.",
   "clt_simulation_hint": "Simulate your net salary under a CLT contract, considering taxes, INSS, IRRF and FGTS.",
   "pj_data": "Company data",
-  "calculator_question": "Which one pays off more: CLT or PJ?"
+  "calculator_question": "Which one pays off more: CLT or PJ?",
+  "clear_data": "Clear Data",
+  "monthly_gross_revenue": "Gross Monthly Revenue",
+  "total_liquid": "Total Net",
+  "gross_revenue_pj": "PJ Gross Revenue"
 }

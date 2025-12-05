@@ -72,6 +72,22 @@ class PjController extends ChangeNotifier {
     await DatabaseService().savePj(model);
   }
 
+  Future<void> clearData() async {
+    salaryController.updateValue(0);
+    accountantController.updateValue(0);
+    taxController.text = '0';
+    inssController.text = '0';
+    grossSalary = 0.0;
+    netSalary = 0.0;
+    inss = 0.0;
+    tax = 0.0;
+    accountantFee = 0.0;
+    inss = 0.0;
+
+    await DatabaseService().clearPj();
+    notifyListeners();
+  }
+
   Future<void> exportToPdf({
     required String name,
     required String profession,
@@ -86,14 +102,17 @@ class PjController extends ChangeNotifier {
       name: name,
       profession: profession,
       summaryRows: [
-        ReportRow(label: 'salary_pj'.tr(), value: formatCurrency(grossSalary)),
+        ReportRow(
+          label: 'monthly_gross_revenue'.tr(),
+          value: formatCurrency(grossSalary),
+        ),
         ReportRow(label: 'taxes_pj'.tr(), value: formatCurrency(tax)),
         ReportRow(
           label: 'accountant_fee'.tr(),
           value: formatCurrency(accountantFee),
         ),
         ReportRow(label: 'inss_pj'.tr(), value: formatCurrency(inss)),
-        ReportRow(label: 'net_salary'.tr(), value: formatCurrency(netSalary)),
+        ReportRow(label: 'total_liquid'.tr(), value: formatCurrency(netSalary)),
       ],
       benefits: const {},
       chartBytes: chartBytes,

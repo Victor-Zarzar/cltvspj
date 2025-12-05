@@ -97,7 +97,7 @@ class ResultPjtDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    '${'net_salary'.tr()}: ${currencyFormat.format(controller.netSalary)}',
+                    '${'total_liquid'.tr()}: ${currencyFormat.format(controller.netSalary)}',
                     style: context.bodySmallDarkBold,
                   ),
                 ],

@@ -79,6 +79,12 @@ flutter run -d chrome
 
 ---
 
+## 🧱 Mockup Images
+
+<img src="assets/imgs/mockup.png" alt="architecture" width="1000" height="800">
+
+---
+
 ## 🧱 Project Architecture
 
 <img src="assets/imgs/architecture.png" alt="architecture" width="1000" height="800">

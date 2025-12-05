@@ -22,6 +22,15 @@ class CltController extends ChangeNotifier {
 
   bool get hasValidInput => netSalary > 0;
 
+  bool get hasAnyData {
+    return cltSalaryController.numberValue > 0 ||
+        cltBenefitsController.numberValue > 0;
+  }
+
+  bool get isEmpty {
+    return !hasAnyData;
+  }
+
   bool includeFgts = false;
 
   double get netSalaryWithFgts => netSalary + fgts;
@@ -68,6 +77,22 @@ class CltController extends ChangeNotifier {
   Future<void> _saveData(double salary, double benefits) async {
     final model = CltModel(salaryClt: salary, benefits: benefits);
     await DatabaseService().saveClt(model);
+  }
+
+  Future<void> clearData() async {
+    cltSalaryController.updateValue(0);
+    cltBenefitsController.updateValue(0);
+    grossSalary = 0.0;
+    netSalary = 0.0;
+    netSalaryWithoutBenefits = 0.0;
+    inss = 0.0;
+    irrf = 0.0;
+    benefits = 0.0;
+    fgts = 0.0;
+    includeFgts = false;
+
+    await DatabaseService().clearClt();
+    notifyListeners();
   }
 
   Future<void> exportToPdf({
