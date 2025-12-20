@@ -1,5 +1,5 @@
-import 'package:cltvspj/controller/locale_controller.dart';
-import 'package:cltvspj/controller/notification_controller.dart';
+import 'package:cltvspj/controller/controllers/locale_controller.dart';
+import 'package:cltvspj/controller/controllers/notification_controller.dart';
 import 'package:cltvspj/features/app_assets.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';

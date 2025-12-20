@@ -1,12 +1,11 @@
 import 'dart:typed_data';
-import 'package:cltvspj/models/report_model.dart';
 import 'package:cltvspj/services/database_service.dart';
 import 'package:cltvspj/services/export_service.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../models/calculate_model.dart';
-import '../utils/salary_helper.dart';
+import 'package:cltvspj/models/calculate_model.dart';
+import 'package:cltvspj/controller/domain/calculator_engine.dart';
+import 'package:cltvspj/controller/reports/calculator_report_builder.dart';
 
 class CalculatorController extends ChangeNotifier {
   final salaryCltController = moneyMaskedController();
@@ -18,6 +17,9 @@ class CalculatorController extends ChangeNotifier {
   final taxesPjController = TextEditingController();
   final inssPjController = TextEditingController();
 
+  final CalculatorEngine _engine;
+  final CalculatorReportBuilder _reportBuilder;
+
   CalculatorModel model = CalculatorModel(
     salaryClt: 0,
     salaryPj: 0,
@@ -26,6 +28,12 @@ class CalculatorController extends ChangeNotifier {
     accountantFee: 189.0,
     inssPj: 0.11,
   );
+
+  CalculatorController({
+    CalculatorEngine engine = const CalculatorEngine(),
+    CalculatorReportBuilder reportBuilder = const CalculatorReportBuilder(),
+  }) : _engine = engine,
+       _reportBuilder = reportBuilder;
 
   double _parsePercentage(TextEditingController controller) {
     return double.tryParse(controller.text.replaceAll(',', '.')) ?? 0.0;
@@ -36,41 +44,38 @@ class CalculatorController extends ChangeNotifier {
       _parsePercentage(inssPjController) > 0 &&
       _parsePercentage(taxesPjController) > 0;
 
-  double get difference => (totalClt - totalPj).abs();
-
   double get benefits => model.benefits;
 
   double get inss => model.salaryPj * model.inssPj;
 
   double get accountantFee => model.accountantFee;
 
-  double get totalClt {
-    final inss = calculateInss(model.salaryClt);
-    final irrf = calculateIrrf(model.salaryClt);
-    return model.salaryClt - inss - irrf + model.benefits;
-  }
+  double get totalClt =>
+      _engine.totalClt(salaryClt: model.salaryClt, benefits: model.benefits);
 
-  double get totalPj {
-    final taxPj = model.salaryPj * (model.taxesPj / 100);
-    final inss = model.salaryPj * model.inssPj;
-    return model.salaryPj - (taxPj + inss + model.accountantFee);
-  }
+  double get totalPj => _engine.totalPj(
+    salaryPj: model.salaryPj,
+    taxesPjPercent: model.taxesPj,
+    inssPjRate: model.inssPj,
+    accountantFee: model.accountantFee,
+  );
+
+  double get difference => (totalClt - totalPj).abs();
 
   String get bestOption {
-    final diff = (totalClt - totalPj).abs();
-    final amountFormatted = NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$',
-      decimalDigits: 2,
-    ).format(diff);
+    final amountFormatted = currencyFormat.format(difference);
 
-    if (totalClt > totalPj) {
-      return 'clt_better'.tr(namedArgs: {'amount': amountFormatted});
-    } else if (totalPj > totalClt) {
-      return 'pj_better'.tr(namedArgs: {'amount': amountFormatted});
-    } else {
-      return 'perfect_tie'.tr();
-    }
+    return _engine
+        .evaluate(
+          salaryClt: model.salaryClt,
+          benefits: model.benefits,
+          salaryPj: model.salaryPj,
+          taxesPjPercent: model.taxesPj,
+          inssPjRate: model.inssPj,
+          accountantFee: model.accountantFee,
+          amountFormatted: amountFormatted,
+        )
+        .bestOptionText;
   }
 
   double fgts = 0.0;
@@ -89,10 +94,12 @@ class CalculatorController extends ChangeNotifier {
 
   Future<void> loadData() async {
     model = await DatabaseService().loadCalculator() ?? model;
+
     salaryCltController.updateValue(model.salaryClt);
     salaryPjController.updateValue(model.salaryPj);
     benefitsController.updateValue(model.benefits);
     accountantFeeController.updateValue(model.accountantFee);
+
     taxesPjController.text = model.taxesPj
         .toStringAsFixed(2)
         .replaceAll('.', ',');
@@ -139,7 +146,6 @@ class CalculatorController extends ChangeNotifier {
     );
 
     await DatabaseService().clearCalculator();
-
     notifyListeners();
   }
 
@@ -148,38 +154,13 @@ class CalculatorController extends ChangeNotifier {
     required String profession,
     Uint8List? chartBytes,
   }) async {
-    String formatCurrency(double value) => currencyFormat.format(value);
-
-    final diff = (totalClt - totalPj).abs();
-
-    final reportData = ReportData(
-      title: 'pdf_title_clt_vs_pj'.tr(),
+    final reportData = _reportBuilder.build(
       name: name,
       profession: profession,
-      summaryRows: [
-        ReportRow(
-          label: 'pdf_row_clt_net'.tr(),
-          value: formatCurrency(totalClt),
-        ),
-        ReportRow(label: 'pdf_row_pj_net'.tr(), value: formatCurrency(totalPj)),
-        ReportRow(
-          label: 'pdf_row_difference'.tr(),
-          value: formatCurrency(diff),
-        ),
-      ],
-      benefits: {},
+      totalClt: totalClt,
+      totalPj: totalPj,
+      differenceAbs: difference,
       chartBytes: chartBytes,
-      benefitsRows: [],
-      labels: ReportLabels(
-        namePrefix: 'report_name_prefix'.tr(),
-        professionPrefix: 'report_profession_prefix'.tr(),
-        benefitsTitle: 'report_benefits_title'.tr(),
-        chartTitle: 'report_chart_title'.tr(),
-        tableHeaders: [
-          'report_table_header_type'.tr(),
-          'report_table_header_value'.tr(),
-        ],
-      ),
     );
 
     await generatePdfReport(reportData);

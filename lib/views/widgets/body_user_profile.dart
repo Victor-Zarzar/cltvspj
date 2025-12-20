@@ -1,4 +1,4 @@
-import 'package:cltvspj/controller/user_controller.dart';
+import 'package:cltvspj/controller/controllers/user_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';

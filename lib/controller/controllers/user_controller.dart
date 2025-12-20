@@ -1,15 +1,15 @@
 import 'dart:typed_data';
-import 'package:cltvspj/models/report_model.dart';
 import 'package:cltvspj/services/export_service.dart';
-import 'package:cltvspj/utils/currency_format_helper.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:cltvspj/models/user_model.dart';
-import 'package:cltvspj/services/database_service.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:cltvspj/utils/currency_format_helper.dart';
+import 'package:cltvspj/controller/reports/user_report_builder.dart';
+import 'package:cltvspj/controller/repositories/user_repository.dart';
 
 class UserController extends ChangeNotifier {
-  final DatabaseService _dbService = DatabaseService();
+  final UserRepository _repo;
+  final UserReportBuilder _reportBuilder;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController professionController = TextEditingController();
@@ -41,6 +41,12 @@ class UserController extends ChangeNotifier {
     return hasName || hasProfession || hasSalary || hasBenefits;
   }
 
+  UserController({
+    UserRepository? repo,
+    UserReportBuilder reportBuilder = const UserReportBuilder(),
+  }) : _repo = repo ?? UserRepository(),
+       _reportBuilder = reportBuilder;
+
   void _resetMoneyControllers() {
     salaryController.updateValue(0);
     benefitsController.updateValue(0);
@@ -50,7 +56,7 @@ class UserController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      final user = await _dbService.loadUser();
+      final user = await _repo.load();
       if (user != null) {
         nameController.text = user.name;
         professionController.text = user.profession;
@@ -73,37 +79,15 @@ class UserController extends ChangeNotifier {
     required String profession,
     Uint8List? chartBytes,
   }) async {
-    String formatCurrency(double value) => currencyFormat.format(value);
-
     final double parsedSalary = salaryController.numberValue.toDouble();
     final double parsedBenefits = benefitsController.numberValue.toDouble();
 
-    final reportData = ReportData(
-      title: 'user_report_title'.tr(),
+    final reportData = _reportBuilder.build(
       name: name,
       profession: profession,
-      summaryRows: [
-        ReportRow(label: 'name'.tr(), value: (name)),
-        ReportRow(label: 'profession'.tr(), value: (profession)),
-        ReportRow(label: 'salary'.tr(), value: formatCurrency(parsedSalary)),
-        ReportRow(
-          label: 'benefits'.tr(),
-          value: formatCurrency(parsedBenefits),
-        ),
-      ],
-      benefits: {'benefits'.tr(): parsedBenefits},
+      salary: parsedSalary,
+      benefits: parsedBenefits,
       chartBytes: chartBytes,
-      benefitsRows: [],
-      labels: ReportLabels(
-        namePrefix: 'report_name_prefix'.tr(),
-        professionPrefix: 'report_professions_prefix'.tr(),
-        benefitsTitle: 'report_benefits_title'.tr(),
-        chartTitle: 'report_chart_title'.tr(),
-        tableHeaders: [
-          'report_table_header_type'.tr(),
-          'report_table_header_value'.tr(),
-        ],
-      ),
     );
 
     await generatePdfReport(reportData);
@@ -121,7 +105,7 @@ class UserController extends ChangeNotifier {
         profession: professionController.text.trim(),
       );
 
-      await _dbService.saveUser(user);
+      await _repo.save(user);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -132,7 +116,7 @@ class UserController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      await _dbService.clearUser();
+      await _repo.clear();
       nameController.clear();
       professionController.clear();
       _resetMoneyControllers();

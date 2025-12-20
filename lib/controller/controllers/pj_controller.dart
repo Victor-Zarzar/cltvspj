@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:cltvspj/models/report_model.dart';
 import 'package:cltvspj/services/database_service.dart';
 import 'package:cltvspj/services/export_service.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:cltvspj/models/pj_model.dart';
+import 'package:cltvspj/controller/domain/pj_calculator.dart';
+import 'package:cltvspj/controller/reports/pj_report_builder.dart';
 
 class PjController extends ChangeNotifier {
   final salaryController = moneyMaskedController();
@@ -15,20 +15,28 @@ class PjController extends ChangeNotifier {
   final taxController = TextEditingController();
   final inssController = TextEditingController();
 
+  final PjCalculator _calculator;
+  final PjReportBuilder _reportBuilder;
+
   double grossSalary = 0.0;
   double netSalary = 0.0;
+
   double tax = 0.0;
   double accountantFee = 189.0;
   double inss = 0.11;
 
   bool get hasValidInput => netSalary > 0 && tax > 0 && inss > 0;
 
-  PjController() {
+  PjController({
+    PjCalculator calculator = const PjCalculator(),
+    PjReportBuilder reportBuilder = const PjReportBuilder(),
+  }) : _calculator = calculator,
+       _reportBuilder = reportBuilder {
     _loadData();
   }
 
-  void calculate() {
-    final grossSalary = salaryController.numberValue;
+  void calculate({bool persist = true}) {
+    grossSalary = salaryController.numberValue;
 
     final taxPercent =
         double.tryParse(taxController.text.replaceAll(',', '.')) ?? 0.0;
@@ -36,13 +44,24 @@ class PjController extends ChangeNotifier {
         double.tryParse(inssController.text.replaceAll(',', '.')) ?? 0.0;
 
     accountantFee = accountantController.numberValue;
-    tax = grossSalary * (taxPercent / 100);
-    inss = grossSalary * (inssPercent / 100);
 
-    final totalDiscount = tax + inss + accountantFee;
-    netSalary = grossSalary - totalDiscount;
+    final result = _calculator.calculate(
+      PjCalculationInput(
+        grossSalary: grossSalary,
+        taxPercent: taxPercent,
+        inssPercent: inssPercent,
+        accountantFee: accountantFee,
+      ),
+    );
 
-    _saveData(grossSalary, taxPercent, accountantFee, inssPercent);
+    tax = result.taxValue;
+    inss = result.inssValue;
+    netSalary = result.netSalary;
+
+    if (persist) {
+      _saveData(grossSalary, taxPercent, accountantFee, inssPercent);
+    }
+
     notifyListeners();
   }
 
@@ -53,7 +72,8 @@ class PjController extends ChangeNotifier {
       accountantController.updateValue(model.accountantFee);
       taxController.text = model.taxes.toStringAsFixed(0);
       inssController.text = model.inss.toStringAsFixed(0);
-      calculate();
+
+      calculate(persist: false);
     }
   }
 
@@ -77,9 +97,9 @@ class PjController extends ChangeNotifier {
     accountantController.updateValue(0);
     taxController.text = '0';
     inssController.text = '0';
+
     grossSalary = 0.0;
     netSalary = 0.0;
-    inss = 0.0;
     tax = 0.0;
     accountantFee = 0.0;
     inss = 0.0;
@@ -93,40 +113,15 @@ class PjController extends ChangeNotifier {
     required String profession,
     Uint8List? chartBytes,
   }) async {
-    String formatCurrency(double value) => currencyFormat.format(value);
-
-    final grossSalary = salaryController.numberValue;
-
-    final reportData = ReportData(
-      title: 'pj_report_title'.tr(),
+    final reportData = _reportBuilder.build(
       name: name,
       profession: profession,
-      summaryRows: [
-        ReportRow(
-          label: 'monthly_gross_revenue'.tr(),
-          value: formatCurrency(grossSalary),
-        ),
-        ReportRow(label: 'taxes_pj'.tr(), value: formatCurrency(tax)),
-        ReportRow(
-          label: 'accountant_fee'.tr(),
-          value: formatCurrency(accountantFee),
-        ),
-        ReportRow(label: 'inss_pj'.tr(), value: formatCurrency(inss)),
-        ReportRow(label: 'total_liquid'.tr(), value: formatCurrency(netSalary)),
-      ],
-      benefits: const {},
+      grossSalary: grossSalary,
+      taxValue: tax,
+      accountantFee: accountantFee,
+      inssValue: inss,
+      netSalary: netSalary,
       chartBytes: chartBytes,
-      benefitsRows: [],
-      labels: ReportLabels(
-        namePrefix: 'report_name_prefix'.tr(),
-        professionPrefix: 'report_profession_prefix'.tr(),
-        benefitsTitle: 'report_benefits_title'.tr(),
-        chartTitle: 'report_chart_title'.tr(),
-        tableHeaders: [
-          'report_table_header_type'.tr(),
-          'report_table_header_value'.tr(),
-        ],
-      ),
     );
 
     await generatePdfReport(reportData);

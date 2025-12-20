@@ -1,9 +1,9 @@
-import 'package:cltvspj/controller/calculator_controller.dart';
-import 'package:cltvspj/controller/clt_controller.dart';
-import 'package:cltvspj/controller/locale_controller.dart';
-import 'package:cltvspj/controller/notification_controller.dart';
-import 'package:cltvspj/controller/pj_controller.dart';
-import 'package:cltvspj/controller/user_controller.dart';
+import 'package:cltvspj/controller/controllers/calculator_controller.dart';
+import 'package:cltvspj/controller/controllers/clt_controller.dart';
+import 'package:cltvspj/controller/controllers/locale_controller.dart';
+import 'package:cltvspj/controller/controllers/notification_controller.dart';
+import 'package:cltvspj/controller/controllers/pj_controller.dart';
+import 'package:cltvspj/controller/controllers/user_controller.dart';
 import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/services/notification_service.dart';
 import 'package:cltvspj/services/secure_service.dart';

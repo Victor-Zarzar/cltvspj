@@ -1,16 +1,18 @@
 import 'dart:typed_data';
 import 'package:cltvspj/models/clt_model.dart';
-import 'package:cltvspj/models/report_model.dart';
 import 'package:cltvspj/services/database_service.dart';
 import 'package:cltvspj/services/export_service.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
-import 'package:cltvspj/utils/salary_helper.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:cltvspj/controller/domain/clt_calculator.dart';
+import 'package:cltvspj/controller/reports/clt_report_builder.dart';
 
 class CltController extends ChangeNotifier {
   final cltSalaryController = moneyMaskedController();
   final cltBenefitsController = moneyMaskedController();
+
+  final CltCalculator _calculator;
+  final CltReportBuilder _reportBuilder;
 
   double grossSalary = 0.0;
   double netSalary = 0.0;
@@ -27,32 +29,40 @@ class CltController extends ChangeNotifier {
         cltBenefitsController.numberValue > 0;
   }
 
-  bool get isEmpty {
-    return !hasAnyData;
-  }
+  bool get isEmpty => !hasAnyData;
 
   bool includeFgts = false;
 
   double get netSalaryWithFgts => netSalary + fgts;
-
   double get netSalaryDisplay => includeFgts ? netSalary + fgts : netSalary;
 
-  CltController() {
+  CltController({
+    CltCalculator calculator = const CltCalculator(),
+    CltReportBuilder reportBuilder = const CltReportBuilder(),
+  }) : _calculator = calculator,
+       _reportBuilder = reportBuilder {
     _loadData();
   }
 
-  void calculate() {
+  void calculate({bool persist = true}) {
     grossSalary = cltSalaryController.numberValue;
     benefits = cltBenefitsController.numberValue;
 
-    inss = calculateInss(grossSalary);
-    irrf = calculateIrrf(grossSalary);
-    fgts = calculateFgts(grossSalary);
+    final result = _calculator.calculate(
+      grossSalary: grossSalary,
+      benefits: benefits,
+    );
 
-    netSalaryWithoutBenefits = grossSalary - inss - irrf;
-    netSalary = netSalaryWithoutBenefits + benefits;
+    inss = result.inss;
+    irrf = result.irrf;
+    fgts = result.fgts;
+    netSalaryWithoutBenefits = result.netSalaryWithoutBenefits;
+    netSalary = result.netSalary;
 
-    _saveData(grossSalary, benefits);
+    if (persist) {
+      _saveData(grossSalary, benefits);
+    }
+
     notifyListeners();
   }
 
@@ -70,7 +80,7 @@ class CltController extends ChangeNotifier {
     if (model != null) {
       cltSalaryController.updateValue(model.salaryClt);
       cltBenefitsController.updateValue(model.benefits);
-      calculate();
+      calculate(persist: false);
     }
   }
 
@@ -100,55 +110,18 @@ class CltController extends ChangeNotifier {
     required String profession,
     Uint8List? chartBytes,
   }) async {
-    String formatCurrency(double value) => currencyFormat.format(value);
-
-    final bool useFgts = includeFgts;
-    final String netLabel = useFgts
-        ? 'net_salary_with_fgts'.tr()
-        : 'net_salary'.tr();
-
-    final double netValueToShow = netSalaryDisplay;
-
-    final List<ReportRow> summaryRows = [
-      ReportRow(label: 'salary_clt'.tr(), value: formatCurrency(grossSalary)),
-      ReportRow(label: 'inss'.tr(), value: formatCurrency(inss)),
-      ReportRow(label: 'irrf'.tr(), value: formatCurrency(irrf)),
-      ReportRow(
-        label: 'net_salary_discounts'.tr(),
-        value: formatCurrency(netSalaryWithoutBenefits),
-      ),
-      ReportRow(label: 'benefits_clt'.tr(), value: formatCurrency(benefits)),
-    ];
-
-    if (useFgts) {
-      summaryRows.insert(
-        3,
-        ReportRow(label: 'fgts'.tr(), value: formatCurrency(fgts)),
-      );
-    }
-
-    summaryRows.add(
-      ReportRow(label: netLabel, value: formatCurrency(netValueToShow)),
-    );
-
-    final reportData = ReportData(
-      title: 'clt_report_title'.tr(),
+    final reportData = _reportBuilder.build(
       name: name,
       profession: profession,
-      summaryRows: summaryRows,
-      benefits: {'benefits_clt'.tr(): benefits},
+      grossSalary: grossSalary,
+      inss: inss,
+      irrf: irrf,
+      fgts: fgts,
+      netSalaryWithoutBenefits: netSalaryWithoutBenefits,
+      benefits: benefits,
+      netSalaryToShow: netSalaryDisplay,
+      includeFgts: includeFgts,
       chartBytes: chartBytes,
-      benefitsRows: [],
-      labels: ReportLabels(
-        namePrefix: 'report_name_prefix'.tr(),
-        professionPrefix: 'report_profession_prefix'.tr(),
-        benefitsTitle: 'report_benefits_title'.tr(),
-        chartTitle: 'report_chart_title'.tr(),
-        tableHeaders: [
-          'report_table_header_type'.tr(),
-          'report_table_header_value'.tr(),
-        ],
-      ),
     );
 
     await generatePdfReport(reportData);
