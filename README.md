@@ -33,21 +33,16 @@ Built with Flutter, responsive UI, multi-language support and browser extension 
 
 ```bash
 git clone https://github.com/Victor-Zarzar/cltvspj
-```
-
-### 2. Enter the directory
-
-```bash
 cd cltvspj
 ```
 
-### 3. Open in your editor (example: VS Code)
+### 2. Open in your editor (example: Zed Editor)
 
 ```bash
-code .
+zed .
 ```
 
-### 4. Install dependencies
+### 3. Install dependencies
 
 Using Makefile:
 
