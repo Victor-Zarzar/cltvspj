@@ -6,6 +6,7 @@ import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:cltvspj/controller/domain/clt_calculator.dart';
 import 'package:cltvspj/controller/reports/clt_report_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CltController extends ChangeNotifier {
   final cltSalaryController = moneyMaskedController();
@@ -15,26 +16,30 @@ class CltController extends ChangeNotifier {
   final CltReportBuilder _reportBuilder;
 
   double grossSalary = 0.0;
-  double netSalary = 0.0;
-  double netSalaryWithoutBenefits = 0.0;
+  double benefits = 0.0;
   double inss = 0.0;
   double irrf = 0.0;
-  double benefits = 0.0;
-  double fgts = 0.0;
-
-  bool get hasValidInput => netSalary > 0;
-
-  bool get hasAnyData {
-    return cltSalaryController.numberValue > 0 ||
-        cltBenefitsController.numberValue > 0;
-  }
-
-  bool get isEmpty => !hasAnyData;
+  double netSalaryWithoutBenefits = 0.0;
+  double netSalaryBase = 0.0;
+  double fgtsValue = 0.0;
 
   bool includeFgts = false;
 
-  double get netSalaryWithFgts => netSalary + fgts;
-  double get netSalaryDisplay => includeFgts ? netSalary + fgts : netSalary;
+  bool get hasValidInput => netSalaryBase > 0;
+
+  bool get hasAnyData =>
+      cltSalaryController.numberValue > 0 ||
+      cltBenefitsController.numberValue > 0;
+
+  bool get isEmpty => !hasAnyData;
+
+  double get netSalaryToShow => netSalaryBase + (includeFgts ? fgtsValue : 0.0);
+
+  String get netSalaryLabelToShow =>
+      includeFgts ? 'net_salary_with_fgts'.tr() : 'net_salary'.tr();
+
+  double get employerCost =>
+      grossSalary + benefits + (includeFgts ? fgtsValue : 0.0);
 
   CltController({
     CltCalculator calculator = const CltCalculator(),
@@ -55,19 +60,15 @@ class CltController extends ChangeNotifier {
 
     inss = result.inss;
     irrf = result.irrf;
-    fgts = result.fgts;
+    fgtsValue = result.fgts;
     netSalaryWithoutBenefits = result.netSalaryWithoutBenefits;
-    netSalary = result.netSalary;
+    netSalaryBase = result.netSalary;
 
     if (persist) {
       _saveData(grossSalary, benefits);
     }
 
     notifyListeners();
-  }
-
-  double get employerCost {
-    return grossSalary + benefits + (includeFgts ? fgts : 0);
   }
 
   void toggleIncludeFgts(bool value) {
@@ -93,12 +94,12 @@ class CltController extends ChangeNotifier {
     cltSalaryController.updateValue(0);
     cltBenefitsController.updateValue(0);
     grossSalary = 0.0;
-    netSalary = 0.0;
-    netSalaryWithoutBenefits = 0.0;
+    benefits = 0.0;
     inss = 0.0;
     irrf = 0.0;
-    benefits = 0.0;
-    fgts = 0.0;
+    netSalaryWithoutBenefits = 0.0;
+    netSalaryBase = 0.0;
+    fgtsValue = 0.0;
     includeFgts = false;
 
     await DatabaseService().clearClt();
@@ -116,10 +117,10 @@ class CltController extends ChangeNotifier {
       grossSalary: grossSalary,
       inss: inss,
       irrf: irrf,
-      fgts: fgts,
+      fgts: fgtsValue,
       netSalaryWithoutBenefits: netSalaryWithoutBenefits,
       benefits: benefits,
-      netSalaryToShow: netSalaryDisplay,
+      netSalaryToShow: netSalaryToShow,
       includeFgts: includeFgts,
       chartBytes: chartBytes,
     );

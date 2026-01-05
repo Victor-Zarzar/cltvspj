@@ -57,7 +57,7 @@ class InputField extends StatelessWidget {
                     (keyboardType == TextInputType.number
                         ? <TextInputFormatter>[
                             FilteringTextInputFormatter.allow(
-                              RegExp(r'[0-9,.]'),
+                              RegExp(r'\d+(\.\d*)?'),
                             ),
                           ]
                         : null),

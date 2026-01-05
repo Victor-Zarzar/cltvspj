@@ -25,12 +25,14 @@ class ResultDialog extends StatelessWidget {
     return Consumer2<UiProvider, CalculatorController>(
       builder: (context, notifier, controller, child) {
         final chartData = ChartDataHelper.buildResultChartData(
-          cltNet: controller.totalClt,
+          cltNet: controller.totalCltToShow,
           pjNet: controller.totalPj,
-          difference: controller.difference,
+          difference: controller.differenceToShow,
           benefits: controller.benefits,
           inss: controller.inss,
           accountantFee: controller.accountantFee,
+          fgts: controller.fgtsValue,
+          includeFgts: controller.includeFgts,
         );
 
         final colorList = [
@@ -39,6 +41,7 @@ class ResultDialog extends StatelessWidget {
           ChartColor.fourthColor,
           ChartColor.sixthColor,
           ChartColor.fifthColor,
+          ChartColor.thirdColor,
         ];
 
         final mediaQuery = MediaQuery.of(context);
@@ -77,8 +80,10 @@ class ResultDialog extends StatelessWidget {
                   const SizedBox(height: 16),
                   _buildSalaryLine(
                     context,
-                    label: 'clt_net'.tr(),
-                    value: controller.totalClt,
+                    label: controller.includeFgts
+                        ? 'clt_net_with_fgts'.tr()
+                        : 'clt_net'.tr(),
+                    value: controller.totalCltToShow,
                   ),
                   const SizedBox(height: 4),
                   _buildSalaryLine(
@@ -108,8 +113,16 @@ class ResultDialog extends StatelessWidget {
                   _buildSalaryLine(
                     context,
                     label: 'difference'.tr(),
-                    value: controller.difference,
+                    value: controller.differenceToShow,
                   ),
+                  if (controller.includeFgts) ...[
+                    const SizedBox(height: 4),
+                    _buildSalaryLine(
+                      context,
+                      label: 'fgts'.tr(),
+                      value: controller.fgtsValue,
+                    ),
+                  ],
                   Divider(
                     color: notifier.isDark
                         ? DividerColor.primaryColor.withValues(alpha: 0.15)

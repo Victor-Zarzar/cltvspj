@@ -1,10 +1,10 @@
 class CalculatorModel {
-  double salaryClt;
-  double salaryPj;
-  double benefits;
-  double taxesPj;
-  double accountantFee;
-  double inssPj;
+  final double salaryClt;
+  final double salaryPj;
+  final double benefits;
+  final double taxesPj;
+  final double accountantFee;
+  final double inssPj;
 
   CalculatorModel({
     required this.salaryClt,

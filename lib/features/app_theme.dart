@@ -141,7 +141,7 @@ class ChartColor {
   ChartColor._();
   static Color get primaryColor => const Color(0xFF339CFF);
   static Color get secondaryColor => const Color(0xFFFFAE33);
-  static Color get thirdColor => const Color(0xFF4C6FFF);
+  static Color get thirdColor => const Color(0xFF6D4C41);
   static Color get fourthColor => const Color(0xFF20A819);
   static Color get fifthColor => const Color(0xFFB819A8);
   static Color get sixthColor => const Color.fromARGB(255, 193, 47, 14);

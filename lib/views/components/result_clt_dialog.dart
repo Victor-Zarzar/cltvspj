@@ -25,22 +25,13 @@ class ResultCltDialog extends StatelessWidget {
     return Consumer2<UiProvider, CltController>(
       builder: (context, notifier, controller, _) {
         final chartData = CltChartDataHelper.buildResultChartData(
-          netSalary: controller.netSalary,
+          netSalary: controller.netSalaryBase,
           inss: controller.inss,
           irrf: controller.irrf,
           benefits: controller.benefits,
-          fgts: controller.fgts,
+          fgts: controller.fgtsValue,
           includeFgts: controller.includeFgts,
         );
-
-        final bool includeFgts = controller.includeFgts;
-        final double netValueToShow = includeFgts
-            ? controller.netSalary + controller.fgts
-            : controller.netSalary;
-
-        final String netLabel = includeFgts
-            ? 'net_salary_with_fgts'.tr()
-            : 'net_salary'.tr();
 
         final colorList = [
           ChartColor.primaryColor,
@@ -106,7 +97,7 @@ class ResultCltDialog extends StatelessWidget {
                     _buildSalaryLine(
                       context,
                       label: 'fgts'.tr(),
-                      value: controller.fgts,
+                      value: controller.fgtsValue,
                     ),
                   ],
                   const SizedBox(height: 12),
@@ -118,7 +109,7 @@ class ResultCltDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '$netLabel: ${currencyFormat.format(netValueToShow)}',
+                    '${controller.netSalaryLabelToShow}: ${currencyFormat.format(controller.netSalaryToShow)}',
                     textAlign: TextAlign.center,
                     style: context.bodySmallDarkBold,
                   ),

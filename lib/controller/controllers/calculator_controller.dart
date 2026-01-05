@@ -45,12 +45,9 @@ class CalculatorController extends ChangeNotifier {
       _parsePercentage(taxesPjController) > 0;
 
   double get benefits => model.benefits;
-
   double get inss => model.salaryPj * model.inssPj;
-
   double get accountantFee => model.accountantFee;
-
-  double get totalClt =>
+  double get totalCltBase =>
       _engine.totalClt(salaryClt: model.salaryClt, benefits: model.benefits);
 
   double get totalPj => _engine.totalPj(
@@ -60,10 +57,16 @@ class CalculatorController extends ChangeNotifier {
     accountantFee: model.accountantFee,
   );
 
-  double get difference => (totalClt - totalPj).abs();
+  bool includeFgts = false;
+
+  double get fgtsValue => model.salaryClt * 0.08;
+
+  double get totalCltToShow => totalCltBase + (includeFgts ? fgtsValue : 0.0);
+
+  double get differenceToShow => (totalCltToShow - totalPj).abs();
 
   String get bestOption {
-    final amountFormatted = currencyFormat.format(difference);
+    final amountFormatted = currencyFormat.format(differenceToShow);
 
     return _engine
         .evaluate(
@@ -77,15 +80,6 @@ class CalculatorController extends ChangeNotifier {
         )
         .bestOptionText;
   }
-
-  double fgts = 0.0;
-  double grossSalary = 0.0;
-
-  double get employerCost {
-    return grossSalary + benefits + (includeFgts ? fgts : 0);
-  }
-
-  bool includeFgts = false;
 
   void toggleIncludeFgts(bool value) {
     includeFgts = value;
@@ -103,6 +97,7 @@ class CalculatorController extends ChangeNotifier {
     taxesPjController.text = model.taxesPj
         .toStringAsFixed(2)
         .replaceAll('.', ',');
+
     inssPjController.text = (model.inssPj * 100)
         .toStringAsFixed(2)
         .replaceAll('.', ',');
@@ -157,9 +152,9 @@ class CalculatorController extends ChangeNotifier {
     final reportData = _reportBuilder.build(
       name: name,
       profession: profession,
-      totalClt: totalClt,
+      totalClt: totalCltToShow,
       totalPj: totalPj,
-      differenceAbs: difference,
+      differenceAbs: differenceToShow,
       chartBytes: chartBytes,
     );
 

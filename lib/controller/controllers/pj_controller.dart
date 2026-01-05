@@ -67,14 +67,20 @@ class PjController extends ChangeNotifier {
 
   Future<void> _loadData() async {
     final model = await DatabaseService().loadPj();
+
     if (model != null) {
       salaryController.updateValue(model.grossSalary);
       accountantController.updateValue(model.accountantFee);
-      taxController.text = model.taxes.toStringAsFixed(0);
-      inssController.text = model.inss.toStringAsFixed(0);
-
-      calculate(persist: false);
+      taxController.text = model.taxes.toStringAsFixed(2);
+      inssController.text = model.inss.toStringAsFixed(2);
+    } else {
+      salaryController.updateValue(0);
+      accountantController.updateValue(189.0);
+      taxController.text = '0';
+      inssController.text = '0';
     }
+
+    calculate(persist: false);
   }
 
   Future<void> _saveData(

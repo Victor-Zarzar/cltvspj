@@ -8,8 +8,10 @@ class ChartDataHelper {
     required double benefits,
     required double inss,
     required double accountantFee,
+    required double fgts,
+    required bool includeFgts,
   }) {
-    return {
+    final data = <String, double>{
       'CLT': cltNet,
       'PJ': pjNet,
       'difference'.tr(): difference,
@@ -17,5 +19,11 @@ class ChartDataHelper {
       'inss_pj_description'.tr(): inss,
       'taxes_pj__description'.tr(): accountantFee,
     };
+
+    if (includeFgts && fgts > 0) {
+      data['fgts'.tr()] = fgts;
+    }
+
+    return data;
   }
 }
