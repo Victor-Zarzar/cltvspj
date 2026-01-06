@@ -87,20 +87,27 @@ class CalculatorController extends ChangeNotifier {
   }
 
   Future<void> loadData() async {
-    model = await DatabaseService().loadCalculator() ?? model;
+    final model = await DatabaseService().loadCalculator();
 
-    salaryCltController.updateValue(model.salaryClt);
-    salaryPjController.updateValue(model.salaryPj);
-    benefitsController.updateValue(model.benefits);
-    accountantFeeController.updateValue(model.accountantFee);
-
-    taxesPjController.text = model.taxesPj
-        .toStringAsFixed(2)
-        .replaceAll('.', ',');
-
-    inssPjController.text = (model.inssPj * 100)
-        .toStringAsFixed(2)
-        .replaceAll('.', ',');
+    if (model != null) {
+      salaryCltController.updateValue(model.salaryClt);
+      salaryPjController.updateValue(model.salaryPj);
+      benefitsController.updateValue(model.benefits);
+      accountantFeeController.updateValue(model.accountantFee);
+      inssPjController.text = (model.inssPj * 100)
+          .toStringAsFixed(2)
+          .replaceAll('.', ',');
+      taxesPjController.text = model.taxesPj
+          .toStringAsFixed(2)
+          .replaceAll('.', ',');
+    } else {
+      salaryCltController.updateValue(0);
+      salaryPjController.updateValue(0);
+      benefitsController.updateValue(0);
+      accountantFeeController.updateValue(189.0);
+      inssPjController.text = '0';
+      taxesPjController.text = '0';
+    }
 
     notifyListeners();
   }
@@ -155,6 +162,12 @@ class CalculatorController extends ChangeNotifier {
       totalClt: totalCltToShow,
       totalPj: totalPj,
       differenceAbs: differenceToShow,
+      includeFgts: includeFgts,
+      fgts: fgtsValue,
+      benefits: benefits,
+      inssPj: inss,
+      taxesPjPercent: model.taxesPj,
+      accountantFee: model.accountantFee,
       chartBytes: chartBytes,
     );
 

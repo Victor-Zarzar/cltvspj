@@ -18,23 +18,25 @@ class PjReportBuilder {
   }) {
     String formatCurrency(double value) => currencyFormat.format(value);
 
+    final List<ReportRow> summaryRows = [
+      ReportRow(
+        label: 'monthly_gross_revenue'.tr(),
+        value: formatCurrency(grossSalary),
+      ),
+      ReportRow(label: 'taxes_pj'.tr(), value: formatCurrency(taxValue)),
+      ReportRow(
+        label: 'accountant_fee'.tr(),
+        value: formatCurrency(accountantFee),
+      ),
+      ReportRow(label: 'inss_pj'.tr(), value: formatCurrency(inssValue)),
+      ReportRow(label: 'total_liquid'.tr(), value: formatCurrency(netSalary)),
+    ];
+
     return ReportData(
       title: 'pj_report_title'.tr(),
       name: name,
       profession: profession,
-      summaryRows: [
-        ReportRow(
-          label: 'monthly_gross_revenue'.tr(),
-          value: formatCurrency(grossSalary),
-        ),
-        ReportRow(label: 'taxes_pj'.tr(), value: formatCurrency(taxValue)),
-        ReportRow(
-          label: 'accountant_fee'.tr(),
-          value: formatCurrency(accountantFee),
-        ),
-        ReportRow(label: 'inss_pj'.tr(), value: formatCurrency(inssValue)),
-        ReportRow(label: 'total_liquid'.tr(), value: formatCurrency(netSalary)),
-      ],
+      summaryRows: summaryRows,
       benefits: const {},
       chartBytes: chartBytes,
       benefitsRows: [],

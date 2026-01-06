@@ -81,6 +81,9 @@ class CltController extends ChangeNotifier {
     if (model != null) {
       cltSalaryController.updateValue(model.salaryClt);
       cltBenefitsController.updateValue(model.benefits);
+    } else {
+      cltSalaryController.updateValue(0);
+      cltBenefitsController.updateValue(0);
       calculate(persist: false);
     }
   }
