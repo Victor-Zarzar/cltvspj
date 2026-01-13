@@ -14,6 +14,11 @@ build-extension-dev:
 build-extension-prod:
 	flutter pub get && flutter build web --release --no-web-resources-cdn --csp --pwa-strategy=none --no-wasm-dry-run
 
+build-web-prod:
+	flutter build web --release \
+		--dart-define=SENTRY_DSN=$(SENTRY_DSN) \
+		--dart-define=SENTRY_ENV=${SENTRY_ENV} \
+
 build-apk-release:
 	flutter build apk --release \
 	    --dart-define=SENTRY_DSN=$(SENTRY_DSN) \
@@ -41,6 +46,7 @@ help:
 	@echo "   make build-extension-dev       ➜ Build browser extension (dev)"
 	@echo ""
 	@echo " Production:"
+	@echo "   make build-web-prod            ➜ Build web (prod)"
 	@echo "   make build-extension-prod      ➜ Build browser extension (prod)"
 	@echo ""
 	@echo " Mobile:"

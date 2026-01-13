@@ -18,23 +18,26 @@ import 'package:timezone/data/latest_10y.dart' as tz;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await NotificationService.init();
-  tz.initializeTimeZones();
+  await SentryService.instance.init();
   SecureStorageService.init();
 
   if (!kIsWeb) {
-    await SentryService.instance.init();
-
-    FlutterError.onError = (FlutterErrorDetails details) {
-      FlutterError.presentError(details);
-      SentryService.instance.captureException(
-        details.exception,
-        stackTrace: details.stack,
-      );
-    };
-  } else {
-    FlutterError.onError = FlutterError.dumpErrorToConsole;
+    await NotificationService.init();
+    tz.initializeTimeZones();
   }
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    SentryService.instance.captureException(
+      details.exception,
+      stackTrace: details.stack,
+    );
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    SentryService.instance.captureException(error, stackTrace: stack);
+    return true;
+  };
 
   runApp(
     EasyLocalization(

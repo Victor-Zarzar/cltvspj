@@ -173,12 +173,14 @@ make build-extension-prod
 | Command                    | Description                    |
 | -------------------------- | ------------------------------ |
 | `make install`             | Install Flutter dependencies   |
+| `make build-web-dev`       | Build Web with Sentry (dev)    |
 | `make build-extension-dev` | Build Web Extension (dev mode) |
 
 ### Production
 
 | Command                     | Description                           |
 | --------------------------- | ------------------------------------- |
+| `make build-web-prod`       | Build Web with Sentry (production)    |
 | `make build-extension-prod` | Build Web Extension (production mode) |
 
 ### Mobile Builds
@@ -283,27 +285,46 @@ cltvspj/
 
 ### Android (Google Play Store)
 
-Build production AppBundle:
+Build production APK with Sentry monitoring:
 
 ```bash
-make build-appbundle-release
+SENTRY_DSN=your-dsn-here SENTRY_ENV=production make build-apk-release
 ```
 
-The generated file will be at: `build/app/outputs/bundle/release/app-release.aab`
+Build production AppBundle with Sentry monitoring:
+
+```bash
+SENTRY_DSN=your-dsn-here SENTRY_ENV=production make build-appbundle-release
+```
+
+The generated files will be at:
+
+- APK: `build/app/outputs/flutter-apk/app-release.apk`
+- AppBundle: `build/app/outputs/bundle/release/app-release.aab`
+- Debug info: `build/debug-info/` (for Sentry symbolication)
 
 ### iOS (App Store)
 
-Build production iOS app:
+Build production iOS app with Sentry monitoring:
 
 ```bash
-make build-ios-release
+SENTRY_DSN=your-dsn-here SENTRY_ENV=production make build-ios-release
 ```
 
-The generated file will be at: `build/ios/ipa/`
+The generated files will be at:
+
+- IPA: `build/ios/ipa/`
+- Debug info: `build/debug-info/` (for Sentry symbolication)
 
 ### Web
 
-Build web version:
+Build web version for production with Sentry monitoring:
+
+```bash
+SENTRY_DSN=your-dsn-here SENTRY_ENV=production make build-web-prod
+```
+
+Or build standard web version:
 
 ```bash
 flutter build web --release
@@ -318,6 +339,22 @@ Build production extension:
 ```bash
 make build-extension-prod
 ```
+
+---
+
+### Sentry Configuration
+
+All production builds include:
+
+- **Error tracking** with Sentry DSN
+- **Code obfuscation** for security
+- **Debug symbols** upload for crash symbolication
+
+Make sure to:
+
+1. Set your `SENTRY_DSN` from your Sentry project
+2. Upload debug symbols to Sentry after each release for proper stack traces
+3. Keep `build/debug-info/` directory for symbolication
 
 ---
 
