@@ -116,7 +116,7 @@ class BodyUserProfile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Expanded(flex: 4, child: Text(label, style: context.h1)),
           const SizedBox(width: 8),

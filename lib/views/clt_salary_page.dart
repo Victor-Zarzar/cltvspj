@@ -122,7 +122,7 @@ Widget _buildContent(
                         child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: .spaceBetween,
                               children: [
                                 Row(
                                   children: [

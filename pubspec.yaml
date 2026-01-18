@@ -1,10 +1,10 @@
 name: cltvspj
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.8.0
+  sdk: ^3.10.3
 
 dependencies:
   flutter:
@@ -12,15 +12,15 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   google_fonts: ^7.0.2
-  easy_localization: ^3.0.7
-  shared_preferences: ^2.5.3
-  flutter_local_notifications: ^19.3.0
-  url_launcher: ^6.3.1
+  easy_localization: ^3.0.8
+  shared_preferences: ^2.5.4
+  flutter_local_notifications: ^19.5.0
+  url_launcher: ^6.3.2
   timezone: ^0.10.1
   provider: ^6.1.5
   flutter_secure_storage: ^10.0.0
-  flutter_svg: ^2.1.0
-  fl_chart: ^1.0.0
+  flutter_svg: ^2.2.3
+  fl_chart: ^1.1.1
   flutter_masked_text2: ^0.9.1
   sqflite: ^2.4.2
   path: ^1.9.1
@@ -29,6 +29,7 @@ dependencies:
   printing: ^5.14.2
   app_settings: ^7.0.0
   sentry_flutter: ^9.8.0
+  font_awesome_flutter: ^10.12.0
 
 dev_dependencies:
   flutter_test:
@@ -38,17 +39,16 @@ dev_dependencies:
   sentry_dart_plugin: ^3.2.0
 
 flutter:
-
   uses-material-design: true
 
   assets:
-  - assets/
-  - assets/translations/
-  - assets/imgs/
-  - assets/icons/
-  - assets/fonts/Roboto-Regular.ttf
-  - assets/fonts/Roboto-Bold.ttf
-  
+    - assets/
+    - assets/translations/
+    - assets/imgs/
+    - assets/icons/
+    - assets/fonts/Roboto-Regular.ttf
+    - assets/fonts/Roboto-Bold.ttf
+
 sentry:
   upload_debug_symbols: true
   upload_source_maps: true

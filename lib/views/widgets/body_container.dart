@@ -100,7 +100,7 @@ class BodyContainer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment: .end,
                                   children: [
                                     Tooltip(
                                       message: 'fgts_include_label'.tr(),

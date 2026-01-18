@@ -104,7 +104,7 @@ class ResultPjtDialog extends StatelessWidget {
               ),
             ),
           ),
-          actionsAlignment: MainAxisAlignment.end,
+          actionsAlignment: .end,
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -136,7 +136,7 @@ class ResultPjtDialog extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Expanded(
             child: Text(
