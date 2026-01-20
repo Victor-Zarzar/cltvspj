@@ -79,12 +79,23 @@ class SettingsPageDesktop extends StatelessWidget {
   }
 
   Widget _buildSettingsCard(BuildContext context, UiProvider notifier) {
-    return Card(
-      color: notifier.isDark
-          ? CardColor.primaryColor
-          : CardColor.secondaryColor,
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    return Container(
+      decoration: BoxDecoration(
+        color: notifier.isDark
+            ? CardColor.primaryColor
+            : CardColor.secondaryColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: notifier.isDark
+                ? BoxShadowColor.fifthColor.withValues(alpha: 0.2)
+                : BoxShadowColor.fourthColor.withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(

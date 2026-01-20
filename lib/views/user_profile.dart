@@ -321,7 +321,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                     ),
                                     label: Text(
                                       'user_clear_profile'.tr(),
-                                      style: context.bodyLargeFont,
+                                      style: context.footerMediumFont,
                                     ),
                                   ),
                                 ),
