@@ -8,7 +8,7 @@ import 'package:cltvspj/features/theme_provider.dart';
 import 'package:cltvspj/services/notification_service.dart';
 import 'package:cltvspj/services/secure_service.dart';
 import 'package:cltvspj/services/sentry_service.dart';
-import 'package:cltvspj/views/app_page.dart';
+import 'package:cltvspj/views/components/navigation/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +76,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return Consumer<UiProvider>(
       builder: (context, notifier, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'CLT VS PJ',
           debugShowCheckedModeBanner: false,
           theme: notifier.lightTheme,
@@ -85,7 +85,7 @@ class _AppWidgetState extends State<AppWidget> {
           locale: context.locale,
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
-          home: AppPage(),
+          routerConfig: AppRouter.router,
         );
       },
     );

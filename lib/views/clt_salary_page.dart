@@ -93,6 +93,20 @@ Widget _buildContent(
                             ? CardColor.primaryColor
                             : CardColor.secondaryColor,
                         borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: notifier.isDark
+                                ? BoxShadowColor.fifthColor.withValues(
+                                    alpha: 0.2,
+                                  )
+                                : BoxShadowColor.fourthColor.withValues(
+                                    alpha: 0.3,
+                                  ),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                            spreadRadius: 0,
+                          ),
+                        ],
                       ),
                       child: Text(
                         'clt_simulation_hint'.tr(),
@@ -109,8 +123,12 @@ Widget _buildContent(
                         boxShadow: [
                           BoxShadow(
                             color: notifier.isDark
-                                ? Colors.black.withValues(alpha: 0.3)
-                                : Colors.grey.withValues(alpha: 0.2),
+                                ? BoxShadowColor.fifthColor.withValues(
+                                    alpha: 0.2,
+                                  )
+                                : BoxShadowColor.fourthColor.withValues(
+                                    alpha: 0.3,
+                                  ),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                             spreadRadius: 0,
@@ -164,7 +182,6 @@ Widget _buildContent(
                                           }),
                                       side: BorderSide(
                                         color: IconColor.primaryColor,
-
                                         width: 2,
                                       ),
                                       value: controller.includeFgts,
@@ -184,7 +201,13 @@ Widget _buildContent(
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 20),
+                            Divider(
+                              height: 15,
+                              color: notifier.isDark
+                                  ? DividerColor.thirdColor
+                                  : DividerColor.secondaryColor,
+                            ),
+                            const SizedBox(height: 16),
                             InputField(
                               label: 'salary_clt'.tr(),
                               controller: controller.cltSalaryController,
@@ -199,6 +222,33 @@ Widget _buildContent(
                               maxWidth: maxWidth,
                               onChanged: (_) => controller.calculate(),
                             ),
+                            const SizedBox(height: 12),
+                            CustomButton(
+                              animatedGradient: true,
+                              fullWidth: true,
+                              height: 42,
+                              maxWidth: maxWidth,
+                              color: notifier.isDark
+                                  ? ButtonColor.fourthColor
+                                  : ButtonColor.primaryColor,
+                              onPressed: () {
+                                final controller = context
+                                    .read<CltController>();
+                                if (controller.hasValidInput) {
+                                  ResultCltDialog.show(context, currencyFormat);
+                                } else {
+                                  ShowDialogError.show(
+                                    context,
+                                    title: 'error_dialog'.tr(),
+                                    child: Text(
+                                      'fill_fields_to_see_chart'.tr(),
+                                    ),
+                                  );
+                                }
+                              },
+                              text: 'calculate'.tr(),
+                            ),
+                            SizedBox(height: 16),
                             Align(
                               alignment: Alignment.centerRight,
                               child: TextButton.icon(
@@ -219,30 +269,6 @@ Widget _buildContent(
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    CustomButton(
-                      animatedGradient: true,
-                      fullWidth: true,
-                      height: 42,
-                      maxWidth: maxWidth,
-                      color: notifier.isDark
-                          ? ButtonColor.fourthColor
-                          : ButtonColor.primaryColor,
-                      onPressed: () {
-                        final controller = context.read<CltController>();
-
-                        if (controller.hasValidInput) {
-                          ResultCltDialog.show(context, currencyFormat);
-                        } else {
-                          ShowDialogError.show(
-                            context,
-                            title: 'error_dialog'.tr(),
-                            child: Text('fill_fields_to_see_chart'.tr()),
-                          );
-                        }
-                      },
-                      text: 'calculate'.tr(),
                     ),
                   ],
                 ),

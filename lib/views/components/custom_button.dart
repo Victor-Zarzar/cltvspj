@@ -75,9 +75,10 @@ class _CustomButtonState extends State<CustomButton>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: widget.color.withValues(alpha: 0.4),
+                        color: widget.color.withValues(alpha: 0.5),
                         blurRadius: 20,
-                        offset: const Offset(0, 4),
+                        offset: const Offset(0, 10),
+                        spreadRadius: 0,
                       ),
                     ],
                   ),

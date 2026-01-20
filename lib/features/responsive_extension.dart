@@ -40,6 +40,12 @@ extension ResponsiveTextStyle on BuildContext {
     color: TextColor.primaryColor,
   );
 
+  TextStyle get h3 => GoogleFonts.roboto(
+    fontSize: ResponsiveText.getSize(this, 9),
+    fontWeight: FontWeight.w500,
+    color: TextColor.primaryColor,
+  );
+
   //Body Styles
 
   TextStyle get bodyLarge => GoogleFonts.roboto(
@@ -111,7 +117,7 @@ extension ResponsiveTextStyle on BuildContext {
   );
 
   TextStyle get footerMediumFont => GoogleFonts.roboto(
-    fontSize: ResponsiveText.getSize(this, 13),
+    fontSize: ResponsiveText.getSize(this, 12),
     fontWeight: FontWeight.w600,
     color: TextColor.primaryColor,
   );

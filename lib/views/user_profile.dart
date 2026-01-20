@@ -12,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -94,18 +95,20 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ? BackGroundColor.fourthColor
               : BackGroundColor.primaryColor,
           appBar: AppBar(
-            leading: Semantics(
-              label: "backtopage".tr(),
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                  color: IconColor.primaryColor,
-                  semanticLabel: 'arrow_back_icon'.tr(),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ),
+            leading: kIsWeb
+                ? null
+                : Semantics(
+                    label: "backtopage".tr(),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        size: 20,
+                        color: IconColor.primaryColor,
+                        semanticLabel: 'arrow_back_icon'.tr(),
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
             title: Text('user_profile_title'.tr(), style: context.h1),
             centerTitle: true,
             actions: const [UserPopupMenu()],
@@ -162,6 +165,39 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     child: Column(
                       children: [
                         Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          margin: const EdgeInsets.only(bottom: 8),
+                          decoration: BoxDecoration(
+                            color: notifier.isDark
+                                ? CardColor.primaryColor
+                                : CardColor.secondaryColor,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: notifier.isDark
+                                    ? BoxShadowColor.fifthColor.withValues(
+                                        alpha: 0.2,
+                                      )
+                                    : BoxShadowColor.fourthColor.withValues(
+                                        alpha: 0.3,
+                                      ),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            'user_profile_subtitle'.tr(),
+                            style: context.h1Home,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
                           decoration: BoxDecoration(
                             color: notifier.isDark
                                 ? CardColor.primaryColor
@@ -170,8 +206,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             boxShadow: [
                               BoxShadow(
                                 color: notifier.isDark
-                                    ? Colors.black.withValues(alpha: 0.3)
-                                    : Colors.grey.withValues(alpha: 0.2),
+                                    ? BoxShadowColor.fifthColor.withValues(
+                                        alpha: 0.2,
+                                      )
+                                    : BoxShadowColor.fourthColor.withValues(
+                                        alpha: 0.3,
+                                      ),
                                 blurRadius: 20,
                                 offset: const Offset(0, 10),
                                 spreadRadius: 0,
@@ -183,9 +223,26 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'user_profile_subtitle'.tr(),
-                                  style: context.bodyMediumFont,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.person,
+                                      size: 18,
+                                      semanticLabel: 'person_icon'.tr(),
+                                      color: IconColor.primaryColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'profile'.tr(),
+                                      style: context.bodyMediumFont,
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 15,
+                                  color: notifier.isDark
+                                      ? DividerColor.thirdColor
+                                      : DividerColor.secondaryColor,
                                 ),
                                 const SizedBox(height: 16),
                                 InputField(
@@ -221,7 +278,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   keyboardType: TextInputType.text,
                                   inputFormatters: const <TextInputFormatter>[],
                                 ),
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 12),
                                 CustomButton(
                                   animatedGradient: true,
                                   fullWidth: true,

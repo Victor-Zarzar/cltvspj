@@ -2,108 +2,88 @@ import 'package:cltvspj/controller/controllers/locale_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
-import 'package:cltvspj/views/clt_salary_page.dart';
-import 'package:cltvspj/views/home_page.dart';
-import 'package:cltvspj/views/pj_salary_page.dart';
-import 'package:cltvspj/views/settings_page.dart';
+import 'package:cltvspj/utils/enum_routes.dart';
+import 'package:cltvspj/views/components/navigation/nav_config.dart';
+import 'package:cltvspj/views/components/navigation/nav_destination.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class AppPage extends StatefulWidget {
-  const AppPage({super.key});
+class AppPage extends StatelessWidget {
+  final Widget child;
+  const AppPage({super.key, required this.child});
 
-  @override
-  State<AppPage> createState() => _AppPageState();
-}
-
-class _AppPageState extends State<AppPage> with TickerProviderStateMixin {
-  late TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 4, vsync: this);
+  int _indexFromLocation(String location, List<NavDestination> items) {
+    final idx = items.indexWhere(
+      (d) =>
+          location == d.route.path || location.startsWith('${d.route.path}/'),
+    );
+    return idx >= 0 ? idx : 0;
   }
 
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
+  String _label(BuildContext context, AppRoute route) {
+    switch (route) {
+      case AppRoute.home:
+        return 'home'.tr();
+      case AppRoute.clt:
+        return 'clt'.tr();
+      case AppRoute.pj:
+        return 'pj'.tr();
+      case AppRoute.user:
+        return 'user'.tr();
+      case AppRoute.settings:
+        return 'settings'.tr();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final currentLocale = context.locale;
+
     return Consumer2<UiProvider, LocaleController>(
-      builder: (context, notifier, languageProvider, child) {
+      builder: (context, notifier, languageProvider, _) {
+        final items = NavConfig.mobile;
+        final location = GoRouterState.of(context).uri.toString();
+        final currentIndex = _indexFromLocation(location, items);
+
         return Scaffold(
-          body: TabBarView(
-            controller: tabController,
-            children: const [HomePage(), Cltpage(), Pjpage(), SettingsPage()],
-          ),
-          bottomNavigationBar: Material(
-            color: notifier.isDark
-                ? TabBarColor.fourthColor
-                : TabBarColor.primaryColor,
-            child: TabBar(
+          body: child,
+          bottomNavigationBar: Theme(
+            data: Theme.of(context).copyWith(
+              navigationBarTheme: NavigationBarThemeData(
+                indicatorColor: notifier.isDark
+                    ? TabBarColor.fifthColor
+                    : TabBarColor.thirdColor,
+                backgroundColor: notifier.isDark
+                    ? TabBarColor.fourthColor
+                    : TabBarColor.primaryColor,
+                labelTextStyle: WidgetStateProperty.all(
+                  context.footerMediumFont.copyWith(
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ),
+            child: NavigationBar(
+              height: 70,
               key: ValueKey(currentLocale.languageCode),
-              controller: tabController,
-              labelColor: TextColor.primaryColor,
-              indicatorColor: TextColor.primaryColor,
-              tabs: [
-                Tab(
-                  icon: Icon(
-                    Icons.calculate,
-                    semanticLabel: "money_icon".tr(),
-                    color: IconColor.primaryColor,
+              selectedIndex: currentIndex,
+              onDestinationSelected: (index) {
+                context.go(items[index].route.path);
+              },
+              destinations: [
+                for (final d in items)
+                  NavigationDestination(
+                    icon: Icon(
+                      d.icon,
+                      color: IconColor.primaryColor,
+                      semanticLabel: d.route == AppRoute.settings
+                          ? "settings_icon".tr()
+                          : "money_icon".tr(),
+                    ),
+                    label: _label(context, d.route),
                   ),
-                  child: Text(
-                    'home'.tr(),
-                    style: context.footerMediumFont,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.work,
-                    semanticLabel: "money_icon".tr(),
-                    color: IconColor.primaryColor,
-                  ),
-                  child: Text(
-                    'Clt',
-                    style: context.footerMediumFont,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.business,
-                    semanticLabel: "money_icon".tr(),
-                    color: IconColor.primaryColor,
-                  ),
-                  child: Text(
-                    'Pj',
-                    style: context.footerMediumFont,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.settings,
-                    semanticLabel: "settings_icon".tr(),
-                    color: IconColor.primaryColor,
-                  ),
-                  child: Text(
-                    'settings'.tr(),
-                    style: context.footerMediumFont,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
               ],
             ),
           ),

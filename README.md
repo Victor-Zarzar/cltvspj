@@ -46,10 +46,11 @@
 - **URL Launcher** - External link handling
 - **Timezone Initialization** - Time zone support
 - **Flutter Secure Storage** - Encrypted local storage
-- **SQFlite** - Local database
+- **Shared Preferences** - Local persist
 - **PieChart** - Data visualization
 - **PDF Export / Printing** - Document generation
 - **Makefile Automation** - Build automation
+- **GoRouter** - Declarative routing with adaptive navigation (mobile/desktop)
 - **Sentry Logs** - Error tracking and monitoring
 
 ---
@@ -271,6 +272,10 @@ cltvspj/
 
 <p align="center">
   <img src="assets/imgs/mockup.png" alt="mockup" width="1000" height="800">
+</p>
+
+<p align="center">
+  <img src="assets/imgs/mockup_desktop.png" alt="mockup_desktop" width="1000" height="800">
 </p>
 
 ### Project Architecture

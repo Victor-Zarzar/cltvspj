@@ -7,6 +7,7 @@ class AppThemeColor {
   static Color get secondaryColor => const Color(0xFF2E7D32);
   static Color get thirdColor => const Color(0xFF81C784);
   static Color get fourthColor => const Color(0xFF000000);
+  static Color get fifthColor => const Color(0x00000000);
 }
 
 class AppBarColor {
@@ -45,8 +46,9 @@ class TabBarColor {
   TabBarColor._();
   static Color get primaryColor => const Color(0xFF4CAF50);
   static Color get secondaryColor => const Color(0xFF66BB6A);
-  static Color get thirdColor => const Color(0xFF81C784);
+  static Color get thirdColor => const Color(0xFF2E7D32);
   static Color get fourthColor => const Color(0xFF1E1E1E);
+  static Color get fifthColor => const Color(0xFF424242);
 }
 
 class TextFormColor {
@@ -72,6 +74,7 @@ class TextButtonColor {
   static Color get thirdColor => const Color(0xFF81C784);
   static Color get fourthColor => const Color(0xFFFFFFFF);
   static Color get fiveColor => const Color(0xFF000000);
+  static Color get sixColor => const Color(0xFF424242);
 }
 
 class AlertDialogColor {
@@ -89,6 +92,7 @@ class IconColor {
   static Color get thirdColor => const Color(0xFF81C784);
   static Color get fourthColor => const Color(0xFF757575);
   static Color get fiveColor => const Color(0xFF000000);
+  static Color get sixColor => const Color(0xFF424242);
 }
 
 class SwitchColor {
@@ -173,5 +177,17 @@ class ThemeColorIcon {
 class DividerColor {
   DividerColor._();
   static Color get primaryColor => const Color(0xFFF5F5F5);
-  static Color get secondaryColor => const Color(0xFF000000);
+  static Color get secondaryColor => const Color(0xFF2E7D32);
+  static Color get thirdColor => const Color(0xFF424242);
+}
+
+class BoxShadowColor {
+  BoxShadowColor._();
+  static Color get primaryColor => const Color(0xFF339CFF);
+  static Color get secondaryColor => const Color(0xFFFFAE33);
+  static Color get thirdColor => const Color(0xFF6D4C41);
+  static Color get fourthColor => const Color(0xFF20A819);
+  static Color get fifthColor => const Color(0xFF424242);
+  static Color get sixthColor => const Color.fromARGB(255, 193, 47, 14);
+  static Color get seventhColor => const Color(0xFF00FF00);
 }

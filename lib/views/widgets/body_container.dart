@@ -70,6 +70,20 @@ class BodyContainer extends StatelessWidget {
                                 ? CardColor.primaryColor
                                 : CardColor.secondaryColor,
                             borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: notifier.isDark
+                                    ? BoxShadowColor.fifthColor.withValues(
+                                        alpha: 0.2,
+                                      )
+                                    : BoxShadowColor.fourthColor.withValues(
+                                        alpha: 0.3,
+                                      ),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                                spreadRadius: 0,
+                              ),
+                            ],
                           ),
                           child: Text(
                             'calculator_question'.tr(),
@@ -86,8 +100,12 @@ class BodyContainer extends StatelessWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: notifier.isDark
-                                    ? Colors.black.withValues(alpha: 0.3)
-                                    : Colors.grey.withValues(alpha: 0.2),
+                                    ? BoxShadowColor.fifthColor.withValues(
+                                        alpha: 0.2,
+                                      )
+                                    : BoxShadowColor.fourthColor.withValues(
+                                        alpha: 0.3,
+                                      ),
                                 blurRadius: 20,
                                 offset: const Offset(0, 10),
                                 spreadRadius: 0,
@@ -100,51 +118,86 @@ class BodyContainer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Row(
-                                  mainAxisAlignment: .end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Tooltip(
-                                      message: 'fgts_include_label'.tr(),
-                                      triggerMode: TooltipTriggerMode.tap,
-                                      preferBelow: false,
-                                      verticalOffset: 20,
-                                      child: Text(
-                                        'include_fgts'.tr(),
-                                        style: context.h1,
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.work,
+                                            size: 18,
+                                            semanticLabel: 'work_icon'.tr(),
+                                            color: IconColor.primaryColor,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            'app_title'.tr(),
+                                            style: context.h1,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(width: 2),
-                                    Checkbox(
-                                      fillColor:
-                                          WidgetStateProperty.resolveWith((
-                                            states,
-                                          ) {
-                                            if (!states.contains(
-                                              WidgetState.selected,
-                                            )) {
-                                              return Colors.transparent;
-                                            }
-                                            return null;
-                                          }),
-                                      side: BorderSide(
-                                        color: IconColor.primaryColor,
-                                        width: 2,
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Tooltip(
+                                            message: 'fgts_include_label'.tr(),
+                                            triggerMode: TooltipTriggerMode.tap,
+                                            preferBelow: false,
+                                            verticalOffset: 20,
+                                            child: Text(
+                                              'include_fgts'.tr(),
+                                              style: context.h1,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 2),
+                                          Checkbox(
+                                            fillColor:
+                                                WidgetStateProperty.resolveWith(
+                                                  (states) {
+                                                    if (!states.contains(
+                                                      WidgetState.selected,
+                                                    )) {
+                                                      return Colors.transparent;
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                            side: BorderSide(
+                                              color: IconColor.primaryColor,
+                                              width: 2,
+                                            ),
+                                            value: controller.includeFgts,
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            checkColor: IconColor.primaryColor,
+                                            activeColor: notifier.isDark
+                                                ? IconColor.fourthColor
+                                                : IconColor.secondaryColor,
+                                            materialTapTargetSize:
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
+                                            onChanged: (bool? value) {
+                                              if (value == null) return;
+                                              controller.toggleIncludeFgts(
+                                                value,
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                      value: controller.includeFgts,
-                                      visualDensity: VisualDensity.compact,
-                                      checkColor: IconColor.primaryColor,
-                                      activeColor: notifier.isDark
-                                          ? IconColor.fourthColor
-                                          : IconColor.secondaryColor,
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      onChanged: (bool? value) {
-                                        if (value == null) return;
-                                        controller.toggleIncludeFgts(value);
-                                      },
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
+                                Divider(
+                                  height: 15,
+                                  color: notifier.isDark
+                                      ? DividerColor.thirdColor
+                                      : DividerColor.secondaryColor,
+                                ),
+                                const SizedBox(height: 16),
                                 InputField(
                                   label: 'salary_clt'.tr(),
                                   controller: controller.salaryCltController,
@@ -188,6 +241,33 @@ class BodyContainer extends StatelessWidget {
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
                                 ),
+                                const SizedBox(height: 12),
+                                CustomButton(
+                                  animatedGradient: true,
+                                  fullWidth: true,
+                                  height: 42,
+                                  maxWidth: maxWidth,
+                                  color: notifier.isDark
+                                      ? ButtonColor.fourthColor
+                                      : ButtonColor.primaryColor,
+                                  onPressed: () {
+                                    final controller = context
+                                        .read<CalculatorController>();
+                                    if (!controller.hasValidInput) {
+                                      ShowDialogError.show(
+                                        context,
+                                        title: 'error_dialog'.tr(),
+                                        child: Text(
+                                          'fill_fields_to_see_chart'.tr(),
+                                        ),
+                                      );
+                                      return;
+                                    }
+                                    onCalculatePressed();
+                                  },
+                                  text: 'calculate'.tr(),
+                                ),
+                                const SizedBox(height: 16),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: TextButton.icon(
@@ -208,31 +288,6 @@ class BodyContainer extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        CustomButton(
-                          animatedGradient: true,
-                          fullWidth: true,
-                          height: 42,
-                          maxWidth: maxWidth,
-                          color: notifier.isDark
-                              ? ButtonColor.fourthColor
-                              : ButtonColor.primaryColor,
-                          onPressed: () {
-                            final controller = context
-                                .read<CalculatorController>();
-
-                            if (!controller.hasValidInput) {
-                              ShowDialogError.show(
-                                context,
-                                title: 'error_dialog'.tr(),
-                                child: Text('fill_fields_to_see_chart'.tr()),
-                              );
-                              return;
-                            }
-                            onCalculatePressed();
-                          },
-                          text: 'calculate'.tr(),
                         ),
                       ],
                     ),

@@ -95,6 +95,20 @@ class _PjpageState extends State<Pjpage> {
                               ? CardColor.primaryColor
                               : CardColor.secondaryColor,
                           borderRadius: BorderRadius.circular(14),
+                          boxShadow: [
+                            BoxShadow(
+                              color: notifier.isDark
+                                  ? BoxShadowColor.fifthColor.withValues(
+                                      alpha: 0.2,
+                                    )
+                                  : BoxShadowColor.fourthColor.withValues(
+                                      alpha: 0.3,
+                                    ),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                              spreadRadius: 0,
+                            ),
+                          ],
                         ),
                         child: Text(
                           'pj_simulation_hint'.tr(),
@@ -111,8 +125,12 @@ class _PjpageState extends State<Pjpage> {
                           boxShadow: [
                             BoxShadow(
                               color: notifier.isDark
-                                  ? Colors.black.withValues(alpha: 0.3)
-                                  : Colors.grey.withValues(alpha: 0.2),
+                                  ? BoxShadowColor.fifthColor.withValues(
+                                      alpha: 0.2,
+                                    )
+                                  : BoxShadowColor.fourthColor.withValues(
+                                      alpha: 0.3,
+                                    ),
                               blurRadius: 20,
                               offset: const Offset(0, 10),
                               spreadRadius: 0,
@@ -134,6 +152,12 @@ class _PjpageState extends State<Pjpage> {
                                   const SizedBox(width: 5),
                                   Text("pj_data".tr(), style: context.h1),
                                 ],
+                              ),
+                              Divider(
+                                height: 15,
+                                color: notifier.isDark
+                                    ? DividerColor.thirdColor
+                                    : DividerColor.secondaryColor,
                               ),
                               const SizedBox(height: 20),
                               InputField(
@@ -168,6 +192,36 @@ class _PjpageState extends State<Pjpage> {
                                 maxWidth: maxWidth,
                                 onChanged: (_) => controller.calculate(),
                               ),
+                              const SizedBox(height: 12),
+                              CustomButton(
+                                animatedGradient: true,
+                                fullWidth: true,
+                                height: 42,
+                                maxWidth: maxWidth,
+                                color: notifier.isDark
+                                    ? ButtonColor.fourthColor
+                                    : ButtonColor.primaryColor,
+                                onPressed: () {
+                                  final controller = context
+                                      .read<PjController>();
+                                  if (controller.hasValidInput) {
+                                    ResultPjtDialog.show(
+                                      context,
+                                      currencyFormat,
+                                    );
+                                  } else {
+                                    ShowDialogError.show(
+                                      context,
+                                      title: 'error_dialog'.tr(),
+                                      child: Text(
+                                        'fill_fields_to_see_chart'.tr(),
+                                      ),
+                                    );
+                                  }
+                                },
+                                text: 'calculate'.tr(),
+                              ),
+                              SizedBox(height: 16),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton.icon(
@@ -188,30 +242,6 @@ class _PjpageState extends State<Pjpage> {
                             ],
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomButton(
-                        animatedGradient: true,
-                        fullWidth: true,
-                        height: 42,
-                        maxWidth: maxWidth,
-                        color: notifier.isDark
-                            ? ButtonColor.fourthColor
-                            : ButtonColor.primaryColor,
-                        onPressed: () {
-                          final controller = context.read<PjController>();
-
-                          if (controller.hasValidInput) {
-                            ResultPjtDialog.show(context, currencyFormat);
-                          } else {
-                            ShowDialogError.show(
-                              context,
-                              title: 'error_dialog'.tr(),
-                              child: Text('fill_fields_to_see_chart'.tr()),
-                            );
-                          }
-                        },
-                        text: 'calculate'.tr(),
                       ),
                     ],
                   ),
