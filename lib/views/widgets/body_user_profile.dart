@@ -34,14 +34,23 @@ class BodyUserProfile extends StatelessWidget {
 
     return Consumer2<UiProvider, UserController>(
       builder: (context, notifier, userController, child) {
-        return Card(
-          color: notifier.isDark
-              ? CardColor.primaryColor
-              : CardColor.secondaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        return Container(
+          decoration: BoxDecoration(
+            color: notifier.isDark
+                ? CardColor.primaryColor
+                : CardColor.secondaryColor,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: notifier.isDark
+                    ? BoxShadowColor.fifthColor.withValues(alpha: 0.2)
+                    : BoxShadowColor.fourthColor.withValues(alpha: 0.3),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+                spreadRadius: 0,
+              ),
+            ],
           ),
-          elevation: 2,
           child: Theme(
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: Semantics(
@@ -60,11 +69,11 @@ class BodyUserProfile extends StatelessWidget {
                 ),
                 title: Text(
                   'user_profile_saved_header'.tr(),
-                  style: context.bodyMediumFont,
+                  style: context.bodySmall,
                 ),
                 subtitle: Text(
                   'user_profile_saved_subtitle'.tr(),
-                  style: context.bodyMediumFont,
+                  style: context.bodySmall,
                 ),
                 children: [
                   _buildRow(
@@ -118,14 +127,14 @@ class BodyUserProfile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [
-          Expanded(flex: 4, child: Text(label, style: context.h1)),
+          Expanded(flex: 4, child: Text(label, style: context.bodySmall)),
           const SizedBox(width: 8),
           Expanded(
             flex: 6,
             child: Text(
               value,
               textAlign: TextAlign.end,
-              style: context.bodyMediumFont,
+              style: context.bodySmall,
             ),
           ),
         ],

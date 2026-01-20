@@ -58,7 +58,7 @@ class ThemeSettings extends StatelessWidget {
                 BoxShadow(
                   offset: const Offset(0, 6),
                   blurRadius: 16,
-                  color: Colors.black.withValues(alpha: 0.35),
+                  color: BoxShadowColor.secondaryColor.withValues(alpha: 0.35),
                 ),
               ]
             : [],

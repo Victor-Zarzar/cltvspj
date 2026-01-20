@@ -22,9 +22,6 @@ dependencies:
   flutter_svg: ^2.2.3
   fl_chart: ^1.1.1
   flutter_masked_text2: ^0.9.1
-  sqflite: ^2.4.2
-  path: ^1.9.1
-  path_provider: ^2.1.5
   pdf: ^3.11.3
   printing: ^5.14.2
   app_settings: ^7.0.0

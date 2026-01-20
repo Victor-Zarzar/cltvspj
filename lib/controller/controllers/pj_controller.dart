@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:cltvspj/services/database_service.dart';
 import 'package:cltvspj/services/export_service.dart';
+import 'package:cltvspj/services/storage_service.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:cltvspj/models/pj_model.dart';
@@ -66,7 +66,7 @@ class PjController extends ChangeNotifier {
   }
 
   Future<void> _loadData() async {
-    final model = await DatabaseService().loadPj();
+    final model = await StorageService().loadPj();
 
     if (model != null) {
       salaryController.updateValue(model.grossSalary);
@@ -95,7 +95,7 @@ class PjController extends ChangeNotifier {
       accountantFee: accountant,
       inss: inssPercent,
     );
-    await DatabaseService().savePj(model);
+    await StorageService().savePj(model);
   }
 
   Future<void> clearData() async {
@@ -110,7 +110,7 @@ class PjController extends ChangeNotifier {
     accountantFee = 0.0;
     inss = 0.0;
 
-    await DatabaseService().clearPj();
+    await StorageService().clearPj();
     notifyListeners();
   }
 

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
-import 'package:cltvspj/services/database_service.dart';
 import 'package:cltvspj/services/export_service.dart';
+import 'package:cltvspj/services/storage_service.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:cltvspj/models/calculate_model.dart';
@@ -87,7 +87,7 @@ class CalculatorController extends ChangeNotifier {
   }
 
   Future<void> loadData() async {
-    final model = await DatabaseService().loadCalculator();
+    final model = await StorageService().loadCalculator();
 
     if (model != null) {
       salaryCltController.updateValue(model.salaryClt);
@@ -122,7 +122,7 @@ class CalculatorController extends ChangeNotifier {
       inssPj: _parsePercentage(inssPjController) / 100,
     );
 
-    DatabaseService().saveCalculator(model);
+    StorageService().saveCalculator(model);
     notifyListeners();
   }
 
@@ -147,7 +147,7 @@ class CalculatorController extends ChangeNotifier {
       inssPj: 0.0,
     );
 
-    await DatabaseService().clearCalculator();
+    await StorageService().clearCalculator();
     notifyListeners();
   }
 

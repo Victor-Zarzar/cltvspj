@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:cltvspj/models/clt_model.dart';
-import 'package:cltvspj/services/database_service.dart';
 import 'package:cltvspj/services/export_service.dart';
+import 'package:cltvspj/services/storage_service.dart';
 import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:cltvspj/controller/domain/clt_calculator.dart';
@@ -77,7 +77,7 @@ class CltController extends ChangeNotifier {
   }
 
   Future<void> _loadData() async {
-    final model = await DatabaseService().loadClt();
+    final model = await StorageService().loadClt();
     if (model != null) {
       cltSalaryController.updateValue(model.salaryClt);
       cltBenefitsController.updateValue(model.benefits);
@@ -90,7 +90,7 @@ class CltController extends ChangeNotifier {
 
   Future<void> _saveData(double salary, double benefits) async {
     final model = CltModel(salaryClt: salary, benefits: benefits);
-    await DatabaseService().saveClt(model);
+    await StorageService().saveClt(model);
   }
 
   Future<void> clearData() async {
@@ -105,7 +105,7 @@ class CltController extends ChangeNotifier {
     fgtsValue = 0.0;
     includeFgts = false;
 
-    await DatabaseService().clearClt();
+    await StorageService().clearClt();
     notifyListeners();
   }
 
