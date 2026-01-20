@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    assignees:
+      - "victorzarzar"
+    labels:
+      - "changelog: changed"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    assignees:
+      - "victorzarzar"
+    labels:
+      - "changelog: changed"
+    groups:
+      pub:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "pub"
+    directory: "/web"
+    schedule:
+      interval: "monthly"
+    assignees:
+      - "victorzarzar"
+    labels:
+      - "changelog: changed"
+    groups:
+      gomod:
+        patterns:
+          - "*"

@@ -14,7 +14,7 @@ class SecureStorageService {
 
   static void init() {
     _secureStorage = const FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      aOptions: AndroidOptions.biometric(enforceBiometrics: true),
       iOptions: IOSOptions(
         accessibility: KeychainAccessibility.first_unlock_this_device,
       ),

@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter">
   <img src="https://img.shields.io/badge/Flutter-3.38.4-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter Version">
   <img src="https://img.shields.io/badge/Material_Design_3-757575?style=for-the-badge&logo=material-design&logoColor=white" alt="Material Design 3">
+  <img src="https://img.shields.io/badge/CI/CD-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
 </p>
 
 <p align="center">
@@ -258,6 +259,11 @@ cltvspj/
 ├── web/                     # Web platform code
 ├── test/                    # Unit and widget tests
 ├── Makefile                 # Build automation
+├── netlify.toml             # Netlify deployment config
+├── .github/
+│   ├── workflows/
+│   │   └── main.yaml        # CI/CD pipeline
+│   └── dependabot.yml       # Dependency updates
 ├── pubspec.yaml             # Flutter dependencies
 └── README.md                # Project documentation
 ```
@@ -289,6 +295,21 @@ cltvspj/
 <h2 id="deployment">
    Deployment
 </h2>
+
+### Netlify (Web)
+
+The project includes Netlify configuration for automated Flutter Web deployment:
+
+- **`netlify.toml`** - Build configuration using `netlify-plugin-flutter`
+- **CI/CD Pipeline** - `.github/workflows/main.yaml` for automated checks and builds
+- **Dependabot** - Monthly dependency updates for GitHub Actions and Pub packages
+
+Deploy to Netlify:
+
+```bash
+# The netlify.toml handles the build automatically
+flutter build web --release
+```
 
 ### Android (Google Play Store)
 
@@ -349,6 +370,15 @@ make build-extension-prod
 
 ---
 
+### CI/CD Workflow
+
+Every push or pull request to `main` triggers automated:
+
+- Code formatting verification (`dart format`)
+- Static analysis (`flutter analyze`)
+- Unit and widget tests (`flutter test`)
+- Production web build
+
 ### Sentry Configuration
 
 All production builds include:
@@ -398,5 +428,5 @@ Project Link: [https://github.com/Victor-Zarzar/cltvspj](https://github.com/Vict
 ---
 
 <p align="center">
-  Made with ❤️ by Victor Zarzar
+  Made with by Victor Zarzar
 </p>
