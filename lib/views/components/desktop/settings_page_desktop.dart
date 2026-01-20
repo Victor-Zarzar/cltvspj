@@ -220,7 +220,7 @@ class SettingsPageDesktop extends StatelessWidget {
           semanticLabel: 'settings.language_dropdown_icon'.tr(),
         ),
         dropdownColor: notifier.isDark
-            ? PopupMenuColor.fourthColor
+            ? PopupMenuColor.secondaryColor
             : PopupMenuColor.thirdColor,
         borderRadius: BorderRadius.circular(12),
         style: context.h3,
