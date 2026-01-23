@@ -27,6 +27,7 @@ class ResultPjtDialog extends StatelessWidget {
         final chartData = PjChartDataHelper.buildResultChartData(
           tax: controller.tax,
           inss: controller.inss,
+          benefits: controller.benefits,
           accountantFee: controller.accountantFee,
           netSalary: controller.netSalary,
         );
@@ -34,6 +35,7 @@ class ResultPjtDialog extends StatelessWidget {
         final colorList = [
           ChartColor.primaryColor,
           ChartColor.secondaryColor,
+          ChartColor.thirdColor,
           ChartColor.fourthColor,
           ChartColor.sixthColor,
         ];
@@ -76,6 +78,12 @@ class ResultPjtDialog extends StatelessWidget {
                     context,
                     label: 'taxes'.tr(),
                     value: controller.tax,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildSalaryLine(
+                    context,
+                    label: 'benefits_pj'.tr(),
+                    value: controller.benefits,
                   ),
                   const SizedBox(height: 4),
                   _buildSalaryLine(

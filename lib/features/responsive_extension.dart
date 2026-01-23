@@ -8,8 +8,6 @@ import 'package:provider/provider.dart';
 extension ResponsiveTextStyle on BuildContext {
   UiProvider get ui => Provider.of<UiProvider>(this, listen: false);
 
-  // Heading Styles
-
   TextStyle get h1 => GoogleFonts.roboto(
     fontSize: ResponsiveText.getSize(this, 13),
     fontWeight: FontWeight.w900,
@@ -29,7 +27,7 @@ extension ResponsiveTextStyle on BuildContext {
   );
 
   TextStyle get h2Dialog => GoogleFonts.roboto(
-    fontSize: ResponsiveText.getSize(this, 12),
+    fontSize: ResponsiveText.getSize(this, 10),
     fontWeight: FontWeight.w700,
     color: ui.isDark ? TextColor.primaryColor : TextColor.fourthColor,
   );
@@ -45,8 +43,6 @@ extension ResponsiveTextStyle on BuildContext {
     fontWeight: FontWeight.w500,
     color: TextColor.primaryColor,
   );
-
-  //Body Styles
 
   TextStyle get bodyLarge => GoogleFonts.roboto(
     fontSize: ResponsiveText.getSize(this, 18),

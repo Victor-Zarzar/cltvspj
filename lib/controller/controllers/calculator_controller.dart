@@ -128,6 +128,13 @@ class CalculatorController extends ChangeNotifier {
 
   void calculate() => updateValues();
 
+  bool get hasDataToClear =>
+      model.salaryClt != 0.0 ||
+      model.salaryPj != 0.0 ||
+      model.benefits != 0.0 ||
+      model.taxesPj != 0.0 ||
+      model.inssPj != 0.0;
+
   Future<void> clearData() async {
     salaryCltController.updateValue(0);
     salaryPjController.updateValue(0);

@@ -160,7 +160,8 @@ class BodyContainer extends StatelessWidget {
                                                     if (!states.contains(
                                                       WidgetState.selected,
                                                     )) {
-                                                      return Colors.transparent;
+                                                      return CheckColor
+                                                          .primaryColor;
                                                     }
                                                     return null;
                                                   },
@@ -212,34 +213,58 @@ class BodyContainer extends StatelessWidget {
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
                                 ),
-                                InputField(
-                                  label: 'benefits_clt'.tr(),
-                                  controller: benefitsController,
-                                  icon: Icons.card_giftcard_rounded,
-                                  maxWidth: maxWidth,
-                                  onChanged: (_) => controller.calculate(),
+                                Tooltip(
+                                  message: 'benefits_clt_tooltip'.tr(),
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  preferBelow: true,
+                                  verticalOffset: 20,
+                                  child: InputField(
+                                    label: 'benefits_clt'.tr(),
+                                    controller: benefitsController,
+                                    icon: Icons.card_giftcard_rounded,
+                                    maxWidth: maxWidth,
+                                    onChanged: (_) => controller.calculate(),
+                                  ),
                                 ),
-                                InputField(
-                                  label: 'accountant_fee'.tr(),
-                                  controller:
-                                      controller.accountantFeeController,
-                                  icon: Icons.receipt_long_rounded,
-                                  maxWidth: maxWidth,
-                                  onChanged: (_) => controller.calculate(),
+                                Tooltip(
+                                  message: 'accountant_fee_tooltip'.tr(),
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  preferBelow: true,
+                                  verticalOffset: 20,
+                                  child: InputField(
+                                    label: 'accountant_fee'.tr(),
+                                    controller:
+                                        controller.accountantFeeController,
+                                    icon: Icons.receipt_long_rounded,
+                                    maxWidth: maxWidth,
+                                    onChanged: (_) => controller.calculate(),
+                                  ),
                                 ),
-                                InputField(
-                                  label: 'inss_pj'.tr(),
-                                  controller: controller.inssPjController,
-                                  icon: Icons.percent_rounded,
-                                  maxWidth: maxWidth,
-                                  onChanged: (_) => controller.calculate(),
+                                Tooltip(
+                                  message: 'inss_pj_tooltip'.tr(),
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  preferBelow: true,
+                                  verticalOffset: 20,
+                                  child: InputField(
+                                    label: 'inss_pj'.tr(),
+                                    controller: controller.inssPjController,
+                                    icon: Icons.percent_rounded,
+                                    maxWidth: maxWidth,
+                                    onChanged: (_) => controller.calculate(),
+                                  ),
                                 ),
-                                InputField(
-                                  label: 'taxes_pj'.tr(),
-                                  controller: controller.taxesPjController,
-                                  icon: Icons.account_balance_rounded,
-                                  maxWidth: maxWidth,
-                                  onChanged: (_) => controller.calculate(),
+                                Tooltip(
+                                  message: 'taxes_pj_tooltip'.tr(),
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  preferBelow: true,
+                                  verticalOffset: 20,
+                                  child: InputField(
+                                    label: 'taxes_pj'.tr(),
+                                    controller: controller.taxesPjController,
+                                    icon: Icons.account_balance_rounded,
+                                    maxWidth: maxWidth,
+                                    onChanged: (_) => controller.calculate(),
+                                  ),
                                 ),
                                 const SizedBox(height: 12),
                                 CustomButton(
@@ -259,6 +284,7 @@ class BodyContainer extends StatelessWidget {
                                         title: 'error_dialog'.tr(),
                                         child: Text(
                                           'fill_fields_to_see_chart'.tr(),
+                                          style: context.bodySmall,
                                         ),
                                       );
                                       return;
@@ -272,6 +298,17 @@ class BodyContainer extends StatelessWidget {
                                   alignment: Alignment.centerRight,
                                   child: TextButton.icon(
                                     onPressed: () async {
+                                      if (!controller.hasDataToClear) {
+                                        ShowDialogError.show(
+                                          context,
+                                          title: 'error_dialog'.tr(),
+                                          child: Text(
+                                            'no_data_to_clear'.tr(),
+                                            style: context.bodySmall,
+                                          ),
+                                        );
+                                        return;
+                                      }
                                       await controller.clearData();
                                     },
                                     icon: Icon(

@@ -9,10 +9,10 @@ import 'package:cltvspj/views/components/show_dialog_error.dart';
 import 'package:cltvspj/views/components/user_popup_menu.dart';
 import 'package:cltvspj/views/widgets/body_user_profile.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -31,59 +31,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
       final controller = Provider.of<UserController>(context, listen: false);
       controller.loadUser();
     });
-  }
-
-  Future<void> _onSavePressed(UserController userController) async {
-    if (!userController.hasValidInput) {
-      ShowDialogError.show(
-        context,
-        title: 'error_dialog'.tr(),
-        child: Text('fill_fields_to_see'.tr()),
-      );
-      return;
-    }
-
-    try {
-      await userController.saveUser();
-
-      if (!mounted) return;
-
-      ShowDialogError.show(
-        context,
-        title: 'success_dialog'.tr(),
-        child: Text('user_saved_success'.tr()),
-      );
-    } catch (e) {
-      if (!mounted) return;
-
-      ShowDialogError.show(
-        context,
-        title: 'error_dialog'.tr(),
-        child: Text('error_dialog'.tr()),
-      );
-    }
-  }
-
-  Future<void> _onClearPressed(UserController userController) async {
-    try {
-      await userController.clearUser();
-
-      if (!mounted) return;
-
-      ShowDialogError.show(
-        context,
-        title: 'success_dialog'.tr(),
-        child: Text('user_cleared_success'.tr()),
-      );
-    } catch (e) {
-      if (!mounted) return;
-
-      ShowDialogError.show(
-        context,
-        title: 'error_dialog'.tr(),
-        child: Text('error_dialog'.tr()),
-      );
-    }
   }
 
   @override
@@ -261,12 +208,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   icon: Icons.attach_money,
                                   maxWidth: maxWidth,
                                 ),
-                                InputField(
-                                  label: 'user_benefits_label'.tr(),
-                                  hintText: 'user_benefits_hint'.tr(),
-                                  controller: userController.benefitsController,
-                                  icon: Icons.card_giftcard,
-                                  maxWidth: maxWidth,
+                                Tooltip(
+                                  message: 'user_benefits_tooltip'.tr(),
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  preferBelow: true,
+                                  verticalOffset: 20,
+                                  child: InputField(
+                                    label: 'user_benefits_label'.tr(),
+                                    hintText: 'user_benefits_hint'.tr(),
+                                    controller:
+                                        userController.benefitsController,
+                                    icon: Icons.card_giftcard,
+                                    maxWidth: maxWidth,
+                                  ),
                                 ),
                                 InputField(
                                   label: 'user_profession_label'.tr(),
@@ -289,9 +243,42 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                       : ButtonColor.primaryColor,
                                   text: 'save_button'.tr(),
                                   onPressed: () {
-                                    if (!userController.isLoading) {
-                                      _onSavePressed(userController);
-                                    }
+                                    if (userController.isLoading) return;
+                                    () async {
+                                      if (!userController.hasValidInput) {
+                                        ShowDialogError.show(
+                                          context,
+                                          title: 'error_dialog'.tr(),
+                                          child: Text(
+                                            'fill_fields_to_see'.tr(),
+                                            style: context.bodySmall,
+                                          ),
+                                        );
+                                        return;
+                                      }
+                                      try {
+                                        await userController.saveUser();
+                                        if (!context.mounted) return;
+                                        ShowDialogError.show(
+                                          context,
+                                          title: 'success_dialog'.tr(),
+                                          child: Text(
+                                            'user_saved_success'.tr(),
+                                            style: context.bodySmall,
+                                          ),
+                                        );
+                                      } catch (_) {
+                                        if (!context.mounted) return;
+                                        ShowDialogError.show(
+                                          context,
+                                          title: 'error_dialog'.tr(),
+                                          child: Text(
+                                            'error_dialog'.tr(),
+                                            style: context.bodySmall,
+                                          ),
+                                        );
+                                      }
+                                    }();
                                   },
                                 ),
                                 const SizedBox(height: 12),
@@ -300,19 +287,40 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   child: TextButton.icon(
                                     onPressed: userController.isLoading
                                         ? null
-                                        : () {
+                                        : () async {
                                             if (!userController.hasAnyValue) {
                                               ShowDialogError.show(
                                                 context,
                                                 title: 'error_dialog'.tr(),
                                                 child: Text(
                                                   'nothing_to_clear'.tr(),
-                                                  style: context.bodyMediumFont,
+                                                  style: context.bodySmall,
                                                 ),
                                               );
                                               return;
                                             }
-                                            _onClearPressed(userController);
+                                            try {
+                                              await userController.clearUser();
+                                              if (!context.mounted) return;
+                                              ShowDialogError.show(
+                                                context,
+                                                title: 'success_dialog'.tr(),
+                                                child: Text(
+                                                  'user_cleared_success'.tr(),
+                                                  style: context.bodySmall,
+                                                ),
+                                              );
+                                            } catch (_) {
+                                              if (!context.mounted) return;
+                                              ShowDialogError.show(
+                                                context,
+                                                title: 'error_dialog'.tr(),
+                                                child: Text(
+                                                  'error_dialog'.tr(),
+                                                  style: context.bodyMediumFont,
+                                                ),
+                                              );
+                                            }
                                           },
                                     icon: Icon(
                                       Icons.delete_outline,

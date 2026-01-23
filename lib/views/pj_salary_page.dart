@@ -168,29 +168,60 @@ class _PjpageState extends State<Pjpage> {
                                 maxWidth: maxWidth,
                                 onChanged: (_) => controller.calculate(),
                               ),
-                              InputField(
-                                label: 'taxes_pj'.tr(),
-                                hintText: 'percent_hint'.tr(),
-                                controller: controller.taxController,
-                                icon: Icons.account_balance_rounded,
-                                maxWidth: maxWidth,
-                                onChanged: (_) => controller.calculate(),
+                              Tooltip(
+                                message: 'taxes_pj_tooltip'.tr(),
+                                triggerMode: TooltipTriggerMode.tap,
+                                preferBelow: true,
+                                verticalOffset: 20,
+                                child: InputField(
+                                  label: 'taxes_pj'.tr(),
+                                  hintText: 'percent_hint'.tr(),
+                                  controller: controller.taxController,
+                                  icon: Icons.account_balance_rounded,
+                                  maxWidth: maxWidth,
+                                  onChanged: (_) => controller.calculate(),
+                                ),
                               ),
-                              InputField(
-                                label: 'accountant_fee'.tr(),
-                                hintText: 'money_hint'.tr(),
-                                controller: controller.accountantController,
-                                icon: Icons.receipt_long_rounded,
-                                maxWidth: maxWidth,
-                                onChanged: (_) => controller.calculate(),
+                              Tooltip(
+                                message: 'accountant_fee_tooltip'.tr(),
+                                triggerMode: TooltipTriggerMode.tap,
+                                preferBelow: true,
+                                verticalOffset: 20,
+                                child: InputField(
+                                  label: 'accountant_fee'.tr(),
+                                  hintText: 'money_hint'.tr(),
+                                  controller: controller.accountantController,
+                                  icon: Icons.receipt_long_rounded,
+                                  maxWidth: maxWidth,
+                                  onChanged: (_) => controller.calculate(),
+                                ),
                               ),
-                              InputField(
-                                label: 'inss_pj'.tr(),
-                                hintText: 'money_hint'.tr(),
-                                controller: controller.inssController,
-                                icon: Icons.security_rounded,
-                                maxWidth: maxWidth,
-                                onChanged: (_) => controller.calculate(),
+                              Tooltip(
+                                message: 'benefits_pj_tooltip'.tr(),
+                                triggerMode: TooltipTriggerMode.tap,
+                                preferBelow: true,
+                                verticalOffset: 20,
+                                child: InputField(
+                                  label: 'benefits_pj'.tr(),
+                                  controller: controller.benefitsController,
+                                  icon: Icons.monetization_on,
+                                  maxWidth: maxWidth,
+                                  onChanged: (_) => controller.calculate(),
+                                ),
+                              ),
+                              Tooltip(
+                                message: 'inss_pj_tooltip'.tr(),
+                                triggerMode: TooltipTriggerMode.tap,
+                                preferBelow: true,
+                                verticalOffset: 20,
+                                child: InputField(
+                                  label: 'inss_pj'.tr(),
+                                  hintText: 'money_hint'.tr(),
+                                  controller: controller.inssController,
+                                  icon: Icons.security_rounded,
+                                  maxWidth: maxWidth,
+                                  onChanged: (_) => controller.calculate(),
+                                ),
                               ),
                               const SizedBox(height: 12),
                               CustomButton(
@@ -202,9 +233,9 @@ class _PjpageState extends State<Pjpage> {
                                     ? ButtonColor.fourthColor
                                     : ButtonColor.primaryColor,
                                 onPressed: () {
-                                  final controller = context
+                                  final pjController = context
                                       .read<PjController>();
-                                  if (controller.hasValidInput) {
+                                  if (pjController.hasValidInput) {
                                     ResultPjtDialog.show(
                                       context,
                                       currencyFormat,
@@ -215,17 +246,29 @@ class _PjpageState extends State<Pjpage> {
                                       title: 'error_dialog'.tr(),
                                       child: Text(
                                         'fill_fields_to_see_chart'.tr(),
+                                        style: context.bodySmall,
                                       ),
                                     );
                                   }
                                 },
                                 text: 'calculate'.tr(),
                               ),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton.icon(
                                   onPressed: () async {
+                                    if (!controller.hasDataToClear) {
+                                      ShowDialogError.show(
+                                        context,
+                                        title: 'error_dialog'.tr(),
+                                        child: Text(
+                                          'no_data_to_clear'.tr(),
+                                          style: context.bodySmall,
+                                        ),
+                                      );
+                                      return;
+                                    }
                                     await controller.clearData();
                                   },
                                   icon: Icon(

@@ -160,5 +160,13 @@
 	"settings.theme_dark_icon": "Dark theme icon",
 	"footer_app_icon": "App icon",
 	"footer_copyright_icon": "Copyright",
-	"footer_version_icon": "Version"
+	"footer_version_icon": "Version",
+	"no_data_to_clear": "There is no data to clear.",
+	"benefits_clt_tooltip": "Enter benefits such as meal allowance, transportation allowance, or health insurance.",
+	"taxes_pj_tooltip": "Enter the total tax rate (in %), for example: 6, 11, or 15.",
+	"accountant_fee_tooltip": "Enter your monthly accountant fee.",
+	"inss_pj_tooltip": "Enter the monthly INSS amount you pay (e.g., contributions on pro-labore or as an individual contributor).",
+	"user_benefits_tooltip": "Enter benefits such as meal allowance, transportation allowance, or health insurance.",
+	"benefits_pj": "Benefits (PJ)",
+	"benefits_pj_tooltip": "Enter benefits such as meal allowance, transportation allowance, or health insurance."
 }

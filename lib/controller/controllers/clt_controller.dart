@@ -93,6 +93,23 @@ class CltController extends ChangeNotifier {
     await StorageService().saveClt(model);
   }
 
+  bool get hasDataToClear {
+    final salary = cltSalaryController.numberValue;
+    final benefits = cltBenefitsController.numberValue;
+
+    final hasAnyInput = salary > 0 || benefits > 0;
+    final hasAnyComputed =
+        grossSalary != 0.0 ||
+        benefits != 0.0 ||
+        inss != 0.0 ||
+        irrf != 0.0 ||
+        netSalaryWithoutBenefits != 0.0 ||
+        netSalaryBase != 0.0 ||
+        fgtsValue != 0.0;
+
+    return hasAnyInput || hasAnyComputed;
+  }
+
   Future<void> clearData() async {
     cltSalaryController.updateValue(0);
     cltBenefitsController.updateValue(0);

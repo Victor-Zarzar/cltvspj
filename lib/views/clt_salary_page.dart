@@ -167,7 +167,6 @@ Widget _buildContent(
                                       ),
                                     ),
                                     const SizedBox(width: 2),
-
                                     Checkbox(
                                       fillColor:
                                           WidgetStateProperty.resolveWith((
@@ -176,7 +175,7 @@ Widget _buildContent(
                                             if (!states.contains(
                                               WidgetState.selected,
                                             )) {
-                                              return Colors.transparent;
+                                              return CheckColor.primaryColor;
                                             }
                                             return null;
                                           }),
@@ -215,12 +214,18 @@ Widget _buildContent(
                               maxWidth: maxWidth,
                               onChanged: (_) => controller.calculate(),
                             ),
-                            InputField(
-                              label: 'benefits_clt'.tr(),
-                              controller: controller.cltBenefitsController,
-                              icon: Icons.card_giftcard_rounded,
-                              maxWidth: maxWidth,
-                              onChanged: (_) => controller.calculate(),
+                            Tooltip(
+                              message: 'benefits_clt_tooltip'.tr(),
+                              triggerMode: TooltipTriggerMode.tap,
+                              preferBelow: true,
+                              verticalOffset: 20,
+                              child: InputField(
+                                label: 'benefits_clt'.tr(),
+                                controller: controller.cltBenefitsController,
+                                icon: Icons.card_giftcard_rounded,
+                                maxWidth: maxWidth,
+                                onChanged: (_) => controller.calculate(),
+                              ),
                             ),
                             const SizedBox(height: 12),
                             CustomButton(
@@ -242,6 +247,7 @@ Widget _buildContent(
                                     title: 'error_dialog'.tr(),
                                     child: Text(
                                       'fill_fields_to_see_chart'.tr(),
+                                      style: context.bodySmall,
                                     ),
                                   );
                                 }
@@ -253,6 +259,17 @@ Widget _buildContent(
                               alignment: Alignment.centerRight,
                               child: TextButton.icon(
                                 onPressed: () async {
+                                  if (!controller.hasDataToClear) {
+                                    ShowDialogError.show(
+                                      context,
+                                      title: 'error_dialog'.tr(),
+                                      child: Text(
+                                        'no_data_to_clear'.tr(),
+                                        style: context.bodySmall,
+                                      ),
+                                    );
+                                    return;
+                                  }
                                   await controller.clearData();
                                 },
                                 icon: Icon(

@@ -8,6 +8,7 @@ updates:
       - "victorzarzar"
     labels:
       - "changelog: changed"
+    open-pull-requests-limit: 5
     groups:
       github-actions:
         patterns:
@@ -21,6 +22,7 @@ updates:
       - "victorzarzar"
     labels:
       - "changelog: changed"
+    open-pull-requests-limit: 5
     groups:
       pub:
         patterns:
@@ -34,6 +36,7 @@ updates:
       - "victorzarzar"
     labels:
       - "changelog: changed"
+    open-pull-requests-limit: 5
     groups:
       gomod:
         patterns:

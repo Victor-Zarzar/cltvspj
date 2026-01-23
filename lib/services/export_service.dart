@@ -42,8 +42,6 @@ Future<void> generatePdfReport(ReportData data) async {
 
             pw.SizedBox(height: 10),
 
-            pw.SizedBox(height: 10),
-
             pw.TableHelper.fromTextArray(
               headerStyle: boldStyle,
               cellStyle: baseStyle,
@@ -53,18 +51,20 @@ Future<void> generatePdfReport(ReportData data) async {
                   .toList(),
             ),
 
-            pw.SizedBox(height: 20),
+            if (data.benefitsRows.isNotEmpty) ...[
+              pw.SizedBox(height: 20),
 
-            pw.Text(
-              data.labels.benefitsTitle,
-              style: boldStyle.copyWith(fontSize: 14),
-            ),
+              pw.Text(
+                data.labels.benefitsTitle,
+                style: boldStyle.copyWith(fontSize: 14),
+              ),
 
-            pw.SizedBox(height: 6),
+              pw.SizedBox(height: 6),
 
-            ...data.benefitsRows.map(
-              (e) => pw.Text('• ${e.label}: ${e.value}', style: baseStyle),
-            ),
+              ...data.benefitsRows.map(
+                (e) => pw.Text('• ${e.label}: ${e.value}', style: baseStyle),
+              ),
+            ],
 
             if (data.chartBytes != null) ...[
               pw.SizedBox(height: 30),

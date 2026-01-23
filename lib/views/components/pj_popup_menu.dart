@@ -60,7 +60,7 @@ class PjPopupMenu extends StatelessWidget {
               size: 22,
               semanticLabel: 'download_icon'.tr(),
             ),
-            title: Text('generate_report'.tr(), style: context.h1),
+            title: Text('generate_report'.tr(), style: context.h2Dialog),
           ),
         ),
       ],

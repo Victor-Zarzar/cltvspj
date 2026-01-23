@@ -37,7 +37,7 @@ class _AppSidebarState extends State<AppSidebar> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.fromLTRB(26, 9, 9, 9),
                 child: Row(
                   children: [
                     Container(
@@ -52,7 +52,7 @@ class _AppSidebarState extends State<AppSidebar> {
                         Icons.calculate_rounded,
                         color: IconColor.primaryColor,
                         semanticLabel: 'sidebar.app_icon'.tr(),
-                        size: 28,
+                        size: 24,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -106,7 +106,7 @@ class _AppSidebarState extends State<AppSidebar> {
               ),
               const Divider(height: 1),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Row(
                   children: [
                     Icon(

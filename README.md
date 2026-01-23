@@ -245,27 +245,27 @@ dart format .
 
 ```
 cltvspj/
-├── lib/                     # Application source code
-│   ├── models/              # Data models
-│   ├── providers/           # State management
-│   ├── screens/             # UI screens
-│   ├── widgets/             # Reusable widgets
-│   └── utils/               # Utility functions
-├── assets/                  # Static assets
-│   ├── imgs/                # Images and mockups
-│   └── fonts/               # Custom fonts
-├── android/                 # Android platform code
-├── ios/                     # iOS platform code
-├── web/                     # Web platform code
-├── test/                    # Unit and widget tests
-├── Makefile                 # Build automation
-├── netlify.toml             # Netlify deployment config
-├── .github/
-│   ├── workflows/
-│   │   └── main.yaml        # CI/CD pipeline
-│   └── dependabot.yml       # Dependency updates
-├── pubspec.yaml             # Flutter dependencies
-└── README.md                # Project documentation
+├── .github/                        # GitHub configuration
+│   ├── workflows/                  # GitHub Actions workflows
+│   │   └── main.yaml               # CI/CD pipeline
+│   └── dependabot.yml              # Dependency updates configuration
+├── lib/                            # Application source code
+│   ├── models/                     # Data models
+│   ├── providers/                  # State management
+│   ├── screens/                    # UI screens
+│   ├── widgets/                    # Reusable widgets
+│   └── utils/                      # Utility functions
+├── assets/                         # Static assets
+│   ├── imgs/                       # Images and mockups
+│   └── fonts/                      # Custom fonts
+├── android/                        # Android platform code
+├── ios/                            # iOS platform code
+├── web/                            # Web platform code
+├── test/                           # Unit and widget tests
+├── Makefile                        # Build automation
+├── netlify.toml                    # Netlify deployment config
+├── pubspec.yaml                    # Flutter dependencies
+└── README.md                       # Project documentation
 ```
 
 ---

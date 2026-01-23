@@ -19,6 +19,7 @@ class StorageService {
   static const _kPjAccountantFee = 'pj.accountantFee';
   static const _kPjInss = 'pj.inss';
   static const _kPjTaxes = 'pj.taxes';
+  static const _kPjBenefits = 'pj.benefits';
   static const _kCalcSalaryClt = 'calculator.salaryClt';
   static const _kCalcSalaryPj = 'calculator.salaryPj';
   static const _kCalcBenefits = 'calculator.benefits';
@@ -100,6 +101,7 @@ class StorageService {
     final prefs = await _prefs;
     await prefs.setDouble(_kPjGrossSalary, model.grossSalary);
     await prefs.setDouble(_kPjAccountantFee, model.accountantFee);
+    await prefs.setDouble(_kPjBenefits, model.benefits);
     await prefs.setDouble(_kPjInss, model.inss);
     await prefs.setDouble(_kPjTaxes, model.taxes);
   }
@@ -108,6 +110,7 @@ class StorageService {
     final prefs = await _prefs;
     final grossSalary = prefs.getDouble(_kPjGrossSalary);
     final accountantFee = prefs.getDouble(_kPjAccountantFee);
+    final benefits = prefs.getDouble(_kPjBenefits);
     final inss = prefs.getDouble(_kPjInss);
     final taxes = prefs.getDouble(_kPjTaxes);
 
@@ -117,6 +120,7 @@ class StorageService {
     return PjModel(
       grossSalary: (grossSalary ?? 0).toDouble(),
       accountantFee: (accountantFee ?? 0).toDouble(),
+      benefits: (benefits ?? 0).toDouble(),
       inss: (inss ?? 0).toDouble(),
       taxes: (taxes ?? 0).toDouble(),
     );
@@ -126,6 +130,7 @@ class StorageService {
     final prefs = await _prefs;
     await prefs.remove(_kPjGrossSalary);
     await prefs.remove(_kPjAccountantFee);
+    await prefs.remove(_kPjBenefits);
     await prefs.remove(_kPjInss);
     await prefs.remove(_kPjTaxes);
   }

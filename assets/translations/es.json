@@ -160,5 +160,13 @@
 	"settings.theme_dark_icon": "Icono del tema oscuro",
 	"footer_app_icon": "Icono de la app",
 	"footer_copyright_icon": "Copyright",
-	"footer_version_icon": "Versión"
+	"footer_version_icon": "Versión",
+	"no_data_to_clear": "No hay datos para limpiar.",
+	"benefits_clt_tooltip": "Ingrese beneficios como vale de alimentación, transporte o seguro de salud.",
+	"taxes_pj_tooltip": "Ingrese la tasa total de impuestos (en %), por ejemplo: 6, 11 o 15.",
+	"accountant_fee_tooltip": "Ingrese el valor mensual que paga al contador.",
+	"inss_pj_tooltip": "Ingrese el monto mensual de INSS que paga (p. ej., sobre el pró-labore o como contribuyente individual).",
+	"user_benefits_tooltip": "Ingrese beneficios como vale de alimentación, transporte o seguro de salud.",
+	"benefits_pj": "Beneficios (PJ)",
+	"benefits_pj_tooltip": "Ingrese beneficios como vale de alimentación, transporte o seguro de salud."
 }

@@ -160,5 +160,13 @@
 	"settings.theme_dark_icon": "Ícone do tema escuro",
 	"footer_app_icon": "Ícone do app",
 	"footer_copyright_icon": "Copyright",
-	"footer_version_icon": "Versão"
+	"footer_version_icon": "Versão",
+	"no_data_to_clear": "Não há dados para limpar.",
+	"benefits_clt_tooltip": "Informe benefícios como vale-alimentação, transporte ou plano de saúde.",
+	"taxes_pj_tooltip": "Informe a alíquota total de impostos (em %), por exemplo: 6, 11 ou 15.",
+	"accountant_fee_tooltip": "Informe o valor mensal pago ao contador (honorários/contabilidade).",
+	"inss_pj_tooltip": "Informe o valor mensal do INSS que você paga (ex.: pró-labore ou contribuição individual).",
+	"user_benefits_tooltip": "Informe benefícios como vale-alimentação, transporte ou plano de saúde.",
+	"benefits_pj": "Benefícios (PJ)",
+	"benefits_pj_tooltip": "Informe benefícios como vale-alimentação, transporte ou plano de saúde."
 }

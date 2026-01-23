@@ -11,6 +11,8 @@ class PjReportBuilder {
     required String profession,
     required double grossSalary,
     required double taxValue,
+    required double benefits,
+    required double benefitsValue,
     required double accountantFee,
     required double inssValue,
     required double netSalary,
@@ -27,6 +29,10 @@ class PjReportBuilder {
       ReportRow(
         label: 'accountant_fee'.tr(),
         value: formatCurrency(accountantFee),
+      ),
+      ReportRow(
+        label: 'benefits_pj'.tr(),
+        value: formatCurrency(benefitsValue),
       ),
       ReportRow(label: 'inss_pj'.tr(), value: formatCurrency(inssValue)),
       ReportRow(label: 'total_liquid'.tr(), value: formatCurrency(netSalary)),

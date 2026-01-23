@@ -191,3 +191,8 @@ class BoxShadowColor {
   static Color get sixthColor => const Color.fromARGB(255, 193, 47, 14);
   static Color get seventhColor => const Color(0xFF00FF00);
 }
+
+class CheckColor {
+  CheckColor._();
+  static Color get primaryColor => const Color(0x00000000);
+}
