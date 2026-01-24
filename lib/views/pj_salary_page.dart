@@ -11,6 +11,7 @@ import 'package:cltvspj/views/components/result_pj_dialog.dart';
 import 'package:cltvspj/views/components/show_dialog_error.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class Pjpage extends StatefulWidget {
@@ -167,6 +168,14 @@ class _PjpageState extends State<Pjpage> {
                                 icon: Icons.business_center_rounded,
                                 maxWidth: maxWidth,
                                 onChanged: (_) => controller.calculate(),
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  brlInputFormatter,
+                                ],
                               ),
                               Tooltip(
                                 message: 'taxes_pj_tooltip'.tr(),
@@ -194,6 +203,14 @@ class _PjpageState extends State<Pjpage> {
                                   icon: Icons.receipt_long_rounded,
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    brlInputFormatter,
+                                  ],
                                 ),
                               ),
                               Tooltip(
@@ -207,6 +224,14 @@ class _PjpageState extends State<Pjpage> {
                                   icon: Icons.monetization_on,
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    brlInputFormatter,
+                                  ],
                                 ),
                               ),
                               Tooltip(

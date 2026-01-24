@@ -1,5 +1,5 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 final currencyFormat = NumberFormat.currency(
   locale: 'pt_BR',
@@ -7,16 +7,24 @@ final currencyFormat = NumberFormat.currency(
   decimalDigits: 2,
 );
 
-MoneyMaskedTextController moneyMaskedController({String symbol = 'R\$ '}) {
-  return MoneyMaskedTextController(
-    leftSymbol: symbol,
-    decimalSeparator: ',',
-    thousandSeparator: '.',
-  );
-}
+final brlInputFormatter = CurrencyTextInputFormatter.currency(
+  locale: 'pt_BR',
+  symbol: 'R\$ ',
+  decimalDigits: 2,
+);
 
-String formatNumber(double value) {
-  return currencyFormat.format(value);
+String formatCurrency(double value) => currencyFormat.format(value);
+
+double parseBrlToDouble(String text) {
+  final cleaned = text
+      .replaceAll('R\$', '')
+      .replaceAll(' ', '')
+      .replaceAll('.', '')
+      .replaceAll(',', '.')
+      .trim();
+
+  if (cleaned.isEmpty) return 0.0;
+  return double.tryParse(cleaned) ?? 0.0;
 }
 
 bool isZeroOrEmptyCurrency(String text) {

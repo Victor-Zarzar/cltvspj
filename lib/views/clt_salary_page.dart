@@ -11,6 +11,7 @@ import 'package:cltvspj/views/components/result_clt_dialog.dart';
 import 'package:cltvspj/views/components/show_dialog_error.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class Cltpage extends StatefulWidget {
@@ -213,6 +214,14 @@ Widget _buildContent(
                               icon: Icons.attach_money_rounded,
                               maxWidth: maxWidth,
                               onChanged: (_) => controller.calculate(),
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                                brlInputFormatter,
+                              ],
                             ),
                             Tooltip(
                               message: 'benefits_clt_tooltip'.tr(),
@@ -225,6 +234,14 @@ Widget _buildContent(
                                 icon: Icons.card_giftcard_rounded,
                                 maxWidth: maxWidth,
                                 onChanged: (_) => controller.calculate(),
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  brlInputFormatter,
+                                ],
                               ),
                             ),
                             const SizedBox(height: 12),

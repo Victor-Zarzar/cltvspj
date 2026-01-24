@@ -3,6 +3,7 @@ import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
+import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:cltvspj/views/components/custom_button.dart';
 import 'package:cltvspj/views/components/input_field.dart';
 import 'package:cltvspj/views/components/show_dialog_error.dart';
@@ -207,6 +208,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   controller: userController.salaryController,
                                   icon: Icons.attach_money,
                                   maxWidth: maxWidth,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    brlInputFormatter,
+                                  ],
                                 ),
                                 Tooltip(
                                   message: 'user_benefits_tooltip'.tr(),
@@ -220,6 +229,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                         userController.benefitsController,
                                     icon: Icons.card_giftcard,
                                     maxWidth: maxWidth,
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      brlInputFormatter,
+                                    ],
                                   ),
                                 ),
                                 InputField(

@@ -9,9 +9,9 @@ import 'package:cltvspj/controller/domain/pj_calculator.dart';
 import 'package:cltvspj/controller/reports/pj_report_builder.dart';
 
 class PjController extends ChangeNotifier {
-  final salaryController = moneyMaskedController();
-  final accountantController = moneyMaskedController();
-  final benefitsController = moneyMaskedController();
+  final salaryController = TextEditingController();
+  final accountantController = TextEditingController();
+  final benefitsController = TextEditingController();
 
   final taxController = TextEditingController();
   final inssController = TextEditingController();
@@ -27,7 +27,7 @@ class PjController extends ChangeNotifier {
   double inss = 0.11;
 
   bool get hasValidInput {
-    final salary = salaryController.numberValue;
+    final salary = parseBrlToDouble(salaryController.text);
 
     final taxPercent =
         double.tryParse(taxController.text.replaceAll(',', '.')) ?? 0.0;
@@ -47,16 +47,16 @@ class PjController extends ChangeNotifier {
   }
 
   void calculate({bool persist = true}) {
-    grossSalary = salaryController.numberValue;
+    grossSalary = parseBrlToDouble(salaryController.text);
 
     final taxPercent =
         double.tryParse(taxController.text.replaceAll(',', '.')) ?? 0.0;
     final inssPercent =
         double.tryParse(inssController.text.replaceAll(',', '.')) ?? 0.0;
 
-    final benefitsValue = benefitsController.numberValue;
+    final benefitsValue = parseBrlToDouble(benefitsController.text);
 
-    accountantFee = accountantController.numberValue;
+    accountantFee = parseBrlToDouble(accountantController.text);
 
     final result = _calculator.calculate(
       PjCalculationInput(
@@ -90,15 +90,15 @@ class PjController extends ChangeNotifier {
     final model = await StorageService().loadPj();
 
     if (model != null) {
-      salaryController.updateValue(model.grossSalary);
-      accountantController.updateValue(model.accountantFee);
-      benefitsController.updateValue(model.benefits);
+      salaryController.text = formatCurrency(model.grossSalary);
+      accountantController.text = formatCurrency(model.accountantFee);
+      benefitsController.text = formatCurrency(model.benefits);
       taxController.text = model.taxes.toStringAsFixed(2);
       inssController.text = model.inss.toStringAsFixed(2);
     } else {
-      salaryController.updateValue(0);
-      accountantController.updateValue(189.0);
-      benefitsController.updateValue(0);
+      salaryController.text = formatCurrency(0);
+      accountantController.text = formatCurrency(189.0);
+      benefitsController.text = formatCurrency(0);
       taxController.text = '0';
       inssController.text = '0';
     }
@@ -124,13 +124,13 @@ class PjController extends ChangeNotifier {
   }
 
   bool get hasDataToClear {
-    final salary = salaryController.numberValue;
-    final accountant = accountantController.numberValue;
+    final salary = parseBrlToDouble(salaryController.text);
+    final accountant = parseBrlToDouble(accountantController.text);
     final taxText = taxController.text.trim();
     final inssText = inssController.text.trim();
     final taxValue = double.tryParse(taxText.replaceAll(',', '.')) ?? 0.0;
     final inssValue = double.tryParse(inssText.replaceAll(',', '.')) ?? 0.0;
-    final benefitsValue = benefitsController.numberValue;
+    final benefitsValue = parseBrlToDouble(benefitsController.text);
 
     final hasAnyInput =
         salary > 0 ||
@@ -151,9 +151,9 @@ class PjController extends ChangeNotifier {
   }
 
   Future<void> clearData() async {
-    salaryController.updateValue(0);
-    accountantController.updateValue(0);
-    benefitsController.updateValue(0);
+    salaryController.text = formatCurrency(0);
+    accountantController.text = formatCurrency(0);
+    benefitsController.text = formatCurrency(0);
     taxController.text = '0';
     inssController.text = '0';
 

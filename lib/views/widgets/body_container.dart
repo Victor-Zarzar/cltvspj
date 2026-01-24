@@ -2,11 +2,13 @@ import 'package:cltvspj/controller/controllers/calculator_controller.dart';
 import 'package:cltvspj/features/app_theme.dart';
 import 'package:cltvspj/features/responsive_extension.dart';
 import 'package:cltvspj/features/theme_provider.dart';
+import 'package:cltvspj/utils/currency_format_helper.dart';
 import 'package:cltvspj/views/components/custom_button.dart';
 import 'package:cltvspj/views/components/input_field.dart';
 import 'package:cltvspj/views/components/show_dialog_error.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class BodyContainer extends StatelessWidget {
@@ -205,6 +207,14 @@ class BodyContainer extends StatelessWidget {
                                   icon: Icons.attach_money_rounded,
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    brlInputFormatter,
+                                  ],
                                 ),
                                 InputField(
                                   label: 'gross_revenue_pj'.tr(),
@@ -212,6 +222,14 @@ class BodyContainer extends StatelessWidget {
                                   icon: Icons.business_center_rounded,
                                   maxWidth: maxWidth,
                                   onChanged: (_) => controller.calculate(),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    brlInputFormatter,
+                                  ],
                                 ),
                                 Tooltip(
                                   message: 'benefits_clt_tooltip'.tr(),
@@ -224,6 +242,14 @@ class BodyContainer extends StatelessWidget {
                                     icon: Icons.card_giftcard_rounded,
                                     maxWidth: maxWidth,
                                     onChanged: (_) => controller.calculate(),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      brlInputFormatter,
+                                    ],
                                   ),
                                 ),
                                 Tooltip(
@@ -238,6 +264,14 @@ class BodyContainer extends StatelessWidget {
                                     icon: Icons.receipt_long_rounded,
                                     maxWidth: maxWidth,
                                     onChanged: (_) => controller.calculate(),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      brlInputFormatter,
+                                    ],
                                   ),
                                 ),
                                 Tooltip(

@@ -9,8 +9,8 @@ import 'package:cltvspj/controller/reports/clt_report_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class CltController extends ChangeNotifier {
-  final cltSalaryController = moneyMaskedController();
-  final cltBenefitsController = moneyMaskedController();
+  final cltSalaryController = TextEditingController();
+  final cltBenefitsController = TextEditingController();
 
   final CltCalculator _calculator;
   final CltReportBuilder _reportBuilder;
@@ -28,8 +28,8 @@ class CltController extends ChangeNotifier {
   bool get hasValidInput => netSalaryBase > 0;
 
   bool get hasAnyData =>
-      cltSalaryController.numberValue > 0 ||
-      cltBenefitsController.numberValue > 0;
+      parseBrlToDouble(cltSalaryController.text) > 0 ||
+      parseBrlToDouble(cltBenefitsController.text) > 0;
 
   bool get isEmpty => !hasAnyData;
 
@@ -50,8 +50,8 @@ class CltController extends ChangeNotifier {
   }
 
   void calculate({bool persist = true}) {
-    grossSalary = cltSalaryController.numberValue;
-    benefits = cltBenefitsController.numberValue;
+    grossSalary = parseBrlToDouble(cltSalaryController.text);
+    benefits = parseBrlToDouble(cltBenefitsController.text);
 
     final result = _calculator.calculate(
       grossSalary: grossSalary,
@@ -79,13 +79,13 @@ class CltController extends ChangeNotifier {
   Future<void> _loadData() async {
     final model = await StorageService().loadClt();
     if (model != null) {
-      cltSalaryController.updateValue(model.salaryClt);
-      cltBenefitsController.updateValue(model.benefits);
+      cltSalaryController.text = formatCurrency(model.salaryClt);
+      cltBenefitsController.text = formatCurrency(model.benefits);
     } else {
-      cltSalaryController.updateValue(0);
-      cltBenefitsController.updateValue(0);
-      calculate(persist: false);
+      cltSalaryController.text = formatCurrency(0);
+      cltBenefitsController.text = formatCurrency(0);
     }
+    calculate(persist: false);
   }
 
   Future<void> _saveData(double salary, double benefits) async {
@@ -94,8 +94,8 @@ class CltController extends ChangeNotifier {
   }
 
   bool get hasDataToClear {
-    final salary = cltSalaryController.numberValue;
-    final benefits = cltBenefitsController.numberValue;
+    final salary = parseBrlToDouble(cltSalaryController.text);
+    final benefits = parseBrlToDouble(cltBenefitsController.text);
 
     final hasAnyInput = salary > 0 || benefits > 0;
     final hasAnyComputed =
@@ -111,8 +111,8 @@ class CltController extends ChangeNotifier {
   }
 
   Future<void> clearData() async {
-    cltSalaryController.updateValue(0);
-    cltBenefitsController.updateValue(0);
+    cltSalaryController.text = formatCurrency(0);
+    cltBenefitsController.text = formatCurrency(0);
     grossSalary = 0.0;
     benefits = 0.0;
     inss = 0.0;

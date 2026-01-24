@@ -8,11 +8,11 @@ import 'package:cltvspj/controller/domain/calculator_engine.dart';
 import 'package:cltvspj/controller/reports/calculator_report_builder.dart';
 
 class CalculatorController extends ChangeNotifier {
-  final salaryCltController = moneyMaskedController();
-  final salaryPjController = moneyMaskedController();
-  final benefitsController = moneyMaskedController();
-  final cltBenefitsController = moneyMaskedController();
-  final accountantFeeController = moneyMaskedController();
+  final salaryCltController = TextEditingController();
+  final salaryPjController = TextEditingController();
+  final benefitsController = TextEditingController();
+  final cltBenefitsController = TextEditingController();
+  final accountantFeeController = TextEditingController();
 
   final taxesPjController = TextEditingController();
   final inssPjController = TextEditingController();
@@ -40,7 +40,7 @@ class CalculatorController extends ChangeNotifier {
   }
 
   bool get hasValidInput =>
-      salaryCltController.numberValue > 0 &&
+      parseBrlToDouble(salaryCltController.text) > 0 &&
       _parsePercentage(inssPjController) > 0 &&
       _parsePercentage(taxesPjController) > 0;
 
@@ -90,10 +90,10 @@ class CalculatorController extends ChangeNotifier {
     final model = await StorageService().loadCalculator();
 
     if (model != null) {
-      salaryCltController.updateValue(model.salaryClt);
-      salaryPjController.updateValue(model.salaryPj);
-      benefitsController.updateValue(model.benefits);
-      accountantFeeController.updateValue(model.accountantFee);
+      salaryCltController.text = formatCurrency(model.salaryClt);
+      salaryPjController.text = formatCurrency(model.salaryPj);
+      benefitsController.text = formatCurrency(model.benefits);
+      accountantFeeController.text = formatCurrency(model.accountantFee);
       inssPjController.text = (model.inssPj * 100)
           .toStringAsFixed(2)
           .replaceAll('.', ',');
@@ -101,23 +101,22 @@ class CalculatorController extends ChangeNotifier {
           .toStringAsFixed(2)
           .replaceAll('.', ',');
     } else {
-      salaryCltController.updateValue(0);
-      salaryPjController.updateValue(0);
-      benefitsController.updateValue(0);
-      accountantFeeController.updateValue(189.0);
+      salaryCltController.text = formatCurrency(0);
+      salaryPjController.text = formatCurrency(0);
+      benefitsController.text = formatCurrency(0);
+      accountantFeeController.text = formatCurrency(189.0);
       inssPjController.text = '0';
       taxesPjController.text = '0';
     }
-
     notifyListeners();
   }
 
   void updateValues() {
     model = CalculatorModel(
-      salaryClt: salaryCltController.numberValue,
-      salaryPj: salaryPjController.numberValue,
-      benefits: benefitsController.numberValue,
-      accountantFee: accountantFeeController.numberValue,
+      salaryClt: parseBrlToDouble(salaryCltController.text),
+      salaryPj: parseBrlToDouble(salaryPjController.text),
+      benefits: parseBrlToDouble(benefitsController.text),
+      accountantFee: parseBrlToDouble(accountantFeeController.text),
       taxesPj: _parsePercentage(taxesPjController),
       inssPj: _parsePercentage(inssPjController) / 100,
     );
@@ -136,11 +135,11 @@ class CalculatorController extends ChangeNotifier {
       model.inssPj != 0.0;
 
   Future<void> clearData() async {
-    salaryCltController.updateValue(0);
-    salaryPjController.updateValue(0);
-    benefitsController.updateValue(0);
-    cltBenefitsController.updateValue(0);
-    accountantFeeController.updateValue(0);
+    salaryCltController.text = formatCurrency(0);
+    salaryPjController.text = formatCurrency(0);
+    benefitsController.text = formatCurrency(0);
+    accountantFeeController.text = formatCurrency(0);
+
     taxesPjController.text = '0';
     inssPjController.text = '0';
     includeFgts = false;
