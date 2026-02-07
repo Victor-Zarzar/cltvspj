@@ -1,14 +1,14 @@
-import 'package:cltvspj/controller/controllers/calculator_controller.dart';
-import 'package:cltvspj/controller/controllers/clt_controller.dart';
-import 'package:cltvspj/controller/controllers/locale_controller.dart';
-import 'package:cltvspj/controller/controllers/notification_controller.dart';
-import 'package:cltvspj/controller/controllers/pj_controller.dart';
-import 'package:cltvspj/controller/controllers/user_controller.dart';
-import 'package:cltvspj/features/theme_provider.dart';
-import 'package:cltvspj/services/notification_service.dart';
-import 'package:cltvspj/services/secure_service.dart';
-import 'package:cltvspj/services/sentry_service.dart';
-import 'package:cltvspj/views/components/navigation/app_routes.dart';
+import 'package:cltvspj/app/presentation/viewmodels/locale_viewmodel.dart';
+import 'package:cltvspj/app/presentation/viewmodels/notification_viewmodel.dart';
+import 'package:cltvspj/app/routes/app_routes.dart';
+import 'package:cltvspj/features/clt/presentantion/viewmodels/clt_viewmodel.dart';
+import 'package:cltvspj/features/home/presentation/viewmodels/home_viewmodel.dart';
+import 'package:cltvspj/features/pj/presentation/viewmodels/pj_viewmodel.dart';
+import 'package:cltvspj/features/user/presentation/viewmodels/user_viewmodel.dart';
+import 'package:cltvspj/shared/services/notification_service.dart';
+import 'package:cltvspj/shared/services/secure_service.dart';
+import 'package:cltvspj/shared/services/sentry_service.dart';
+import 'package:cltvspj/shared/theme/theme_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -50,12 +50,12 @@ Future<void> main() async {
       fallbackLocale: const Locale('en-US'),
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => NotificationController()),
-          ChangeNotifierProvider(create: (_) => LocaleController()),
-          ChangeNotifierProvider(create: (_) => CalculatorController()),
-          ChangeNotifierProvider(create: (_) => CltController()),
-          ChangeNotifierProvider(create: (_) => PjController()),
-          ChangeNotifierProvider(create: (_) => UserController()),
+          ChangeNotifierProvider(create: (_) => NotificationViewModel()),
+          ChangeNotifierProvider(create: (_) => LocaleViewModel()),
+          ChangeNotifierProvider(create: (_) => HomeViewmodel()),
+          ChangeNotifierProvider(create: (_) => CltViewModel()),
+          ChangeNotifierProvider(create: (_) => PjViewModel()),
+          ChangeNotifierProvider(create: (_) => UserViewModel()),
           ChangeNotifierProvider(create: (_) => UiProvider()..init()),
         ],
         child: const AppWidget(),
@@ -85,7 +85,7 @@ class _AppWidgetState extends State<AppWidget> {
           locale: context.locale,
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
-          routerConfig: AppRouter.router,
+          routerConfig: AppRoutes.router,
         );
       },
     );

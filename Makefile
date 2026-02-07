@@ -1,11 +1,12 @@
 # Makefile CLT Vs PJ
+PROJECT_NAME = CLT Vs Pj
 VERSION_TAG = 1.0.0
 
 install:
 	flutter pub get
 
 clean:
-	sudo rm -rf build/ .dart_tool/ .flutter-plugins .flutter-plugins-dependencies 2>/dev/null || true
+	rm -rf build/ .dart_tool/ .flutter-plugins .flutter-plugins-dependencies 2>/dev/null || true
 	flutter clean && flutter pub cache clean
 
 build-extension-dev:
@@ -39,7 +40,7 @@ build-ios-release:
 
 help:
 	@echo ""
-	@echo "CLT VS PJ Makefile ($(VERSION_TAG))"
+	@echo "$(PROJECT_NAME) v$(VERSION_TAG)"
 	@echo "──────────────────────────────────────────────"
 	@echo " Development:"
 	@echo "   make install                   ➜ Install Flutter dependencies"
