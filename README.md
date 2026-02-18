@@ -5,7 +5,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart">
   <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter">
-  <img src="https://img.shields.io/badge/Flutter-3.38.4-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter Version">
+  <img src="https://img.shields.io/badge/Flutter-3.41.1-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter Version">
   <img src="https://img.shields.io/badge/Material_Design_3-757575?style=for-the-badge&logo=material-design&logoColor=white" alt="Material Design 3">
   <img src="https://img.shields.io/badge/CI/CD-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
 </p>
@@ -66,7 +66,7 @@ Before starting, ensure you have the following installed:
 - [Xcode](https://developer.apple.com/xcode/) (for iOS development on macOS)
 - [Android Studio](https://developer.android.com/studio) (for Android development)
 
-> **Note**: This project uses **Flutter 3.38.4** managed through FVM. You don't need to install Flutter globally.
+> **Note**: This project uses **Flutter 3.41.1** managed through FVM. You don't need to install Flutter globally.
 
 > Optional: [VS Code](https://code.visualstudio.com/) or [Android Studio](https://developer.android.com/studio) with Flutter plugins for IDE support.
 

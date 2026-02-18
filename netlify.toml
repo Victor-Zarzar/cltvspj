@@ -1,5 +1,5 @@
 [build]
-  command = "flutter build web --release"
+  command = "make build-web-prod"
   publish = "build/web"
 
 [[plugins]]
