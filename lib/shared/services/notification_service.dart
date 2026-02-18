@@ -40,7 +40,7 @@ class NotificationService {
         );
 
     await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotification,
       onDidReceiveBackgroundNotificationResponse: onDidReceiveNotification,
     );
@@ -76,18 +76,18 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      _ratingNotificationId,
-      title,
-      body,
-      scheduledDate,
-      notificationDetails,
+      id: _ratingNotificationId,
+      title: title,
+      body: body,
+      scheduledDate: scheduledDate,
+      notificationDetails: notificationDetails,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       payload: payload,
     );
   }
 
   static Future<void> cancelRatingNotification() async {
-    await flutterLocalNotificationsPlugin.cancel(_ratingNotificationId);
+    await flutterLocalNotificationsPlugin.cancel(id: _ratingNotificationId);
   }
 
   static Future<void> showInstantNotification(String title, String body) async {
@@ -102,10 +102,10 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      platformChannelSpecifics,
+      id: 0,
+      title: title,
+      body: body,
+      notificationDetails: platformChannelSpecifics,
       payload: 'instant_notification',
     );
   }
