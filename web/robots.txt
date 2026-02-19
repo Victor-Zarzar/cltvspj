@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /user
+Disallow: /settings
+
+Allow: /
+
+Sitemap: https://www.calculadoracltvspj.com.br/sitemap.xml
