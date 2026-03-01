@@ -218,34 +218,34 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "2b50e938a275e1ad77352d6a25e25770f4130baa61eaf02de7a9a884680954ad"
+      sha256: cf206c68707773b670340dfeca7fc95f95509f4ca91a544bdd77d03a8106b91e
       url: "https://pub.dev"
     source: hosted
-    version: "20.1.0"
+    version: "21.0.0-dev.2"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
       name: flutter_local_notifications_linux
-      sha256: dce0116868cedd2cdf768af0365fc37ff1cbef7c02c4f51d0587482e625868d0
+      sha256: "223bdd6e389a5ec02597fb494c8b3d6b0a9119534f9f45b7feef69cc0ee838e5"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.0"
+    version: "8.0.0-dev.1"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
-      sha256: "23de31678a48c084169d7ae95866df9de5c9d2a44be3e5915a2ff067aeeba899"
+      sha256: "2adc3c14a650af4e6235817fbf4335ba14bc3d36d5d497d7104d94e1475d5ddc"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
+    version: "11.0.0-dev.1"
   flutter_local_notifications_windows:
     dependency: transitive
     description:
       name: flutter_local_notifications_windows
-      sha256: e97a1a3016512437d9c0b12fae7d1491c3c7b9aa7f03a69b974308840656b02a
+      sha256: e7136082af98f3459552d2cc423f4b27e3010bbddcd1e575d9a270d47d2384d4
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.0-dev.1"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -353,10 +353,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: c30eef5e7cd26eb89cc8065b4390ac86ce579f2fcdbe35220891c6278b5460da
+      sha256: db9df7a5898d894eeda4c78143f35c30a243558be439518972366880b80bf88e
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.1"
+    version: "8.0.2"
   hooks:
     dependency: transitive
     description:
@@ -689,10 +689,10 @@ packages:
     dependency: transitive
     description:
       name: sentry
-      sha256: e57e57123968b673c8ca19892eecf93113b4811b8e5cd5d165749ca7f7319fdb
+      sha256: "605ad1f6f1ae5b72018cbe8fc20f490fa3bd53e58882e5579566776030d8c8c1"
       url: "https://pub.dev"
     source: hosted
-    version: "9.13.0"
+    version: "9.14.0"
   sentry_dart_plugin:
     dependency: "direct dev"
     description:
@@ -705,10 +705,10 @@ packages:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: c8f5b805c0346cd0c93b09e584675af7ed8c3ef36c3589181ad19b4adce35954
+      sha256: "7fd0fb80050c1f6a77ae185bda997a76d384326d6777cf5137a6c38952c4ac7d"
       url: "https://pub.dev"
     source: hosted
-    version: "9.13.0"
+    version: "9.14.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -830,10 +830,10 @@ packages:
     dependency: "direct main"
     description:
       name: timezone
-      sha256: dd14a3b83cfd7cb19e7888f1cbc20f258b8d71b54c06f79ac585f14093a287d1
+      sha256: "784a5e34d2eb62e1326f24d6f600aaaee452eb8ca8ef2f384a59244e292d158b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.1"
+    version: "0.11.0"
   typed_data:
     dependency: transitive
     description:
